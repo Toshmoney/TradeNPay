@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+.blue-background{
+    background: radial-gradient(24.1% 77.04% at 53.05% 34.1%, #0235EA 0%, rgba(33, 73, 217, 0.714882) 50.26%, rgba(29, 72, 226, 0.6) 100%);
+    border-radius: 14px;
+    width: 100%;
+    height: 20vh;
+    padding: 20px;
+}
+
+.welcome-msg{
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    padding: 20px;
+}
+
+.welcome-msg p{
+    font-family: 'Poppins', sans-serif;
+    margin-top: 10px;
+}
+
+.verify-method{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 100px;
+}
+
+.first-verify-method{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.first-verify-method h1{
+    font-family: 'Raleway', sans-serif;
+}
+
+.method{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.method a{
+    text-decoration: none;
+    color: black;
+}
+
+.ctn button{
+    background-color: #0235EA;
+    width: 100%;
+    padding: 20px 20px;
+    border: none;
+    border-radius: 14px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.disclaimer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.disclaimer h1{
+    font-family: 'Raleway', sans-serif;
+    color: #0235EA;
+}
+
+.disclaimer ul li{
+    font-family: 'Poppins', sans-serif;
+    color: rgba(0, 0, 0, 0.5);
+    padding-top: 10px;
+}
+
+.id-card, .passport, .driver{
+    background: #FFFFFF;
+    border: 1px solid #0235EA;
+    width: 100%;
+    border-radius: 14px;
+    padding: 20px;
+    cursor: pointer;
+}
+
+@media screen and (max-width:950px) {
+    .verify-method{
+        flex-direction: column-reverse;
+        gap: 50px;
+    }
+}

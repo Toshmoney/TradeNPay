@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha Bills | Sign In Page</title>
+    <link rel="stylesheet" href="css/SignIn.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+    <section>
+        <div class="sign-in">
+            <div class="image">
+                <a href=""><img src="images/signin-img.png" alt=""></a>
+            </div>
+            <div class="form-area">
+                <div>
+                    <a href="/"><img src="images/small-logo.png" alt=""></a>
+                </div>
+                <h1>Sign in</h1>
+                <div class="main-form">
+                    <form action="/dashboard" method="post">
+                        <div>
+                            <input type="email" name="username" id="" placeholder="Your Email" >
+                        </div>
+                        <div>
+                            <input type="password" name="password" id="password" placeholder="Password">
+                            <div>
+                                <p id="toggle-password" class="text"><span><i class="ri-eye-line"></i></span>  </p>
+                            </div>
+                        </div>
+                        <div class="forget-pwd">
+                            <span><a href="">Forget Password?</a></span>
+                        </div>
+                        <button type="submit" class="submit" onsubmit="handleSubmit()">Sign In</button>
+                    </form>                    
+                </div>
+                <div class="link-to-signup">
+                    <span>Don't have an account? <a href="/sign-up">Sign Up</a></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/Register.js"></script>
+</body>
+</html>

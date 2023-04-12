@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+h3, h1{
+    font-family: "Raleway", sans-serif;
+}
+p{
+    font-family: "Poppins", sans-serif;
+}
+.btn button{
+    font-family: "Poppins", sans-serif;
+    background-color: #0235EA;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+}
+
+main{
+    width: 100%;
+    padding: 0 30px;
+}
+.toggle-main{
+    width: 95%;
+}
+.dashboard-main-top{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 600;
+
+}
+.profile-picture{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+.input-bar{
+    height: 100px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    overflow: hidden;
+}
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+}
+.firste{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.seconde{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    border: 1px solid #F6F8FE;
+    border-radius: 10px;
+    height: 71.5vh;
+    padding: 0 30px;
+}
+form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    height: 50vh;
+}
+.field{
+    width: 100%;
+    height: 5vh;
+}
+.field input{
+    width: 100%;
+    height: 100%;
+    padding: 21px;
+    border-radius: 10px;
+    border: 1px solid #F6F8FE;
+    outline-color: #0235EA;
+}
+.view-input{
+    position: absolute;
+    left: 93%;
+    margin-top: 7px;
+    border: none;
+    padding: 5px 7px;
+    background-color: transparent;
+
+}
+.profile{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 20vh;
+    gap: 15px;
+}
+.one{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    height: 25vh;
+    border: 1px solid #F6F8FE;
+    border-radius: 10px;
+}
+.one-div{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+
+}
+.content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.three{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    height: 15vh;
+    border: 1px solid #F6F8FE;
+    border-radius: 10px;
+    gap: 20px;
+}
+.btn{
+    align-self: flex-end;
+}
+.update{
+    font-family: "Poppins", sans-serif;
+    background-color: #0235EA;
+    padding: 15px;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+}
+.name{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.username{
+    border: none;
+    outline: none;
+}
+.userpic{
+    width: 100px;
+    height: 100px;
+    background-color: #F6F8FE;
+    border-radius: 50px;
+    text-align: center;
+
+}
+#check{
+    cursor: pointer;
+}
+.show{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    font-family: "Poppins", sans-serif;
+}
+
+@media screen and (max-width: 950px) {
+
+    main{
+        width: 100%;
+    
+    }
+    .toggle-main{
+        width: 100%;
+    } 
+    .dashboard-main-top{
+        width: 100% !important;
+        
+    }
+    .container{
+        flex-direction: column;
+        padding-top: 20px;
+    }
+    .field img{
+        left: 80%;
+    }
+
+}
