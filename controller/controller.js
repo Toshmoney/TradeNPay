@@ -1,4 +1,4 @@
-const User = require("../model/Purchase")
+const User = require("../model/User.db")
 const homePage = async (req, res)=>{
     res.status(200).render("pages/home")
 }

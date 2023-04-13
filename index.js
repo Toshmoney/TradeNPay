@@ -1,7 +1,7 @@
 require("dotenv").config();
 require("./model/User.db")
 const connectDB = require("./db/connect")
-require("express-async-error")
+// require("express-async-error")
 const notFoundMiddleWare = require("./handleError/notfound")
 const handleError = require("./handleError/error")
 const express = require("express");
@@ -26,7 +26,7 @@ app.use(notFoundMiddleWare)
 
 const start = async ()=>{
     try {
-        await connectDB(process.env.connectionString);
+        // await connectDB(process.env.connectionString);
         console.log("Success!!!");
         app.listen(port, () => {
             console.log(`Server is running on port ${port}...`);
