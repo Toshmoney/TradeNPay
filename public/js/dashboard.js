@@ -10,11 +10,8 @@ tog.addEventListener('click', () => {
     });
 })
 
-
-const togTwo = document.querySelector('.toggle-two');
-togTwo.addEventListener('click', () => {
-    document.querySelector('nav').classList.toggle('nav-sub')
-
-    document.querySelector('.toggle-two').classList.toggle('toggle-sub')
-
+const mobileToggle = document.querySelector('.mobile-toggle') 
+mobileToggle.addEventListener('click', () => {
+    mobileToggle.classList.toggle('open')
+    document.querySelector('aside').classList.toggle('open');
 })
