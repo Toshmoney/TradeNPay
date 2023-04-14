@@ -1,4 +1,7 @@
 const User = require("../model/User.db")
+const {
+    fetchPrices
+} = require('../utils')
 const homePage = async (req, res)=>{
     res.status(200).render("pages/home")
 }
@@ -23,8 +26,17 @@ const dashboard = async (req, res)=>{
 const airtime = (req, res)=>{
     res.status(200).render("dashboard/airtime")
 };
-const dataplan = (req, res)=>{
-    res.status(200).render("dashboard/dataplan")
+const dataplan = async (req, res) => {
+    let prices = {}
+    try {
+        const priceDetails = await fetchPrices()
+        prices.details = priceDetails
+    } catch (error) {
+        console.log(error);
+    }
+    finally {
+        res.status(200).render("dashboard/dataplan", prices)
+    }
 };
 const billpayment = (req, res)=>{
     res.status(200).render("dashboard/billpayment")
