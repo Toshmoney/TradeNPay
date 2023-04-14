@@ -12,7 +12,6 @@
     <section class="dashboard-container">
         <%- include('../partials/nav') %>
 
-       <!-- mobile dashboard end -->
         <main>
             <%- include('../partials/mobileHeader') %>
            <div class="dashboard-main-top">
@@ -33,22 +32,21 @@
 
                 <div class="choose">
                     <h2>SELECT NETWORK PROVIDER</h2>
-                    <select name="" id="select" value="Select Option">
+                    <select class="network" name="network" id="select" value="Select Option">
                         <option value="1">Select Option</option>
-                        <option value="1">MTN NG</option>
-                        <option value="1">GLO</option>
-                        <option value="1">9MOBILE</option>
-                        <option value="1">AIRTEL NG</option>
+                        <option value="BCA SME">MTN NG</option>
+                        <option value="BCC GIFTING">GLO</option>
+                        <option value="BCB GIFTING">9MOBILE</option>
+                        <option value="BCD GIFTING">AIRTEL NG</option>
                     </select>
                 </div>
                 <div class="choose">
                     <h2>CHOOSE PLAN</h2>
-                    <select name="" id="select" value="Select Option">
+                    <select class="prices" name="prices" id="select" value="Select Option">
                         <option value="1">Select Option</option>
-                        <option value="1">1000 for 1.5gb</option>
-                        <option value="1">500 for 1gb</option>
-                        <option value="1">300 for 500mb</option>
-                        <option value="1">100 for 250mb</option>
+                        <% details.forEach(function(detail, i, arr){ -%>
+                            <option value="1"><%= detail.cost %> for <%= detail.value %>MB</option>
+                        <% }); -%>
                     </select>
                 </div>
            </div>
@@ -89,5 +87,34 @@
     
 
     <script src="js/dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const networkSelect = document.querySelector('select.network')
+        const pricesSelect = document.querySelector('select.prices')
+
+        const fetchPrices = (service_id, requestType) => {
+            const data = {
+                service_id, requestType
+            }
+            axios.post("/api/v1/data_plan/prices", data)
+            .then((response) => {
+                const prices = response.data
+                pricesSelect.innerHTML = ''
+                for (let index = 0; index < prices.length; index++) {
+                    const price = prices[index];
+                    pricesSelect.innerHTML += `<option value='${price.cost}'>${price.cost} for ${price.value}mb</option>`
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        }
+
+        networkSelect.addEventListener('change', (event) => {
+            const item = event.target.value
+            const [service_id, requestType] = item.split(" ")
+            fetchPrices(service_id, requestType)
+        })
+    </script>
 </body>
 </html>
