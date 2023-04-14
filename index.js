@@ -12,6 +12,8 @@ const router = require("./routes/handler");
 const errorHandler = require("./handleError/error");
 const port = 4000;
 
+const dataPlanRoutes = require('./routes/dataPlanRoute')
+
 // ************** Middleware ****************
 app.set("view engine", "ejs");
 app.use(express.urlencoded({extended:false}));
@@ -20,6 +22,7 @@ app.use(express.json())
 
 // ********** Routes **************
 app.use("/", router);
+app.use("/api/v1/data_plan", dataPlanRoutes)
 
 app.use(errorHandler)
 app.use(notFoundMiddleWare)
