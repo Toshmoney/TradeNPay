@@ -15,3 +15,12 @@ mobileToggle.addEventListener('click', () => {
     mobileToggle.classList.toggle('open')
     document.querySelector('aside').classList.toggle('open');
 })
+
+const currentPage = window.location.href
+const sideLinks = document.querySelectorAll('.side-link')
+sideLinks.forEach(sideLink => {
+    const sideLinkHref = sideLink.getAttribute('href')
+    if (currentPage.includes(sideLinkHref)) {
+        sideLink.classList.add('active')
+    }
+})
