@@ -6,72 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AlphaBills | Buy Airtime </title>
     <link rel="stylesheet" href="css/dashboard.css">
-    <link rel="stylesheet" href="css/AirtimeHero.css">
+    <link rel="stylesheet" href="css/DataPlans.css">
 </head>
 <body>
     <section class="dashboard-container">
         <%- include('../partials/nav') %>
-       <!-- mobile dashboard end -->
-        <main>
-            <%- include('../partials/mobileHeader') %>
-           <div class="dashboard-main-top">
-                <h1>BUY AIRTIME</h1>
-                <div class="input-bar">
-                    <div>
-                        <img src="images/tabler-icon-bell.png" alt="">
-                    </div>
-                    <div class="profile-picture">
-                        <img src="images/Frame 12.png" alt="profile-picture">
-                    </div>
-                    
+       <main>
+        <%- include('../partials/mobileHeader') %>
+        <div class="dashboard-main-top">
+            <h1>BUY Airtime</h1>
+            <div class="input-bar">
+                <div>
+                    <img src="images/tabler-icon-bell.png" alt="">
                 </div>
-           </div>
-
-           <div class="airtime">
-                <div class="choose">
-                    <h2>SELECT NETWORK PROVIDER</h2>
-                    <select name="" id="select" value="Select Option">
-                        <option value="1">Select Option</option>
-                        <option value="1">MTN NG</option>
-                        <option value="1">GLO</option>
-                        <option value="1">9MOBILE</option>
-                        <option value="1">AIRTEL NG</option>
-                    </select>
+                <div class="profile-picture">
+                    <img src="images/Frame 12.png" alt="profile-picture">
                 </div>
-           </div>
+            </div>
+        </div>
 
+        <div class="form-group">
+            <div class="choose form-field">
+                <label class="bold" for="network">SELECT NETWORK PROVIDER</label>
+                <select class="network" name="network" id="network" value="Select Option">
+                    <option value="1">Select Option</option>
+                    <option value="BCA SME">MTN NG</option>
+                    <option value="BCC GIFTING">GLO</option>
+                    <option value="BCB GIFTING">9MOBILE</option>
+                    <option value="BCD GIFTING">AIRTEL NG</option>
+                </select>
+            </div>
+        </div>
 
-           <div class="two-divs">
-                <div class="phone">
-                    <h1>PHONE NO.</h1>
-                    <div>
-                        <select name="" id="">
-                            <option value="">+234</option>
-                            <option value="">+1</option>
-                            <option value="">+88</option>
-                            <option value="">+21</option>
-                            <option value="">+54</option>
-                        </select>
-                        <input type="tel" name="" id="" placeholder="90 4563 763 275">
-                    </div>
-                </div>
+        <div class="form-group">
+            <div class="form-field">
+                <label class="bold" for="phoneNumber">PHONE NO.</label>
+                <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="090 4563 763 275">
+            </div>
+            <div class="form-field">
+                <label class="bold" for="amount">AMOUNT</label>
+                <input type="number" name="amount" id="amount" placeholder="0.00">
+            </div>
+        </div>
 
-
-                <div class="amount">
-                     <h1>AMOUNT</h1>
-                     <div class="input">
-                         <input type="number" name="" id="" placeholder="0.00">
-                         <div class="total">
-                            <span>Total Bal.</span><span>N140,560</span>
-                         </div>
-                         <div>
-                            <a href=""><button class="share">share</button></a>
-                            <a href=""><button class="submit">Continue</button></a>
-                         </div>
-                     </div>
-                </div>
-           </div>
-        </main>
+        <div class="page-end">
+            <p class="bold wallet-balance">
+                <span>Total Bal.</span><span>N140,560</span>
+            </p>
+            <div class="ctas">
+                <button class="cta share">share</button></a>
+                <button class="cta submit">Continue</button>
+            </div>
+        </div>
+    </main>
     </section>
     
 
