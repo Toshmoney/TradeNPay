@@ -7,6 +7,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="css/SignUp.css">
 </head>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="js/sign-up.js"></script>
 <body>
     <section>
         <div class="sign-in">
@@ -19,23 +21,23 @@
                 </div>
                 <h1>Create An Account</h1>
                 <div class="main-form">
-                    <form action="/dashboard" method="post" onsubmit="handleSubmit()">
+                    <form action="/sign-up" method="post" onsubmit="return validateInputs()">
                         <p class="error">Please fill the empty space!</p>
                         <div>
-                            <input type="text" name="" id="" placeholder="Full Name">
+                            <input type="text" name="name" id="name" placeholder="Full Name">
                         </div>
                         <div>
-                            <input type="email" name="" id="" placeholder="Your Email">
+                            <input type="email" name="email" id="email" placeholder="Your Email">
                         </div>
                         <div>
-                            <input type="tel" name="" id="" placeholder="Phone Number">
+                            <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="Phone Number">
                         </div>
                         <div>
-                            <input type="password" name="" id="" placeholder="Password">
+                            <input type="password" name="password" id="password" placeholder="Password">
                         </div>
                         <div>
                             <p class="pass-err">You need to confirm your password</p>
-                            <input type="password" name="" id="" placeholder="Confirm Password">
+                            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
                         </div>
                         <div class="forget-pwd">
                             <span>by clicking continue means you agree to our <a href="">privacy & policy</a> and <a href="">terms & conditions</a></span>
@@ -44,11 +46,10 @@
                     </form>
                 </div>
                 <div class="link-to-signup">
-                    <span>Already have an account? <a href="/sign-in">Sign In</a></span>
+                    <span>Already have an account? <a href="/login">Sign In</a></span>
                 </div>
             </div>
         </div>
     </section>
-    <script src="js/sign-up.js"></script>
 </body>
 </html>
