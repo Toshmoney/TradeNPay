@@ -1,14 +1,27 @@
 const express = require("express");
+const passport = require("passport")
 const router = express.Router();
-const {homePage,signIn,signUp,dashboard,signOut,
-airtime,dataplan, billpayment, wallet, fundWallet,
-receiveWallet, setting, profile, verifyNow, test } = require("../controller/controller")
+const { 
+    homePage,dashboard,
+    airtime,dataplan, billpayment, wallet, fundWallet,
+    receiveWallet, setting, profile, verifyNow, test 
+} = require("../controller/controller")
+
+const {
+    newUser,
+    signUpPage,
+    logInPage,
+    login,
+    logout
+} = require('../controller/auth')
 
 router.route("/").get(homePage)
 router.route("/test").get(test)
-router.route("/sign-in").get(signIn)
-router.route("/sign-up").get(signUp)
-router.route("/sign-out").get(signOut)
+router.route("/login").get(logInPage)
+router.route("/login").post(passport.authenticate('local', { failureRedirect: '/login' }), login)
+router.route('/logout').get(logout)
+router.route("/sign-up").get(signUpPage)
+router.route("/sign-up").post(newUser)
 router.route("/dashboard").get(dashboard)
 router.route("/dashboard").post(dashboard)
 router.route("/airtime").get(airtime)

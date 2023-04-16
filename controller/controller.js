@@ -5,24 +5,14 @@ const {
 const homePage = async (req, res)=>{
     res.status(200).render("pages/home")
 }
-const signIn = async (req, res)=>{
-    res.status(200).render("pages/signin")
-}
-
 const test = async (req, res)=>{
     res.status(200).json({msg: "testing new data"})
 }
-const signUp = async (req, res)=>{
-    // const {data} = req.query
-    // await User.create(data)
-    res.status(200).render("pages/signup")
-}
-const signOut = async (req, res)=>{
-    res.status(200).redirect("/sign-in")
-}
-const dashboard = async (req, res)=>{
+
+const dashboard = async (req, res) => {
     res.status(200).render("dashboard/dashboard")
 }
+
 const airtime = (req, res)=>{
     res.status(200).render("dashboard/airtime")
 };
@@ -61,5 +51,8 @@ const setting =(req, res)=>{
 const profile =(req, res)=>{
     res.status(200).render("dashboard/profile")
 };
-module.exports = {homePage, signIn, signUp, signOut, dashboard, airtime, dataplan, billpayment, wallet,
-fundWallet, receiveWallet, setting, verifyNow, profile, test}
+
+module.exports = {
+    homePage, dashboard, airtime, dataplan, billpayment, wallet,
+    fundWallet, receiveWallet, setting, verifyNow, profile, test
+}
