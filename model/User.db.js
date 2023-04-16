@@ -1,32 +1,27 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt")
+const passportLocalMongoose = require('passport-local-mongoose')
 
 const userSchema = new mongoose.Schema({
     name: {
-        required:[true, "Must provide name"],
-        maxlength:[20, "Name can not be more than 20 characters!"],
+        required:[true, "Must provide fullname"],
         type: String,
         trim: true,
     },
-    username:{
+    email:{
         required:[true, "Username is required!!"],
-        maxlength:[10, "Username can not be more than 10 characters."],
         type: String,
+        trim: true,
+    },
+    phoneNumber:{
+        required:[true, "phoneNumber is required!!"],
+        type: String,
+        trim: true,
     },
     password:{
         type: String,
         required:[true, "Password is required."],
         trim: true,
-    },
-    updated:{
-        type: Date,
-        default: Date.now()
-    },
-    age:{
-        type: Number,
-        min: 18, max: 65
-    },
-    avail_bal:{
-        type: Number,
     },
     kyc_ver:{
         type:Boolean,
@@ -36,5 +31,26 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
+},
+{ timestamps: true }
+)
+
+userSchema.pre('save', async function(next) {
+    const user = this;
+    if (!user.isModified('password')) return next();
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(user.password, salt);
+    user.password = hash;
+    next();
+});
+
+userSchema.methods.comparePassword = async function(password) {
+    return await bcrypt.compare(password, this.password);
+};
+
+
+userSchema.plugin(passportLocalMongoose, {
+    usernameField: 'email'
 })
+
 module.exports = mongoose.model("User", userSchema)
