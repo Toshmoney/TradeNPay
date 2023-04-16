@@ -12,5 +12,5 @@ togglePasswordButton.addEventListener('click', function() {
 
 
 function handleSubmit(e){
-  e.preventDefault()
+  return true
 }
