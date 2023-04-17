@@ -30,7 +30,7 @@
                 <div class="choose form-field">
                     <label class="bold" for="network">SELECT NETWORK PROVIDER</label>
                     <select class="network" name="network" id="network" value="Select Option">
-                        <option value="1">Select Option</option>
+                        <option value="">Select Option</option>
                         <option value="BCA SME">MTN NG</option>
                         <option value="BCC GIFTING">GLO</option>
                         <option value="BCB GIFTING">9MOBILE</option>
@@ -40,9 +40,9 @@
                 <div class="choose form-field">
                     <label class="bold" for="prices">CHOOSE PLAN</label>
                     <select class="prices" name="prices" id="prices" value="Select Option">
-                        <option value="1">Select Option</option>
+                        <option value="">Select Option</option>
                         <% details.forEach(function(detail, i, arr){ -%>
-                            <option value="1"><%= detail.cost %> for <%= detail.value %>MB</option>
+                            <option value="<%= detail.code %> <%= detail.cost %>"><%= detail.cost %> for <%= detail.value %>MB</option>
                         <% }); -%>
                     </select>
                 </div>
@@ -76,6 +76,45 @@
     <script>
         const networkSelect = document.querySelector('select.network')
         const pricesSelect = document.querySelector('select.prices')
+        const continueButton = document.querySelector('button.submit')
+        const phoneNumberInput = document.querySelector('input#phoneNumber')
+
+        const validateData = () => {
+            const item = pricesSelect.value
+            const [code, amount] = pricesSelect.value.split(" ")
+            const [service_id, service_type] = networkSelect.value.split(" ")
+            const phoneNumber = phoneNumberInput.value
+
+            // validate data
+            if (!amount || !code || !service_id || !service_type || !phoneNumber ) {
+                console.log('bad request');
+                return
+            }
+            
+            continueButton.textContent = 'please wait'
+
+            // send to server for purchase
+            axios.post("/api/v1/data_plan/recharge", {
+                amount: Number(amount),
+                code,
+                beneficiary: phoneNumber,
+                service_id,
+                service_type,
+            })
+            .then(res => {
+                alert('transaction succesfull')
+                continueButton.textContent ='continue'
+            })
+            .catch(error => {
+                alert('unable to complete transaction')
+                continueButton.textContent ='continue'
+                console.log('error');
+            })
+        }
+
+        continueButton.addEventListener('click', () => {
+            validateData()
+        })
 
         const fetchPrices = (service_id, requestType) => {
             const data = {
@@ -84,10 +123,10 @@
             axios.post("/api/v1/data_plan/prices", data)
             .then((response) => {
                 const prices = response.data
-                pricesSelect.innerHTML = ''
+                pricesSelect.innerHTML = `<option value="">Select Option</option>`
                 for (let index = 0; index < prices.length; index++) {
                     const price = prices[index];
-                    pricesSelect.innerHTML += `<option value='${price.cost}'>${price.cost} for ${price.value}mb</option>`
+                    pricesSelect.innerHTML += `<option value='${price.code} ${price.cost}'>${price.cost} for ${price.value}mb</option>`
                 }
             })
             .catch(error => {
@@ -100,6 +139,11 @@
             const [service_id, requestType] = item.split(" ")
             fetchPrices(service_id, requestType)
         })
+
+        pricesSelect.addEventListener('change', (event) => {
+            const [code, amount] = event.target.value.split(" ");
+        })
+
     </script>
 </body>
 </html>
