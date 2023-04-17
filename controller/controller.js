@@ -1,4 +1,18 @@
 const User = require("../model/User.db")
+const Wallet = require("../model/Wallet")
+const Transaction = require("../model/Transaction")
+
+const fetchUserTransactions = async (userId, limit=20) => {
+    let transactions = await Transaction.find({user: userId})
+    .sort('-createdAt')
+    .limit(limit)
+    transactions = transactions.map(transaction => transaction.toObject())
+    if (transactions) {
+        return transactions
+    }
+    return []
+}
+
 const {
     fetchPrices
 } = require('../utils')
@@ -10,7 +24,22 @@ const test = async (req, res)=>{
 }
 
 const dashboard = async (req, res) => {
-    res.status(200).render("dashboard/dashboard")
+    const userWallet = await Wallet.find({
+        user: req.user._id
+    })
+    const userTransactions = await fetchUserTransactions(req.user._id)
+    const user = {
+        name: req.user.name,
+        email: req.user.email,
+    }
+    if (userWallet) {
+        user.balance = userWallet.balance
+    }
+    const data = {
+        user: user,
+        transactions: userTransactions
+    }
+    res.status(200).render("dashboard/dashboard", data)
 }
 
 const airtime = (req, res)=>{
