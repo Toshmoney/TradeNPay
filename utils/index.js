@@ -1,3 +1,4 @@
+require("dotenv").config();
 const axios = require('axios')
 
 const service_ids = {
@@ -18,7 +19,7 @@ const getStatus = async (service_id='BCA', requestType='SME') => {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer pk_test_7Uijgj3YbGLFSjlf73aQCCRJbhPs+IP7+YZZci3HU9A=`
+                    'Authorization': `Bearer ${process.env.API_PUBLIC_KEY}`
                 }
             }
         )
@@ -46,6 +47,12 @@ const fetchPrices = async (service_id='BCA', requestType='SME') => {
             }
         )
         let details = await response.data.details
+        details = details.map(detail => {
+            return {
+                ...detail,
+                cost: Math.ceil(detail.cost)
+            }
+        })
         details = details.filter(detail => detail.status === '1')
         return details
     } 
