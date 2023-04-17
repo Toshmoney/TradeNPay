@@ -27,9 +27,10 @@ aside{
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     padding: 0 10px;
     padding-block: 2rem 2rem;
+    place-content: center;
 }
 .close-aside{
-    width: 50px;
+    width: 80px;
     padding-left: 15px;
     overflow: hidden;
 }
@@ -89,6 +90,10 @@ a:active {
 .close-aside .side-link:hover > span,
 .close-aside .side-link.active > span {
     padding: .25rem;
+    background-color: #ffffff;
+}
+.close-aside .side-link > span > span {
+    display: none;
 }
 .tags a{
     color: black;
@@ -123,7 +128,7 @@ main{
     padding-bottom: 2rem;
 }
 .toggle-main{
-    width: calc(100% - 50px);
+    width: calc(100% - 80px);
 }
 .dashboard-main-top{
     width: 100%;
