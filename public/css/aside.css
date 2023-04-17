@@ -4,12 +4,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: all .3s ease;
 }
 .dashboard-container{
     width: 100%;
     min-height: 100vh;
-    /* display: flex;
-    flex-direction: row; */
 }
 aside{
     width: 250px;
@@ -26,13 +25,12 @@ aside{
     overflow-y: auto;
     gap: 20px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    transition: all .3s ease;
     padding: 0 10px;
     padding-block: 2rem 2rem;
-    
+    place-content: center;
 }
 .close-aside{
-    width: 70px;
+    width: 80px;
     padding-left: 15px;
     overflow: hidden;
 }
@@ -47,38 +45,61 @@ aside{
     cursor: pointer;
     width: 25px;
 }
-.active{
-    border-left: 2px solid #0235EA;
-    background-color: #F6F8FE;
-    padding: 10px;
-    border-radius: 10px;
-}
-.active a{
-    color: #0235EA !important;
-}
 .middle-side{
     width: 100%;
+}
+a:active {
+    color: red;
 }
 .middle-side > ul {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    list-style: none;
 }
-.tags{
+
+.side-link {
+    display: inline-block;
+}
+
+.side-link > span {
     width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 40px;
+    gap: 20px;
     text-transform: capitalize;
+}
 
+.side-link:hover,
+.side-link.active{
+    border-left: 2px solid #0235EA;
+    color: #0235EA;
+    padding-left: 1rem;
+}
+.side-link:hover > span,
+.side-link.active > span {
+    background: #F6F8FE;
+    padding: 1rem;
+    border-radius: 14px;
+}
+.close-aside .side-link:hover,
+.close-aside .side-link {
+    padding-left: .2rem;
+}
+.close-aside .side-link:hover > span,
+.close-aside .side-link.active > span {
+    padding: .25rem;
+    background-color: #ffffff;
+}
+.close-aside .side-link > span > span {
+    display: none;
 }
 .tags a{
     color: black;
     font-family: "Raleway", sans-serif;
     font-weight: 600;
     text-decoration: none;
-    cursor: pointer;
 }
 .item{
     display: block;
@@ -107,7 +128,7 @@ main{
     padding-bottom: 2rem;
 }
 .toggle-main{
-    width: calc(100% - 70px);
+    width: calc(100% - 80px);
 }
 .dashboard-main-top{
     width: 100%;

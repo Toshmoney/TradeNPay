@@ -10,9 +10,19 @@
 </head>
 <body>
     <section>
+        <% if (messages.error) { %>
+            <div class="alert alert-danger" role="alert">
+              <%= messages.error %>
+            </div>
+        <% } %>
+        <% if (messages.info) { %>
+            <div class="alert alert-info" role="alert">
+              <%= messages.info %>
+            </div>
+        <% } %>
         <div class="sign-in">
             <div class="image">
-                <a href=""><img src="images/signin-img.png" alt=""></a>
+                <img src="images/signin-img.png" alt="">
             </div>
             <div class="form-area">
                 <div>
@@ -20,9 +30,9 @@
                 </div>
                 <h1>Sign in</h1>
                 <div class="main-form">
-                    <form action="/dashboard" method="post">
+                    <form action="/login" method="post" onsubmit="return handleSubmit()">
                         <div>
-                            <input type="email" name="username" id="" placeholder="Your Email" >
+                            <input type="email" name="email" id="email" placeholder="Your Email" >
                         </div>
                         <div>
                             <input type="password" name="password" id="password" placeholder="Password">
@@ -33,7 +43,7 @@
                         <div class="forget-pwd">
                             <span><a href="">Forget Password?</a></span>
                         </div>
-                        <button type="submit" class="submit" onsubmit="handleSubmit()">Sign In</button>
+                        <button type="submit" class="submit">Sign In</button>
                     </form>                    
                 </div>
                 <div class="link-to-signup">

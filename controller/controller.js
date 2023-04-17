@@ -1,30 +1,61 @@
 const User = require("../model/User.db")
+const Wallet = require("../model/Wallet")
+const Transaction = require("../model/Transaction")
+
+const fetchUserTransactions = async (userId, limit=20) => {
+    let transactions = await Transaction.find({user: userId})
+    .sort('-createdAt')
+    .limit(limit)
+    transactions = transactions.map(transaction => transaction.toObject())
+    if (transactions) {
+        return transactions
+    }
+    return []
+}
+
+const {
+    fetchPrices
+} = require('../utils')
 const homePage = async (req, res)=>{
     res.status(200).render("pages/home")
 }
-const signIn = async (req, res)=>{
-    res.status(200).render("pages/signin")
-}
-
 const test = async (req, res)=>{
     res.status(200).json({msg: "testing new data"})
 }
-const signUp = async (req, res)=>{
-    // const {data} = req.query
-    // await User.create(data)
-    res.status(200).render("pages/signup")
+
+const dashboard = async (req, res) => {
+    const userWallet = await Wallet.find({
+        user: req.user._id
+    })
+    const userTransactions = await fetchUserTransactions(req.user._id)
+    const user = {
+        name: req.user.name,
+        email: req.user.email,
+    }
+    if (userWallet) {
+        user.balance = userWallet.balance
+    }
+    const data = {
+        user: user,
+        transactions: userTransactions
+    }
+    res.status(200).render("dashboard/dashboard", data)
 }
-const signOut = async (req, res)=>{
-    res.status(200).redirect("/sign-in")
-}
-const dashboard = async (req, res)=>{
-    res.status(200).render("dashboard/dashboard")
-}
+
 const airtime = (req, res)=>{
     res.status(200).render("dashboard/airtime")
 };
-const dataplan = (req, res)=>{
-    res.status(200).render("dashboard/dataplan")
+const dataplan = async (req, res) => {
+    let prices = {}
+    try {
+        const priceDetails = await fetchPrices()
+        prices.details = priceDetails
+    } catch (error) {
+        console.log(error);
+    }
+    finally {
+        res.status(200).render("dashboard/dataplan", prices)
+    }
 };
 const billpayment = (req, res)=>{
     res.status(200).render("dashboard/billpayment")
@@ -49,5 +80,8 @@ const setting =(req, res)=>{
 const profile =(req, res)=>{
     res.status(200).render("dashboard/profile")
 };
-module.exports = {homePage, signIn, signUp, signOut, dashboard, airtime, dataplan, billpayment, wallet,
-fundWallet, receiveWallet, setting, verifyNow, profile, test}
+
+module.exports = {
+    homePage, dashboard, airtime, dataplan, billpayment, wallet,
+    fundWallet, receiveWallet, setting, verifyNow, profile, test
+}

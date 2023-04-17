@@ -1,31 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-.blue-background{
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+    font-family:  'Raleway', sans-serif;
+}
+
+.blue-background {
     background: radial-gradient(24.1% 77.04% at 53.05% 34.1%, #0235EA 0%, rgba(33, 73, 217, 0.714882) 50.26%, rgba(29, 72, 226, 0.6) 100%);
     border-radius: 14px;
     width: 100%;
-    height: 25vh;
     padding: 20px;
 }
 
-.welcome-msg{
+.welcome-msg {
     color: white;
     font-family: 'Raleway', sans-serif;
     padding: 20px;
 }
 
-.welcome-msg p{
-    font-family: 'Poppins', sans-serif;
+.welcome-msg p {
     margin-top: 10px;
 }
 
-.verify-btn{
+.verify-btn {
     display: flex;
     justify-content: space-between;
 }
 
-.verify-btn button{
+.verify-btn button {
     padding: 10px 30px;
     background-color: transparent;
     border: 2px solid #FFFFFF;
@@ -34,18 +40,18 @@
     cursor: pointer;
 }
 
-.main-airtime{
+.main-airtime {
     background: #FFFFFF;
     border: 1px solid #E0E6FC;
     border-radius: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 30px 20px;
     gap: 20px;
 }
 
-.main-airtime a{
+.main-airtime a {
     text-decoration: none;
     color: black;
     display: flex;
@@ -53,72 +59,65 @@
     gap: 20px;
 }
 
-.main-airtime h1{
-    font-family:  'Raleway', sans-serif;
+.main-airtime p {
+    font-size: 12px;
+    text-transform: capitalize;
 }
-
-.main-airtime p{
-    font-family: 'Poppins', sans-serif;
-    font-size: 13px;
-}
-
-.airtime-area{
+.icon-box {
+    background-color: #F6F8FE;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
     display: grid;
-    grid-template-columns: repeat(4,1fr);
-    padding: 10px;
+    place-items: center;
+}
+.airtime-area {
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
     gap: 20px;
-    width: 100%;
+    margin-block: 2.5rem;
 }
 
-.history h1{
-    font-family: 'Raleway', sans-serif;
-    font-size: 15px;
-    padding-top: 20px;
+.history-table h2 {
+    font-size: 1rem;
+    margin-bottom: 2rem;
 }
 
-.history-table{
-    width: 100%;
-    padding-top: 20px;
-}
-
-table{
+table {
     width: 100%;
     border-collapse: collapse;
-    font-family: 'Poppins', sans-serif;
+    border-spacing: 0;
+    overflow-x: auto;
 }
-
-td{
+th, td {
+    text-align: start;
     padding: 10px;
 }
-
-
-th{
-    text-align: start;
-    padding: 5px;
-}
-
-.bundle{
+.bundle {
     display: flex;
     align-items: center;
-    text-align: center;
     gap: 20px;
 }
-.table-head{
+.table-head {
     background: #F6F8FE;
-    border-radius: 14px;
-    height: 5vh;
 }
-
-.table-data{
+.table-data {
     background: #FFFFFF;
     border: 1px solid #F6F8FE;
-    border-radius: 20px;
-    height: 5vh;
 }
 
-@media screen and (max-width:950px) {
-    .airtime-area{
-        grid-template-columns: 1fr;
+@media screen and (min-width:576px) {
+    .airtime-area {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
-
+@media screen and (min-width:992px) {
+    .airtime-area {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media screen and (min-width:1200px) {
+    .airtime-area {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

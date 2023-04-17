@@ -10,11 +10,17 @@ tog.addEventListener('click', () => {
     });
 })
 
+const mobileToggle = document.querySelector('.mobile-toggle') 
+mobileToggle.addEventListener('click', () => {
+    mobileToggle.classList.toggle('open')
+    document.querySelector('aside').classList.toggle('open');
+})
 
-const togTwo = document.querySelector('.toggle-two');
-togTwo.addEventListener('click', () => {
-    document.querySelector('nav').classList.toggle('nav-sub')
-
-    document.querySelector('.toggle-two').classList.toggle('toggle-sub')
-
+const currentPage = window.location.href
+const sideLinks = document.querySelectorAll('.side-link')
+sideLinks.forEach(sideLink => {
+    const sideLinkHref = sideLink.getAttribute('href')
+    if (currentPage.includes(sideLinkHref)) {
+        sideLink.classList.add('active')
+    }
 })
