@@ -10,6 +10,16 @@
 </head>
 <body>
     <section>
+        <% if (messages.error) { %>
+            <div class="alert alert-danger" role="alert">
+              <%= messages.error %>
+            </div>
+        <% } %>
+        <% if (messages.info) { %>
+            <div class="alert alert-info" role="alert">
+              <%= messages.info %>
+            </div>
+        <% } %>
         <div class="sign-in">
             <div class="image">
                 <img src="images/signin-img.png" alt="">
