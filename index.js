@@ -12,6 +12,8 @@ const User = require('./model/User.db')
 const session = require("express-session")
 // const bodyParser = require("body-parser")
 const passport = require("passport")
+const flash = require("connect-flash")
+const cookieParser = require("cookie-parser")
 
 const app = express();
 
@@ -30,6 +32,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(express.static("public"));
 app.use(express.json())
+app.use(flash())
+app.use(cookieParser())
 
 passport.use(User.createStrategy())
 passport.serializeUser(User.serializeUser())
