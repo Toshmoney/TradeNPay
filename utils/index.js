@@ -1,6 +1,10 @@
 require("dotenv").config();
 const axios = require('axios')
 
+const { randomChars, generateTransId } = require('./randomChars')
+const businessBalance = require('./businessBalance')
+const { transactionQuery } = require('./transactionQuery')
+
 const service_ids = {
     'mtn': { service_id:'BCA', requestType:'SME' },
     '9mobile': { service_id:'BCB', requestType:'GIFTING' },
@@ -61,9 +65,11 @@ const fetchPrices = async (service_id='BCA', requestType='SME') => {
     }
 }
 
-fetchPrices()
-
 module.exports = {
     getStatus,
-    fetchPrices
+    fetchPrices,
+    randomChars,
+    generateTransId,
+    businessBalance,
+    transactionQuery
 }
