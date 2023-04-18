@@ -8,7 +8,6 @@ const logInPage = async (req, res) => {
         error: errorMg,
         info: infoMg
     }
-    console.log(infoMg);
     res.status(200).render("pages/signin", { messages })
 }
 
