@@ -106,7 +106,14 @@
                 continueButton.textContent ='continue'
             })
             .catch(error => {
+                if (error.response) {
+                    const { status } = error.response
+                    if (status === 401 || status === 405) {
+                        window.location.href = '/data'
+                    }
+                }
                 alert('unable to complete transaction')
+                window.location.href = '/data'
                 continueButton.textContent ='continue'
                 console.log('error');
             })
