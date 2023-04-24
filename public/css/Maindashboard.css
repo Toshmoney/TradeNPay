@@ -81,29 +81,17 @@ h1 {
 .history-table h2 {
     font-size: 1rem;
     margin-bottom: 2rem;
+    font-weight: 700;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    overflow-x: auto;
-}
-th, td {
-    text-align: start;
-    padding: 10px;
-}
-.bundle {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-.table-head {
-    background: #F6F8FE;
-}
-.table-data {
-    background: #FFFFFF;
+tr {
+    text-transform: capitalize;
+    background-color: #F6F8FE;
     border: 1px solid #F6F8FE;
+}
+
+tbody > tr {
+    background-color: #FFFFFF;
 }
 
 @media screen and (min-width:576px) {
