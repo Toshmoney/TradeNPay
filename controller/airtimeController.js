@@ -1,30 +1,13 @@
 require('dotenv').config()
-const { fetchPrices, generateTransId } = require("../utils")
+const { generateTransId } = require("../utils")
 const Wallet = require('../model/Wallet')
 const Transaction = require("../model/Transaction")
 const { default: axios } = require("axios")
 
-const fetchDataPrices = async ( req, res ) => {
-    const {
-        service_id,
-        requestType
-    } = req.body
-    try {
-        const details = await fetchPrices(service_id, requestType)
-        return res.status(200).json(details)
-    } 
-    catch (error) {
-        return res.status(500).json({
-            message: 'unable to handle error'
-        })
-    }
-}
-
-const buyData = async (req, res) => {
+const buyAirtime = async (req, res) => {
     const {
         amount,
-        beneficiary,
-        code,
+        phoneNumber,
         service_id,
         service_type
     } = req.body
@@ -58,14 +41,13 @@ const buyData = async (req, res) => {
         amount: Number(amount),
         status: 'pending',
         type: 'debit',
-        description: `data purchase for ${beneficiary}`,
+        description: `airtime purchase for ${phoneNumber}`,
         reference_number: transaction_id
     })
     // form request data 
     const req_data = {
-        amount,
-        beneficiary,
-        code,
+        amount: Number(amount),
+        phoneNumber,
         service_id,
         service_type,
         trans_id: transaction_id
@@ -95,7 +77,7 @@ const buyData = async (req, res) => {
         await userWallet.save()
         await transaction.save()
         res.status(202).json({
-            message: 'transaction is being processed',
+            message: 'your transaction is being processed',
             balance: userWallet.balance
         })
     } catch (error) {
@@ -106,6 +88,5 @@ const buyData = async (req, res) => {
 }
 
 module.exports = {
-    fetchDataPrices,
-    buyData
+    buyAirtime
 }

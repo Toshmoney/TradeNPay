@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AlphaBills | Buy Airtime </title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/aside.css">
     <link rel="stylesheet" href="css/DataPlans.css">
 </head>
@@ -29,11 +30,11 @@
             <div class="choose form-field">
                 <label class="bold" for="network">SELECT NETWORK PROVIDER</label>
                 <select class="network" name="network" id="network" value="Select Option">
-                    <option value="1">Select Option</option>
-                    <option value="BCA SME">MTN NG</option>
-                    <option value="BCC GIFTING">GLO</option>
-                    <option value="BCB GIFTING">9MOBILE</option>
-                    <option value="BCD GIFTING">AIRTEL NG</option>
+                    <option value="">Select Option</option>
+                    <option value="BAD STANDARD">MTN NG</option>
+                    <option value="BAB STANDARD">GLO</option>
+                    <option value="BAC STANDARD">9MOBILE</option>
+                    <option value="BAA STANDARD">AIRTEL NG</option>
                 </select>
             </div>
         </div>
@@ -41,7 +42,7 @@
         <div class="form-group">
             <div class="form-field">
                 <label class="bold" for="phoneNumber">PHONE NO.</label>
-                <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="090 4563 763 275">
+                <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="0901 2345 678">
             </div>
             <div class="form-field">
                 <label class="bold" for="amount">AMOUNT</label>
@@ -50,8 +51,8 @@
         </div>
 
         <div class="page-end">
-            <p class="bold wallet-balance">
-                <span>Total Bal.</span><span>N140,560</span>
+            <p class="flex gap-6 bold wallet-balance">
+                Total Bal.<span><%= balance %></span>
             </p>
             <div class="ctas">
                 <button class="cta share">share</button></a>
@@ -61,7 +62,98 @@
     </main>
     </section>
     
-
     <script src="js/dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        let walletBalance = 0;
+        const balanceElement = document.querySelector('.wallet-balance > span')
+        walletBalance = Number(balanceElement.textContent)
+        balanceElement.textContent = `N${walletBalance}`
+
+        const networkSelect = document.querySelector('select.network')
+        const phoneNumberInput = document.querySelector('input#phoneNumber')
+        const amountInput = document.querySelector('input#amount')
+        const submitButton = document.querySelector('button.submit')
+
+        const resetInputs = () => {
+            networkSelect.value = ""
+            phoneNumberInput.value = ""
+            amountInput.value = ""
+        }
+
+        const validatedData = () => {
+            const [service_id, service_type] = networkSelect.value.split(" ")
+            const amount = Number(amountInput.value)
+            const phoneNumber = phoneNumberInput.value.replaceAll(" ", "")
+            if (!service_id || !service_type) {
+                alert('pls select network')
+                return false
+            }
+            if (!phoneNumber) {
+                alert('pls enter phone number')
+                return false
+            }
+            if (!amount) {
+                alert('pls enter amount')
+                return false
+            }
+            if (amount <= 0 || amount % 100 !== 0) {
+                alert('amount must be greater than 0 and must be multiple of 100. e.g 100, 200,...')
+                return false
+            }
+            if (walletBalance < amount) {
+                alert('not enough balance in your wallet')
+                return false
+            }
+            return {
+                service_id, service_type,
+                amount, phoneNumber
+            }
+        }
+
+        const recharge = () => {
+            if (!validatedData()) {
+                return
+            }
+            const {
+                service_id, service_type,
+                amount, phoneNumber
+            } = validatedData()
+            submitButton.textContent = 'Please wait...'
+            axios.post('/api/v1/airtime/recharge', {
+                service_id,
+                service_type,
+                amount,
+                phoneNumber
+            })
+            .then(response => {
+                submitButton.textContent = 'Continue'
+                const { data } = response
+                walletBalance = data.balance || walletBalance - amount
+                balanceElement.textContent = `N${walletBalance}`
+                resetInputs()
+                alert('Your transaction is being processed')
+            })
+            .catch(error => {
+                if (error.response) {
+                    const { status, data } = error.response
+                    if (status === 401 || status === 403) {
+                        window.location.href = '/airtime'
+                    }
+                    const message = data.message || 'unable to complete transaction'
+                    alert(message)
+                    submitButton.textContent ='Continue'
+                }
+                else {
+                    alert('pls check your network and try again')
+                }
+                resetInputs()
+            })
+        }
+
+        submitButton.addEventListener('click', () => {
+            recharge()
+        })
+    </script>
 </body>
 </html>

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AlphaBills | Buy Data</title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/aside.css">
     <link rel="stylesheet" href="css/DataPlans.css">
 </head>
@@ -60,8 +61,8 @@
             </div>
 
             <div class="page-end">
-                <p class="bold wallet-balance">
-                    <span>Total Bal.</span><span>N140,560</span>
+                <p class="flex gap-6 bold wallet-balance">
+                    Total Bal.<span><%= balance %></span>
                 </p>
                 <div class="ctas">
                     <button class="cta share">share</button></a>
@@ -74,53 +75,103 @@
     <script src="js/dashboard.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+        let walletBalance = 0;
+        const balanceElement = document.querySelector('.wallet-balance > span')
+        walletBalance = Number(balanceElement.textContent)
+        balanceElement.textContent = `N${walletBalance}`
+
         const networkSelect = document.querySelector('select.network')
         const pricesSelect = document.querySelector('select.prices')
         const continueButton = document.querySelector('button.submit')
         const phoneNumberInput = document.querySelector('input#phoneNumber')
 
-        const validateData = () => {
+        const resetInputs = () => {
+            networkSelect.value = ""
+            pricesSelect.value = ""
+            phoneNumber.value = ""
+        }
+
+        const validatedData = () => {
             const item = pricesSelect.value
-            const [code, amount] = pricesSelect.value.split(" ")
+            let [code, amount] = pricesSelect.value.split(" ")
+            amount = Number(amount)
             const [service_id, service_type] = networkSelect.value.split(" ")
             const phoneNumber = phoneNumberInput.value
 
             // validate data
-            if (!amount || !code || !service_id || !service_type || !phoneNumber ) {
-                console.log('bad request');
+            if (!service_id || !service_type) {
+                alert('Pls select network')
+                return false
+            }
+
+            if (!amount || !code ) {
+                alert('Pls choose plan')
+                return false
+            }
+            if (walletBalance < amount) {
+                alert('not enough balance in your wallet')
+                return false
+            }
+
+            if (!phoneNumber) {
+                alert('Pls enter phone number')
+                return false
+            }
+
+            return {
+                amount, code,
+                beneficiary: phoneNumber,
+                service_id, service_type
+            }
+
+        }
+
+        const recharge = () => {
+            if (!validatedData()) {
                 return
             }
-            
+            const {
+                amount, code,
+                beneficiary,
+                service_id, service_type
+            } = validatedData()
             continueButton.textContent = 'please wait'
-
-            // send to server for purchase
-            axios.post("/api/v1/data_plan/recharge", {
-                amount: Number(amount),
+             // send to server for purchase
+             axios.post("/api/v1/data_plan/recharge", {
+                amount,
                 code,
-                beneficiary: phoneNumber,
+                beneficiary,
                 service_id,
                 service_type,
             })
             .then(res => {
+                const { data } = res
+                walletBalance = data.balance || walletBalance - amount
+                balanceElement.textContent = `N${walletBalance}`
                 alert('transaction succesfull')
+                resetInputs()
                 continueButton.textContent ='continue'
             })
             .catch(error => {
                 if (error.response) {
-                    const { status } = error.response
+                    const { data, status } = error.response
                     if (status === 401 || status === 405) {
                         window.location.href = '/data'
                     }
+                    const message = data.message || 'unable to complete transaction'
+                    alert(message)
                 }
-                alert('unable to complete transaction')
-                window.location.href = '/data'
+                else {
+                    alert('unable to complete transaction')
+                }
                 continueButton.textContent ='continue'
-                console.log('error');
+                resetInputs()
+                console.log('error', error);
             })
         }
 
         continueButton.addEventListener('click', () => {
-            validateData()
+            recharge()
         })
 
         const fetchPrices = (service_id, requestType) => {
