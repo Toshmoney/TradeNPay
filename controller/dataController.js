@@ -95,7 +95,8 @@ const buyData = async (req, res) => {
         await userWallet.save()
         await transaction.save()
         res.status(202).json({
-            message: 'transaction is being processed'
+            message: 'transaction is being processed',
+            balance: userWallet.balance
         })
     } catch (error) {
         return res.status(422).json({

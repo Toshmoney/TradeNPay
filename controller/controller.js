@@ -1,4 +1,3 @@
-const User = require("../model/User.db")
 const Wallet = require("../model/Wallet")
 const Transaction = require("../model/Transaction")
 
@@ -75,15 +74,15 @@ const airtime = async (req, res) => {
 };
 
 const dataplan = async (req, res) => {
-    let prices = {}
+    const data = await dashboardData(req.user)
     try {
         const priceDetails = await fetchPrices()
-        prices.details = priceDetails
+        data.details = priceDetails
     } catch (error) {
         console.log(error);
     }
     finally {
-        res.status(200).render("dashboard/dataplan", prices)
+        res.status(200).render("dashboard/dataplan", data)
     }
 };
 const billpayment = (req, res)=>{
