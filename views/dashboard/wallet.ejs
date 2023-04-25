@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AlphaBills | User Wallet</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/general.css">
     <link rel="stylesheet" href="css/aside.css">
     <link rel="stylesheet" href="css/wallet.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
@@ -15,86 +17,46 @@
        <!-- mobile dashboard end -->
         <main>
             <%- include('../partials/mobileHeader') %>
-           <div class="dashboard-main-top">
-                <h1>WALLET</h1>
-                <div class="input-bar">
-                    <div>
-                        <img src="images/tabler-icon-bell.png" alt="">
+            <div class="dashboard-main-top">
+                    <h1>WALLET</h1>
+                    <div class="input-bar">
+                        <div>
+                            <img src="images/tabler-icon-bell.png" alt="">
+                        </div>
+                        <div class="profile-picture">
+                            <img src="images/Frame 12.png" alt="profile-picture">
+                        </div>
                     </div>
-                    <div class="profile-picture">
-                        <img src="images/Frame 12.png" alt="profile-picture">
+            </div>
+
+            <div class="main-page">
+                <div class="balance-box">
+                    <div class="flex gap-6 bal-toggle">
+                        <p class="font-medium">Available balance</p>
+                        <span id="toggle-balance" class="hide-balance"><i class="ri-eye-off-line"></i></span>
+                        <span id="toggle-balance" class="show-balance"><i class="ri-eye-line"></i></span>
+                    </div>
+                    <h3 data-balance="<%= balance %>" class="font-semibold text-3xl wallet-balance"><%= balance %></h3>
+                    <p class="font-medium">Estimated Of Total Wallet</p>
+                </div>
+
+                <div class="wallet-area">
+                    <div class="linear-gradient">
+                        <div class="domain">
+                            <p>Domain Account</p>
+                            <span>2344566677777</span>
+                        </div>
+
+                        <div class="btn-group">
+                            <a href="/wallet/receive"><button class="cta-btn btn-1">Recieve</button></a>
+                            <a href="/wallet/fund"><button class="cta-btn btn-2">Fund Wallet</button></a>
+                        </div>
                     </div>
                 </div>
-           </div>
-
-          <div class="main-page">
-            <div class="payment">
-                <p>Available balance <span id="toggle-balance" class="open" onclick="change()"><i class="ri-eye-line"></i></span> <span id="toggle-balance" class="close" onclick="changer()"><i class="ri-eye-off-line"></i></span></p>
-                <input id="balance" value="N 14,2000" type="text"/>
-                <p>Estimated Of Total Wallet</p>
-           </div>
-
-           <div class="wallet-area">
-                <div class="linear-gradient">
-                    <div class="domain">
-                        <p>Domain Account</p>
-                        <span>2344566677777</span>
-                    </div>
-
-                    <div class="btn-group">
-                        <a href="/wallet/receive"><button class="btn-1">Recieve</button></a>
-                        <a href="/wallet/fund"><button class="btn-2">Fund Wallet</button></a>
-                    </div>
-                </div>
-           </div>
-
-           <div class="history-table">
-            <table>
-                <div>
-                    <tr class="table-head">
-                        <th>Transaction</th>
-                        <th>Amount(NGN)</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                    </tr>
-                    <tr class="table-data">
-                        <td class="bundle"><img src="images/tabler-icon-access-point.png" alt=""> Airtime Bundle</td>
-                        <td>-N20,000</td>
-                        <td>Sent</td>
-                        <td>3-23-2023</td>
-                    </tr>
-                    <tr class="table-data">
-                        <td class="bundle"><img src="images/tabler-icon-id.png" alt=""> Data Bundle</td>
-                        <td>-N20,000</td>
-                        <td>Sent</td>
-                        <td>3-23-2023</td>
-                    </tr>
-                    <tr class="table-data">
-                        <td class="bundle"><img src="images/tabler-icon-access-point.png" alt=""> Airtime Bundle</td>
-                        <td>-N20,000</td>
-                        <td>Sent</td>
-                        <td>3-23-2023</td>
-                    </tr>
-                    <tr class="table-data">
-                        <td class="bundle"><img src="images/tabler-icon-id.png" alt=""> Data Bundle</td>
-                        <td>-N20,000</td>
-                        <td>Sent</td>
-                        <td>3-23-2023</td>
-                    </tr>
-                    <tr class="table-data">
-                        <td class="bundle"><img src="images/tabler-icon-access-point.png" alt=""> Airtime Bundle</td>
-                        <td>-N20,000</td>
-                        <td>Sent</td>
-                        <td>3-23-2023</td>
-                    </tr>
-                </div>
-            </table>
-       </div>
-          </div>
+            </div>
+            <%- include('../partials/transactions', {transactions: transactions}) %>
         </main>
     </section>
-    
-
     <script src="js/dashboard.js"></script>
     <script src="js/wallet.js"></script>
 </body>
