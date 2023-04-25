@@ -4,7 +4,7 @@ const router = express.Router();
 const { 
     homePage,dashboard,
     airtime,dataplan, billpayment, wallet, fundWallet,
-    receiveWallet, setting, profile, verifyNow, test 
+    receiveWallet, setting, profile, verifyNow, test, billPayer 
 } = require("../controller/controller")
 
 // middlewares
@@ -24,7 +24,11 @@ const {
 router.route("/").get(homePage)
 router.route("/test").get(test)
 router.route("/login").get(logInPage)
-router.route("/login").post(passport.authenticate('local', { failureRedirect: '/login', failureFlash:'incorrect credientials', failureMessage: true }), login)
+router.route("/login").post(passport.authenticate('local', {
+    failureRedirect: '/login',
+    failureFlash:'incorrect credientials',
+    failureMessage: true
+}), login)
 router.route('/logout').get(logout)
 router.route("/sign-up").get(signUpPage)
 router.route("/sign-up").post(newUser)
@@ -39,5 +43,6 @@ router.route("/wallet/receive").get(receiveWallet);
 router.route("/setting").get(isLoggedIn, setting);
 router.route("/profile").get(isLoggedIn, profile);
 router.route("/verify_now").get(verifyNow);
+router.route("/billpayment/:service").get(isLoggedIn, billPayer);
 
 module.exports = router;
