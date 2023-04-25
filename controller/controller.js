@@ -89,6 +89,26 @@ const billpayment = (req, res)=>{
     res.status(200).render("dashboard/billpayment")
 }
 
+const billPayer = async(req, res) => {
+    // get url parameters and query
+    // use those to customize requested page
+    const data = await dashboardData(req.user)
+    const urlParams = req.params
+    const service = urlParams.service
+    if (service === 'electricity') {
+        res.status(200).render("dashboard/electricity", data)
+    }
+    if (service === 'tv') {
+        res.status(200).render("dashboard/tv", data)
+    }
+    if (service === 'exam') {
+        res.status(200).render("dashboard/exam", data)
+    }
+    return res.status(404).json({
+        message: 'page you are looking for does not exist'
+    })
+}
+
 const wallet = async (req, res) => {
     const data = await dashboardData(req.user)
     res.status(200).render("dashboard/wallet", data)
@@ -112,5 +132,5 @@ const profile = (req, res) => {
 
 module.exports = {
     homePage, dashboard, airtime, dataplan, billpayment, wallet,
-    fundWallet, receiveWallet, setting, verifyNow, profile, test
+    fundWallet, receiveWallet, setting, verifyNow, profile, test, billPayer
 }
