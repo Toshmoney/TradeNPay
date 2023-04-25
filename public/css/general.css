@@ -1,6 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+h1, h2,
+h3, h4,
+h5, h6 {
+    font-family:  'Raleway', sans-serif;
+}
+
 .alert {
     position: fixed;
     border-width: 5px;
@@ -19,6 +29,22 @@
     background-color: aquamarine;
     -webkit-animation: fadeIn 30s;
     animation: fadeIn 30s;
+}
+
+.history-table h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+tr {
+    text-transform: capitalize;
+    background-color: #F6F8FE;
+    border: 1px solid #F6F8FE;
+}
+
+tbody > tr {
+    background-color: #FFFFFF;
 }
 
 @-webkit-keyframes fadeIn {
