@@ -96,13 +96,13 @@ const billPayer = async(req, res) => {
     const urlParams = req.params
     const service = urlParams.service
     if (service === 'electricity') {
-        res.status(200).render("dashboard/electricity", data)
+        return res.status(200).render("dashboard/electricity", data)
     }
     if (service === 'tv') {
-        res.status(200).render("dashboard/tv", data)
+        return res.status(200).render("dashboard/tv", data)
     }
     if (service === 'exam') {
-        res.status(200).render("dashboard/exam", data)
+        return res.status(200).render("dashboard/exam", data)
     }
     return res.status(404).json({
         message: 'page you are looking for does not exist'
