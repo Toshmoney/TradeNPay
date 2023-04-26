@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlphaBills | Buy Exam Pin </title>
+    <link rel="stylesheet" href="/css/toastr.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/aside.css">
+    <link rel="stylesheet" href="/css/general.css">
+</head>
+<body>
+    <section class="dashboard-container bill-page">
+        <%- include('../partials/aside') %>
+       <main>
+            <%- include('../partials/mobileHeader') %>
+            <div class="dashboard-main-top">
+                <h1>BUY EXAM PIN</h1>
+                <div class="input-bar">
+                    <div>
+                        <img src="/images/tabler-icon-bell.png" alt="">
+                    </div>
+                    <div class="profile-picture">
+                        <img src="/images/Frame 12.png" alt="profile-picture">
+                    </div>
+                </div>
+            </div>
+
+            <section class="bill-box">
+                <div class="bill-payer">
+                    <form>
+                        <div class="form-field">
+                            <label id="exam">Select Exam Type</label>
+                            <select name="exam" id="exam" class="exam">
+                                <option value="">Please select your exam type</option>
+                                <option value="AJA">Waec </option>
+                                <option value="AJC">NECO </option>
+                                <!-- <option value="AJB">JAMB</option> -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-field">
+                                <label for="quantity">Quantity</label>
+                                <input name="quantity" id="quantity" class="quantity" type="number" min="1" placeholder="Enter Quantity" />
+                            </div>
+                            <div class="form-field">
+                                <label for="amount">Amount</label>
+                                <input disabled name="amount" id="amount" class="amount" type="number" placeholder="Amount" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-field">
+                                <label for="phone">Phone Number</label>
+                                <input name="phone" id="phone" class="phone" placeholder="Enter Phone Number" />
+                            </div>
+                            <div class="form-field">
+                                <label for="email">Email Address</label>
+                                <input name="email" id="email" class="email" type="tel" placeholder="Enter Your Email Address" />
+                            </div>
+                        </div>
+                        <button class="block-btn submit-btn cta">Buy Now</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </section>
+
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/toastr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>        
+    <script>
+        const toastOptions = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        
+        const examSelect = document.querySelector('select.exam')
+        const emailField = document.querySelector('input.email')
+        const phoneField = document.querySelector('input.phone')
+        const amountField = document.querySelector('input.amount')
+        const quantityField = document.querySelector('input.quantity')
+        const submitButton = document.querySelector('button.submit-btn')
+        const form = document.querySelector('form')
+
+        quantityField.value = 1
+        let service_id;
+        let quantity = 1
+        let unitPrice = 0;
+        let amount = 0;
+        
+        const updateQuantity = () => {
+            if (!unitPrice) {
+                toastr.options = {
+                    ...toastOptions
+                }
+                toastr.error("Please select exam type", 'Exam type not select')
+                return
+            }
+            const quantityEntered = Number(quantityField.value)
+            if (!quantityEntered) {
+                quantity = 1
+                toastr.options = {
+                    ...toastOptions,
+                    "timeOut": "1000"
+                }
+                toastr.error("Quantity must be greater than zero")
+                return
+            }
+            amount = quantityEntered * unitPrice
+            amountField.value = amount
+        }
+
+        const updateExamType = () => {
+            const selectedService_id = examSelect.value
+            if (!selectedService_id) {
+                toastr.options = {
+                    ...toastOptions
+                }
+                toastr.info("Pls select exam type", 'Invalid Option')
+                return
+            }
+            service_id = selectedService_id
+            axios.post('/api/v1/packages', {service_id})
+            .then(response => {
+                const { price } = response.data;
+                const quantityEntered = Number(quantityField.value)
+                unitPrice = price
+                if (quantityEntered) {
+                    quantity = quantityEntered
+                    amountField.value = price * quantity
+                    amount = price * quantityEntered
+                }
+                else {
+                    quantity = 1
+                    quantityField.value = 1
+                    amountField.value = price
+                    amount = price
+                }
+            })
+            .catch(error => {
+                if (error.response) {
+                    toastr.options = {
+                        ...toastOptions
+                    }
+                    toastr.error("Check your input and try again", 'Invalid Option')
+                    console.log(error.response.data);
+                }
+                else {
+                    toastr.options = {
+                        ...toastOptions
+                    }
+                    toastr.error("Check your input and try again", 'Poor Internet')
+                }
+            })
+        }
+
+        examSelect.addEventListener('change', () => {
+            updateExamType()  
+        })
+
+        quantityField.addEventListener('input', () => {
+            updateQuantity()
+        })
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault()
+            console.log(amount);
+            toastr.options = {
+                ...toastOptions
+            }
+            toastr.success('Purchased processed', 'Success')
+        })
+    </script>
+</body>
+</html>
