@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlphaBills | Buy Tv Subcription </title>
+    <link rel="stylesheet" href="/css/toastr.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/aside.css">
+    <link rel="stylesheet" href="/css/general.css">
+</head>
+<body>
+    <section class="dashboard-container bill-page">
+        <%- include('../partials/aside') %>
+       <main>
+        <%- include('../partials/mobileHeader') %>
+        <div class="dashboard-main-top">
+            <h1>BUY TV SUBCRIPTION</h1>
+            <div class="input-bar">
+                <div>
+                    <img src="/images/tabler-icon-bell.png" alt="">
+                </div>
+                <div class="profile-picture">
+                    <img src="/images/Frame 12.png" alt="profile-picture">
+                </div>
+            </div>
+        </div>
+
+        <section class="bill-box">
+            <div class="bill-payer">
+                <form>
+                    <div class="form-field">
+                        <label id="provider">Provider</label>
+                        <select name="provider" id="provider" class="provider">
+                            <option value="">Please select your provider</option>
+                            <option value="AKC">DSTV </option>
+                            <option value="AKA">GOTV </option>
+                            <option value="AKB">Startimes</option>
+                            <option value="SMA">Showmax</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="package">Available Packages</label>
+                        <select name="package" id="package" class="package">
+                            <option value="">Please select your provider and then your prefered package</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="card">Smart Card Number</label>
+                        <input name="card" id="card" class="card" type="tel" placeholder="Enter Smart Card Number" />
+                    </div>
+                    <div class="form-group">
+                        <div class="form-field">
+                            <label for="phone">Phone Number</label>
+                            <input name="phone" id="phone" class="phone" type="tel" placeholder="Enter Phone Number" />
+                        </div>
+                        <div class="form-field">
+                            <label for="email">Email Address</label>
+                            <input name="email" id="email" class="email" type="email" placeholder="Enter Your Email Address" />
+                        </div>
+                    </div>
+                    <button class="block-btn submit-btn cta">Buy Now</button>
+                </form>
+            </div>
+        </section>
+        
+    </main>
+    </section>
+    
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/toastr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const toastOptions = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        const form = document.querySelector('form')
+        const providerSelect = document.querySelector("select.provider")
+        const packageSelect = document.querySelector("select.package")
+        const emailField = document.querySelector('input.email')
+        const phoneField = document.querySelector('input.phone')
+        const cardField = document.querySelector('input.card')
+        const submitButton = document.querySelector('button.submit-btn')
+
+        const nigerianCurrencyFormat = new Intl.NumberFormat('en-NG', {
+            currency: 'NGN',
+            style: 'currency',
+        });
+
+        const resetInputs = () => {
+            providerSelect.value = ''
+            packageSelect.value = ''
+            emailField.value = ''
+            phoneField.value = ''
+            cardField.value = ''
+            submitButton.disabled = false
+            submitButton.textContent = 'Buy Now'
+        }
+
+        const validatedData = () => {
+            // I need selected provider, package:price, code, email, phone number
+            const service_id = providerSelect.value
+            const [name, price, productCode] = packageSelect.value.split("**")
+            const email = emailField.value
+            const phoneNumber = phoneField.value
+            const smartCardNumber = cardField.value
+            const amount = Number(price)
+
+            if (!service_id) {
+                toastr.error('Pls select your provider', 'Provider not selected')
+                return false
+            }
+            if (!productCode) {
+                toastr.error('Pls select your preferred package', 'Package not selected')
+                return false
+            }
+            if (!email) {
+                toastr.error('Pls enter your email', 'Email not entered')
+                return false
+            }
+            if (!phoneNumber) {
+                toastr.error('Pls enter your phone number', 'Phone number not entered')
+                return false
+            }
+            if (!smartCardNumber) {
+                toastr.error('Pls your device card number', 'Device number not entered')
+                return false
+            }
+
+            return {
+                productCode,
+                amount,
+                name,
+                service_id,
+                email,
+                phoneNumber,
+                smartCardNumber
+            }
+        }
+
+        const recharge = () => {
+            const data = validatedData()
+            if (!data) {
+                return
+            }
+            console.log(data);
+            toastr.info("Processing your purchase, pls wait", "Processing")
+            submitButton.disabled = true
+            // send request to the server to 
+            axios.post('/api/v1/tv/recharge', data)
+            .then(response => {
+                const { data } = response
+                console.log(data);
+                resetInputs()
+                toastr.success("Purchase successful", "Success")
+            })
+            .catch(error => {
+                if (error.response) {
+                    const { data, status } = error.response
+                    if (status === 401 || status === 405) {
+                        toastr.info('Pls logout and login again', 'Session Over')
+                    }
+                    if (status === 400) {
+                        toastr.error('Check your inputs and try again', 'Error')
+                    }
+                    // toastr.error('Pls try again later', 'Error')
+                    console.log(error.response.data);
+                }
+                else {
+                    toastr.error('Pls check your internet connectivity and try again', 'Poor Internet')
+                }
+                submitButton.disabled = false
+            })
+        }
+
+        providerSelect.addEventListener("change", (event) => {
+            const service_id = event.target.value
+            axios.post('/api/v1/packages', {service_id})
+            .then(response => {
+                const packages = response.data
+                if (packages) {
+                    packageSelect.innerHTML = `<option value="">Please select your prefered package</option>`
+                    for (let index = 0; index < packages.length; index++) {
+                        const package = packages[index];
+                        const {
+                            name,
+                            price,
+                            productCode
+                        } = package
+                        const formattedPrice = nigerianCurrencyFormat.format(price)
+                        const packageOption = `<option value ='${name}**${price}**${productCode}'>${name} ${formattedPrice}</option>`
+                        packageSelect.innerHTML += packageOption
+                    }
+                }
+                else {
+                    packageSelect.innerHTML = `<option value="">Please select your prefered package</option>`
+                    packageSelect.innerHTML = `<option value="">Service currently not availble</option>`
+                    toastr.info('Choose another provider', 'Not availble')
+                }
+            })
+            .catch(error => {
+                if (error.response) {
+                    const { data, status } = error.response
+                    if (status === 401 || status === 405) {
+                        toastr.info('Pls logout and login again', 'Session Over')
+                    }
+                    toastr.info('Pls try again later', 'Error')
+                }
+                else {
+                    toastr.error('Pls check your internet connectivity and try again', 'Poor Internet')
+                }
+                providerSelect.innerHTML = `<option value="">Please select your provider</option>`
+                packageSelect.innerHTML = `<option value="">Please select your provider and then your prefered package</option>`
+                // console.log(error);
+            })
+        })
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault()
+            recharge()
+        })
+
+    </script>
+</body>
+</html>
