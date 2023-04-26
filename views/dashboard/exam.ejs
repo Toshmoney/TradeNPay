@@ -81,14 +81,13 @@
             "onclick": null,
             "showDuration": "300",
             "hideDuration": "1000",
-            "timeOut": "5000",
+            "timeOut": "3000",
             "extendedTimeOut": "1000",
             "showEasing": "swing",
             "hideEasing": "linear",
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         }
-        
         const examSelect = document.querySelector('select.exam')
         const emailField = document.querySelector('input.email')
         const phoneField = document.querySelector('input.phone')
@@ -102,6 +101,36 @@
         let quantity = 1
         let unitPrice = 0;
         let amount = 0;
+
+        const validatedData = () => {
+            const examType = examSelect.value
+            const email = emailField.value
+            const phoneNumber = phoneField.value
+            const computedAmount = Number(amountField.value)
+            const quantityEntered = Number(quantityField.value)
+
+            if (!examType || !Boolean(amount) || !Boolean(quantity) || computedAmount !== amount || quantityEntered !== quantity) {
+                toastr.options = {...toastOptions}
+                toastr.error('Please select exam type and then enter quantity')
+                return false
+            }
+            return {
+                service_id: examType,
+                email,
+                quantity,
+                amount,
+                phoneNumber
+            }
+        }
+
+        const recharge = () => {
+            const data = validatedData()
+            if (!data) {
+                return
+            }
+            toastr.success('Purchased processed', 'Success')
+            console.log(data, service_id);
+        }
         
         const updateQuantity = () => {
             if (!unitPrice) {
@@ -134,9 +163,10 @@
                 toastr.info("Pls select exam type", 'Invalid Option')
                 return
             }
-            service_id = selectedService_id
+            submitButton.disabled = true
             axios.post('/api/v1/packages', {service_id})
             .then(response => {
+                service_id = selectedService_id
                 const { price } = response.data;
                 const quantityEntered = Number(quantityField.value)
                 unitPrice = price
@@ -151,6 +181,7 @@
                     amountField.value = price
                     amount = price
                 }
+                submitButton.disabled = false
             })
             .catch(error => {
                 if (error.response) {
@@ -166,6 +197,7 @@
                     }
                     toastr.error("Check your input and try again", 'Poor Internet')
                 }
+                submitButton.disabled = false
             })
         }
 
@@ -179,11 +211,7 @@
 
         form.addEventListener("submit", (event) => {
             event.preventDefault()
-            console.log(amount);
-            toastr.options = {
-                ...toastOptions
-            }
-            toastr.success('Purchased processed', 'Success')
+            recharge()
         })
     </script>
 </body>
