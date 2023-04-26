@@ -7,6 +7,10 @@ const {
     receiveWallet, setting, profile, verifyNow, test, billPayer 
 } = require("../controller/controller")
 
+const {
+    fetchPackages
+} = require("../controller/packageController")
+
 // middlewares
 
 const {
@@ -21,6 +25,7 @@ const {
     logout
 } = require('../controller/auth')
 
+router.route("/api/v1/packages").post(fetchPackages)
 router.route("/").get(homePage)
 router.route("/test").get(test)
 router.route("/login").get(logInPage)
