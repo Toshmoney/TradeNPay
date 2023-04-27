@@ -19,7 +19,6 @@ const fetchPackages = async (req, res) => {
         return res.status(200).json(details)
     } 
     catch (error) {
-        console.log(error);
         return res.status(422).json({
             message: 'unable to handle request'
         })
