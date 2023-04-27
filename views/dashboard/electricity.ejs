@@ -32,50 +32,55 @@
                     <form>
                         <div class="form-field">
                             <label id="provider">Provider</label>
-                            <select name="provider" id="provider" class="provider">
+                            <select name="provider" id="provider" class="provider" required>
                                 <option value="">Please select your provider</option>
-                                <option value="">Abuja </option>
-                                <option value="">Eko </option>
-                                <option value="">Ibadan</option>
-                                <option value="">IKeja</option>
-                                <option value="">Jos</option>
-                                <option value="">Kaduna</option>
-                                <option value="">Kano</option>
-                                <option value="">Port-Harcourt</option>
+                                <option value="AHB AHA">Abuja </option>
+                                <option value="ANA ANB">Eko </option>
+                                <option value="AEA AEB">Ibadan</option>
+                                <option value="AMA AMB">IKeja</option>
+                                <option value="ACB ACA">Jos</option>
+                                <option value="AGB AGA">Kaduna</option>
+                                <option value="AFA AFB">Kano</option>
+                                <option value="ADB ADA">Port-Harcourt</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <div class="form-field">
                                 <label for="package">Meter Type</label>
-                                <select name="package" id="package" class="package">
+                                <select name="package" id="package" class="package" required>
                                     <option value="">Please select meter type</option>
-                                    <option value="">Prepaid</option>
-                                    <option value="">Postpaid</option>
+                                    <option value="0">Prepaid</option>
+                                    <option value="1">Postpaid</option>
                                 </select>
                             </div>
                             <div class="form-field">
                                 <label for="meter-number">Meter Number</label>
-                                <input name="meter-number" id="meter-number" class="meter-number" placeholder="Enter Meter Number" />
+                                <input name="meter-number" id="meter-number" class="meter-number" placeholder="Enter Meter Number" required />
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form-field">
                                 <label for="phone">Phone Number</label>
-                                <input name="phone" id="phone" class="phone" placeholder="Enter Phone Number" />
+                                <input name="phone" id="phone" class="phone" placeholder="Enter Phone Number" required />
                             </div>
                             <div class="form-field">
                                 <label for="email">Email Address</label>
-                                <input name="email" id="email" class="email" type="tel" placeholder="Enter Your Email Address" />
+                                <input name="email" id="email" class="email" type="tel" placeholder="Enter Your Email Address" required />
                             </div>
                         </div>
                         <div class="form-field">
                             <label for="amount">Amount</label>
-                            <input name="amount" id="amount" class="amount" type="number" placeholder="Enter Amount" />
+                            <input name="amount" id="amount" class="amount" type="number" placeholder="Enter Amount" required />
                         </div>
                         <button class="block-btn submit-btn cta">Buy Now</button>
                     </form>
                 </div>
             </section>
+            <div class="balance-box">
+                <p class="wallet-balance">
+                    <%= balance %>
+                </p>
+            </div>
         </main>
     </section>
 
@@ -110,13 +115,77 @@
         const amountField = document.querySelector('input.amount')
         const submitButton = document.querySelector('.submit-btn')
 
+        const resetInputs = () => {
+            providerSelect.value = ''
+            packageSelect.value = ''
+            phoneField.value = ''
+            meterNumberField.value = ''
+            emailField.value = ''
+            amountField.value = ''
+            submitButton.disabled = false
+            submitButton.textContent = 'Buy Now'
+        }
+
         const validatedData = () => {
-            return
+            const supplier = providerSelect.value.split(" ")
+            const packageIndex = packageSelect.value
+            const serviceIndex = Number(packageIndex)
+            const service_id = supplier[serviceIndex]
+            const phoneNumber = phoneField.value
+            const email = emailField.value
+            const amount = Number(amountField.value)
+            const meterNumber = meterNumberField.value
+            return {
+                service_id,
+                phoneNumber,
+                email,
+                amount,
+                meterNumber,
+                customerAccountId: meterNumber
+            }
+        }
+
+        const recharge = () => {
+            const data = validatedData()
+            if (!data) {
+                return
+            }
+            console.log(data);
+            submitButton.disabled = true
+            submitButton.textContent = 'Pls wait'
+            axios.post('/api/v1/power/recharge', data)
+            .then(response => {
+                const { data } = response
+                console.log(data);
+                resetInputs()
+                toastr.success("Purchase successful", "Success")
+            })
+            .catch(error => {
+                submitButton.disabled = false
+                submitButton.textContent = 'Buy Now'
+                if (error.response) {
+                    const { data, status } = error.response
+                    const { message } = data
+                    if (status === 401 || status === 405) {
+                        toastr.info('Pls logout and login again', 'Session Over')
+                    }
+                    else {
+                        toastr.error(`${message || 'Pls contact the admin'}`)
+                    }
+                    console.log(error.response.data);
+                }
+                else if (error.request) {
+                    toastr.error('Pls check your internet connectivity and try again', 'Poor Internet')
+                }
+                else {
+                    toastr.error('Pls contact the admin')
+                }
+            })
         }
 
         form.addEventListener('submit', (event) => {
             event.preventDefault()
-            toastr.success("Purchase successful", "Success")
+            recharge()
         })
     </script>      
 </body>
