@@ -21,6 +21,7 @@ const getStatus = async (service_id='BCA', requestType='SME') => {
                 "requestType": requestType
             },
             {
+                
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${process.env.API_PUBLIC_KEY}`

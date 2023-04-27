@@ -84,7 +84,7 @@ const buyData = async (req, res) => {
         const { message } = data
         if (message !== 'success') {
            return res.status(422).json({
-                message: 'unable to process transaction, pls check your inputs '
+                message: 'unable to process transaction, please check your inputs '
             }
            )
         }

@@ -18,7 +18,10 @@ const {
     signUpPage,
     logInPage,
     login,
-    logout
+    logout,
+    forgotPassword,
+    confirmReset,
+    confirmPass
 } = require('../controller/auth')
 
 router.route("/").get(homePage)
@@ -27,6 +30,10 @@ router.route("/login").get(logInPage)
 router.route("/login").post(passport.authenticate('local', { failureRedirect: '/login', failureFlash:'incorrect credientials', failureMessage: true }), login)
 router.route('/logout').get(logout)
 router.route("/sign-up").get(signUpPage)
+router.route("/forgot-password").get(forgotPassword)
+router.route("/forgot-password").post(forgotPassword)
+router.route("/confirmation").get(confirmPass)
+router.route("/confirmation").post(confirmReset)
 router.route("/sign-up").post(newUser)
 router.route("/dashboard").get(isLoggedIn, dashboard)
 router.route("/dashboard").post(dashboard)
