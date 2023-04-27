@@ -79,6 +79,29 @@ tbody > tr {
     background-color: #FFFFFF;
 }
 
+/* wallet balance toggle */
+.balance-box {
+    margin-bottom: 1rem;
+}
+.balance-box .balance-toggle {
+    cursor: pointer;
+}
+.balance-box.opened .hide-balance {
+    display: block;
+}
+
+.balance-box.opened .show-balance {
+    display: none;
+}
+
+.balance-box.closed .hide-balance {
+    display: none;
+}
+
+.balance-box.closed .show-balance {
+    display: block;
+}
+
 @-webkit-keyframes fadeIn {
     0% {
         opacity: 1;
