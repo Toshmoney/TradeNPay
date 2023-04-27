@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlphaBills | Buy Electricity </title>
+    <link rel="stylesheet" href="/css/toastr.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/aside.css">
+    <link rel="stylesheet" href="/css/general.css">
+</head>
+<body>
+    <section class="dashboard-container bill-page">
+        <%- include('../partials/aside') %>
+        <main>
+            <%- include('../partials/mobileHeader') %>
+            <div class="dashboard-main-top">
+                <h1>BUY Electricity</h1>
+                <div class="input-bar">
+                    <div>
+                        <img src="/images/tabler-icon-bell.png" alt="">
+                    </div>
+                    <div class="profile-picture">
+                        <img src="/images/Frame 12.png" alt="profile-picture">
+                    </div>
+                </div>
+            </div>
+
+            <section class="bill-box">
+                <div class="bill-payer">
+                    <form>
+                        <div class="form-field">
+                            <label id="provider">Provider</label>
+                            <select name="provider" id="provider" class="provider">
+                                <option value="">Please select your provider</option>
+                                <option value="">Abuja </option>
+                                <option value="">Eko </option>
+                                <option value="">Ibadan</option>
+                                <option value="">IKeja</option>
+                                <option value="">Jos</option>
+                                <option value="">Kaduna</option>
+                                <option value="">Kano</option>
+                                <option value="">Port-Harcourt</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-field">
+                                <label for="package">Meter Type</label>
+                                <select name="package" id="package" class="package">
+                                    <option value="">Please select meter type</option>
+                                    <option value="">Prepaid</option>
+                                    <option value="">Postpaid</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label for="meter-number">Meter Number</label>
+                                <input name="meter-number" id="meter-number" class="meter-number" placeholder="Enter Meter Number" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-field">
+                                <label for="phone">Phone Number</label>
+                                <input name="phone" id="phone" class="phone" placeholder="Enter Phone Number" />
+                            </div>
+                            <div class="form-field">
+                                <label for="email">Email Address</label>
+                                <input name="email" id="email" class="email" type="tel" placeholder="Enter Your Email Address" />
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label for="amount">Amount</label>
+                            <input name="amount" id="amount" class="amount" type="number" placeholder="Enter Amount" />
+                        </div>
+                        <button class="block-btn submit-btn cta">Buy Now</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </section>
+
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/toastr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const toastOptions = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        const form = document.querySelector('form')
+        const providerSelect = document.querySelector('select.provider')
+        const packageSelect = document.querySelector('select.package')
+        const phoneField = document.querySelector('input.phone')
+        const meterNumberField = document.querySelector('input.meter-number')
+        const emailField = document.querySelector('input.email')
+        const amountField = document.querySelector('input.amount')
+        const submitButton = document.querySelector('.submit-btn')
+
+        const validatedData = () => {
+            return
+        }
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault()
+            toastr.success("Purchase successful", "Success")
+        })
+    </script>      
+</body>
+</html>

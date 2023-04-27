@@ -6,7 +6,9 @@ const router = require("./routes/handler");
 const errorHandler = require("./handleError/error");
 const port = 4000;
 
+const airtimeRoutes = require('./routes/airtimeRoute')
 const dataPlanRoutes = require('./routes/dataPlanRoute')
+const tvRoutes = require('./routes/tvRouter')
 const User = require('./model/User.db')
 
 const session = require("express-session")
@@ -42,6 +44,8 @@ passport.deserializeUser(User.deserializeUser())
 // ********** Routes **************
 app.use("/", router);
 app.use("/api/v1/data_plan", dataPlanRoutes)
+app.use("/api/v1/airtime", airtimeRoutes)
+app.use("/api/v1/tv", tvRoutes)
 
 app.use(errorHandler)
 app.use(notFoundMiddleWare)

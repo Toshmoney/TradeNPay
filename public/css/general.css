@@ -1,6 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+h1, h2,
+h3, h4,
+h5, h6 {
+    font-family:  'Raleway', sans-serif;
+}
+
+.form-field {
+    margin-bottom: 1rem;
+    flex-basis: 100%;
+}
+
+input, select {
+    width: 100%;
+    border: 1px solid #F6F8FE;
+    border-radius: .5rem;
+    outline-color:#F6F8FE;
+    padding: 10px;
+    margin-top: .5rem;
+}
+
+.block-btn {
+    display: block;
+    width: 100%;
+}
+
+.submit-btn {
+    background-color: #0235EA;
+    color: #FFFFFF;
+    border: none;
+}
+
+.cta {
+    padding: 10px 30px;
+    border-radius: .5rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
 .alert {
     position: fixed;
     border-width: 5px;
@@ -21,6 +63,22 @@
     animation: fadeIn 30s;
 }
 
+.history-table h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+tr {
+    text-transform: capitalize;
+    background-color: #F6F8FE;
+    border: 1px solid #F6F8FE;
+}
+
+tbody > tr {
+    background-color: #FFFFFF;
+}
+
 @-webkit-keyframes fadeIn {
     0% {
         opacity: 1;
@@ -32,7 +90,25 @@
         opacity: 0;
     }
 }
-  
+
+/* Bill payment */
+
+.bill-page .dashboard-main-top {
+    margin-bottom: .75rem;
+}
+
+.bill-payer {
+    max-width: 700px;
+    border: 1px solid #F6F8FE;
+    padding: 1rem;
+    border-radius: 10px;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    row-gap: 0;
+}
 @keyframes fadeIn {
     0% {
         opacity: 1;
@@ -42,5 +118,11 @@
     }
     100% {
         opacity: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .form-group {
+        flex-direction: row;
     }
 }

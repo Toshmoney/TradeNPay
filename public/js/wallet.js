@@ -1,21 +1,39 @@
-function change() {
-    document.querySelector(".open").classList.add("open-sub")
-    document.querySelector(".close").classList.add("close-sub")
-}
-function changer(){
-    document.querySelector(".open").classList.remove("open-sub")
-    document.querySelector(".close").classList.remove("close-sub")
-}
-
-
-
-const passwordInput = document.querySelector('#balance');
-const togglePasswordButton = document.querySelector('#toggle-balance');
-
-togglePasswordButton.addEventListener('click', function() {
-  if (passwordInput.type === 'password') {
-    passwordInput.type = 'text';
-  } else {
-    passwordInput.type = 'password';
-  }
+const nigerianCurrencyFormat = new Intl.NumberFormat('en-NG', {
+  currency: 'NGN',
+  style: 'currency',
 });
+
+const hideBalanceElement = document.querySelector('.hide-balance')
+const showBalanceElement = document.querySelector('.show-balance')
+
+const walletBalanceElement = document.querySelector('.wallet-balance')
+let walletBalance = walletBalanceElement.textContent
+walletBalanceElement.textContent = nigerianCurrencyFormat.format(walletBalance)
+
+function hideBalance() {
+  const balance = nigerianCurrencyFormat.format(walletBalanceElement.dataset.balance)
+  let hiddenBalance = "";
+  for (let index = 0; index < balance.length; index++) {
+    hiddenBalance += "*"
+  }
+  walletBalanceElement.textContent = hiddenBalance
+  document.querySelector('.balance-box').classList.add('closed')
+  document.querySelector('.balance-box').classList.remove('opened')
+}
+
+function showBalance () {
+  let balance = walletBalanceElement.dataset.balance
+  const openBalance = nigerianCurrencyFormat.format(balance)
+  walletBalanceElement.textContent = openBalance
+  document.querySelector('.balance-box').classList.remove('closed')
+  document.querySelector('.balance-box').classList.add('opened')
+}
+hideBalance()
+
+hideBalanceElement.addEventListener('click', () => {
+  hideBalance()
+} )
+
+showBalanceElement.addEventListener('click', () => {
+  showBalance()
+})

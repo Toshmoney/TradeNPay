@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AlphaBills | Bill-Payments</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/general.css">
     <link rel="stylesheet" href="css/aside.css">
     <link rel="stylesheet" href="css/PayBills.css">
 </head>
@@ -33,38 +35,119 @@
            </div>
 
            <div class="pay-area">
-                <div class="cable">
-                    <div class="icon">
-                        <span><img src="images/Frame 9.png" alt=""></span>
-                        <h1>Cable TV</h1>
-                    </div>
-                    <div>
-                        <span><img src="images/Arrow 2.png" alt=""></span>
+                <div class="cable closed">
+                    <div class="service">
+                        <div class="service-header">
+                            <div class="icon">
+                                <span><img src="images/Frame 9.png" alt="Cable bills"></span>
+                                <h1>Cable TV</h1>
+                            </div>
+                            <span class="toggler" role="img"><img src="images/Arrow 2.png" alt="open"></span>
+                        </div>
+                        <article class="service-list-box">
+                            <ul class="service-items">
+                                <li>
+                                    <a href="/billpayment/tv">Dstv</a>
+                                </li>
+                                <li>
+                                    <a href="/billpayment/tv">Gotv</a>
+                                </li>
+                                <li>
+                                    <a href="/billpayment/tv">Showmax</a>
+                                </li>
+                                <li>
+                                    <a href="/billpayment/tv">Startimes</a>
+                                </li>
+                            </ul>
+                        </article>
                     </div>
                 </div>
-                <div class="cable">
-                    <div class="icon">
-                        <span><img src="images/Frame 9.png" alt=""></span>
-                        <h1>Electricity</h1>
-                    </div>
-                    <div>
-                        <span><img src="images/Arrow 2.png" alt=""></span>
+                <div class="cable closed">
+                    <div class="service">
+                        <div class="service-header">
+                            <div class="icon">
+                                <span><img src="images/Frame 9.png" alt="Electricity bills"></span>
+                                <h1>Electricity</h1>
+                            </div>
+                            <span class="toggler" role="img"><img src="images/Arrow 2.png" alt="open"></span>
+                        </div>
+                        <article class="service-list-box">
+                            <ul class="service-items">
+                                <li>
+                                    <a href="/billpayment/electricity">Abuja</a>
+                                </li>
+                                <li>
+                                    <a href="/billpayment/electricity">Eko</a>
+                                </li>
+                                <li>
+                                    <a href="/billpayment/electricity">IBDC</a>
+                                </li>
+                                <li>
+                                    <a href="/billpayment/electricity">Ikeja</a>
+                                </li>
+                                <li>
+                                    <a href="/billpayment/electricity">Jos</a>
+                                </li>
+                                <li>
+                                    <a href="/billpayment/electricity">Kaduna</a>
+                                </li>
+                                <li>
+                                    <a href="/billpayment/electricity">Kano</a>
+                                </li>
+                                <li>
+                                    <a href="/billpayment/electricity">Port-Harcourt</a>
+                                </li>
+                            </ul>
+                        </article>
                     </div>
                 </div>
-                <div class="cable">
-                    <div class="icon">
-                        <span><img src="images/Frame 9.png" alt=""></span>
-                        <h1>Internet Bills</h1>
-                    </div>
-                    <div>
-                        <span><img src="images/Arrow 2.png" alt=""></span>
+                <div class="cable closed">
+                    <div class="service">
+                        <div class="service-header">
+                            <div class="icon">
+                                <span><img src="images/Frame 9.png" alt="Internet bills"></span>
+                                <h1>Examination</h1>
+                            </div>
+                            <span class="toggler" role="img"><img src="images/Arrow 2.png" alt="open"></span>
+                        </div>
+                        <article class="service-list-box">
+                            <ul class="service-items">
+                                <li>
+                                    <a href="/billpayment/exam">Jamb Result Checker</a>
+                                </li>
+                                <li>
+                                    <a href="/billpayment/exam">Waec Exam Result Checker</a>
+                                </li>
+                                <li>
+                                    <a href="/billpayment/exam">Neco Exam Result Checker</a>
+                                </li>
+                            </ul>
+                        </article>
                     </div>
                 </div>
            </div>
         </main>
     </section>
-    
-
     <script src="js/dashboard.js"></script>
+    <script>
+        const servicesBox = document.querySelectorAll(".cable")
+        servicesBox.forEach((cableElement)=> {
+            const toggler = cableElement.querySelector('.toggler')
+            const serviceHeader = cableElement.querySelector('.service-header')
+            const serviceBox = cableElement.querySelector('.service-list-box')
+            const serviceItems = cableElement.querySelector('.service-items')
+            serviceHeader.addEventListener('click', () => {
+                const itemsHeight = serviceItems.getBoundingClientRect().height;
+                if (cableElement.classList.contains('closed')) {
+                    serviceBox.style.height = `${itemsHeight}px`
+                    cableElement.classList.remove('closed')
+                }
+                else {
+                    serviceBox.style.height = `${0}px`
+                    cableElement.classList.add('closed')
+                }
+            })
+        },)
+    </script>
 </body>
 </html>
