@@ -1,84 +1,29 @@
 require("dotenv").config()
 const { default: axios } = require("axios")
 const Transaction = require("../model/Transaction")
-const Wallet = require("../model/Wallet")
-
 const { generateTransId } = require("../utils")
 
 const recharge = async (req, res) => {
     const user = req.user
-    const { service_id, smartCardNumber, productCode, amount } = req.body
-    if (!user) {
-        return res.status(401).json({
-            message: 'user not recognised',
-            error: 'authentication'
-        })
-    }
+    const { service_id, smartcardNumber, productCode, amount } = req.body
     if (!service_id) {
         return res.status(400).json({
             message: 'missing provider',
             error: 'service_id'
         })
     }
-    if (!smartCardNumber) {
+    if (!smartcardNumber) {
         return res.status(400).json({
             message: 'missing smart card/device number',
             error: 'card'
         })
     }
     // check if user has enough in his wallet
-    const userWallet = await Wallet.findOne({ user: user._id })
-    if (!userWallet) {
-        return res.status(400).json({
-            message: 'No wallet for user',
-            error: 'wallet'
-        })
-    }
-    if (userWallet.balance < Number(amount)) {
-        return res.status(400).json({
-            message: 'Insufficient wallet balance',
-            error: 'balance'
-        })
-    }
+    const userWallet = req.user.wallet
+    
     // first validate smart card number
-    const validationReqData = {
-        service_id,
-        customerAccountId: smartCardNumber
-
-    }
-    let validateResponse;
-    let validateResponseData = {};
-    let customerDetails;
-    console.log('validation started');
-    try {
-        validateResponse = await axios.post(
-            'https://enterprise.mobilenig.com/api/services/proxy',
-            validationReqData,
-            {
-                headers: {
-                    'Authorization': `Bearer ${process.env.API_PUBLIC_KEY}`,
-                    "Content-Type": 'application/json' 
-                }
-            }
-        )
-        validateResponseData = validateResponse.data
-        customerDetails = validateResponseData.details
-        if (validateResponseData.message !== 'success' || !customerDetails || typeof customerDetails !== 'object') {
-            console.log('validation failed');
-            return res.status(400).json({
-                message: 'failed',
-                error: 'validation'
-            })
-        }
-        console.log(validateResponseData, customerDetails);
-    } catch (error) {
-        console.log(error);
-        return res.status(422).json({
-            message: 'failed',
-            error: 'validation'
-        })
-    }
-    console.log('validation completd');
+    const customerDetails = req.customerDetails
+    console.log('validation completed');
     // create a unique transaction_id
     let transaction_id;
     while (true) {
@@ -95,16 +40,18 @@ const recharge = async (req, res) => {
         amount: Number(amount),
         status: 'pending',
         type: 'debit',
-        description: `tv purchase for ${smartCardNumber}`,
+        description: `tv purchase for ${smartcardNumber}`,
         reference_number: transaction_id
     })
     // If validation is successful make data to proceed to purchase
     const rechargeRequestData = {
-        ...validateResponseData.details,
-        trans_id: transaction_id,
         service_id,
+        trans_id: transaction_id,
         productCode,
-        amount: Number(amount)
+        smartcardNumber,
+        customerName: `${customerDetails.firstName} ${customerDetails.lastName}`,
+        ...customerDetails,
+        amount: Number(amount),
     }
     console.log('recharge request data: ', rechargeRequestData);
     try {
@@ -125,7 +72,7 @@ const recharge = async (req, res) => {
         if (rechargeResponseData.message !== 'success') {
             console.log('purchase failed');
             return res.status(400).json({
-                message: 'failed',
+                message: rechargeResponseData.details || 'Check your inputs and try again',
                 error: 'recharge'
             })
         }
@@ -143,7 +90,7 @@ const recharge = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(422).json({
-            message: 'failed',
+            message: 'Check your inputs and try again',
             error: 'validation'
         })
     }
