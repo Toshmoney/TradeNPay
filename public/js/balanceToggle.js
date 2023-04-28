@@ -37,3 +37,23 @@ hideBalanceElement.addEventListener('click', () => {
 showBalanceElement.addEventListener('click', () => {
     showBalance()
 })
+
+const disableBuyButton = (buttonText='Please wait') => {
+    const submitButton = document.querySelector('button.submit-btn')
+    submitButton.disabled = true
+    submitButton.textContent = buttonText
+    submitButton.classList.add('disabled')
+}
+
+const activateBuyButton = (buttonText='Buy Now') => {
+    const submitButton = document.querySelector('button.submit-btn')
+    submitButton.disabled = false
+    submitButton.textContent = buttonText
+    submitButton.classList.remove('disabled')
+}
+
+const isBalanceEnough = (purchaseAmount) => {
+    const walletBalanceField = balanceField = document.querySelector('.wallet-balance')
+    const walletBalance = Number(walletBalanceField.dataset.balance )
+    return walletBalance >= purchaseAmount
+}
