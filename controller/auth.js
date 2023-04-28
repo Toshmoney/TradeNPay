@@ -21,10 +21,6 @@ const signUpPage = async (req, res) => {
     res.status(200).render("pages/signup", { messages })
 }
 
-const login = async (req, res) => {
-    res.redirect('/dashboard')
-}
-
 const signout = (req, res, next) => {
     req.logout(function(err) {
         if (err) { return next(err); }
@@ -78,7 +74,6 @@ const newUser = async (req, res, next) => {
 
 module.exports = {
     logInPage,
-    login,
     logout:signout,
     newUser,
     signUpPage,

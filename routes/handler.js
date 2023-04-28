@@ -21,7 +21,6 @@ const {
     newUser,
     signUpPage,
     logInPage,
-    login,
     logout
 } = require('../controller/auth')
 
@@ -29,11 +28,15 @@ router.route("/api/v1/packages").post(fetchPackages)
 router.route("/").get(homePage)
 router.route("/test").get(test)
 router.route("/login").get(logInPage)
-router.route("/login").post(passport.authenticate('local', {
+router.route("/login").post((req, res, next) => {
+    const redirectUrl = req.session.requestedUrl || '/dashboard';
+    passport.authenticate('local', {
+    successRedirect: redirectUrl,
     failureRedirect: '/login',
     failureFlash:'incorrect credientials',
     failureMessage: true
-}), login)
+  })(req, res, next);
+})
 router.route('/logout').get(logout)
 router.route("/sign-up").get(signUpPage)
 router.route("/sign-up").post(newUser)
