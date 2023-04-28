@@ -153,6 +153,10 @@
                 return false
             }
 
+            if (!isBalanceEnough(amount)) {
+                toastr.error('Kindly fund your wallet', 'Insufficient Balance')
+                return false
+            }
             return {
                 productCode,
                 amount,

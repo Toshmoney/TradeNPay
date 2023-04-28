@@ -144,9 +144,7 @@
                 toastr.error('Please select exam type and then enter quantity')
                 return false
             }
-            const walletBalanceField = balanceField = document.querySelector('.wallet-balance')
-            const walletBalance = Number(walletBalanceField.dataset.balance )
-            if (walletBalance < computedAmount) {
+            if (!isBalanceEnough(computedAmount)) {
                 toastr.error('Kindly fund your wallet', 'Insufficient Balance')
                 return false
             }
