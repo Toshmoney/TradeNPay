@@ -185,6 +185,7 @@
             .then(response => {
                 const { data } = response
                 console.log(data);
+                updateBalance(data.balance)
                 resetInputs()
                 toastr.success("Purchase successful", "Success")
             })
