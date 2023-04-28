@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/aside.css">
     <link rel="stylesheet" href="/css/general.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
     <section class="dashboard-container bill-page">
@@ -25,6 +26,15 @@
                         <img src="/images/Frame 12.png" alt="profile-picture">
                     </div>
                 </div>
+            </div>
+
+            <div class="balance-box">
+                <div class="flex gap-6 bal-toggle">
+                    <p class="font-medium">Available balance</p>
+                    <span id="" class="balance-toggle hide-balance"><i class="ri-eye-off-line"></i></span>
+                    <span id="" class="balance-toggle show-balance"><i class="ri-eye-line"></i></span>
+                </div>
+                <h3 data-balance="<%= balance %>" class="font-semibold text-3xl wallet-balance"><%= balance %></h3>
             </div>
 
             <section class="bill-box">
@@ -63,17 +73,10 @@
                     </form>
                 </div>
             </section>
-            <div class="balance-box">
-                <p>
-                    <span>Available Balance:</span>&nbsp;
-                    <strong class="wallet-balance">
-                        <%= balance %>
-                    </strong>
-                </p>
-            </div>
         </main>
     </section>
 
+    <script src="/js/balanceToggle.js"></script>
     <script src="/js/dashboard.js"></script>
     <script src="/js/jquery.js"></script>
     <script src="/js/toastr.js"></script>
@@ -110,19 +113,11 @@
         let unitPrice = 0;
         let amount = 0;
 
-        const nigerianCurrencyFormat = new Intl.NumberFormat('en-NG', {
-            currency: 'NGN',
-            style: 'currency',
-        });
-
-        const balanceField = document.querySelector('.wallet-balance')
-
         const updateBalance = (newBalance) => {
-            const formattedPrice = nigerianCurrencyFormat.format(newBalance)
-            balanceField.textContent = formattedPrice
+            const balanceField = document.querySelector('.wallet-balance')
+            balanceField.dataset.balance = newBalance
+            hideBalance()
         }
-
-        updateBalance(balanceField.textContent)
 
         const resetInputs = () => {
             examSelect.value = ""
@@ -135,6 +130,7 @@
             unitPrice = 0;
             amount = 0;
             submitButton.disabled = false
+            submitButton.classList.remove('disabled')
             submitButton.textContent = 'Buy Now'
         }
 
@@ -148,6 +144,13 @@
             if (!examType || !amount || !quantity || computedAmount !== amount || quantityEntered !== quantity) {
                 toastr.options = {...toastOptions}
                 toastr.error('Please select exam type and then enter quantity')
+                return false
+            }
+            const walletBalanceField = balanceField = document.querySelector('.wallet-balance')
+            const walletBalance = Number(walletBalanceField.dataset.balance )
+            if (walletBalance < computedAmount) {
+                toastr.options = {...toastOptions}
+                toastr.error('Kindly fund your wallet', 'Insufficient Balance')
                 return false
             }
             return {
@@ -167,6 +170,7 @@
             toastr.options = {...toastOptions, "timeOut": "1000"}
             toastr.info("Processing your purchase, pls wait", "Processing")
             submitButton.disabled = true
+            submitButton.classList.add('disabled')
             submitButton.textContent = 'Pls wait...'
             // send request to the server to 
             axios.post('/api/v1/exam/buy-result-checker', data)
@@ -182,6 +186,7 @@
             .catch(error => {
                 submitButton.disabled = false
                 submitButton.textContent = 'Buy Now'
+                submitButton.classList.remove('disabled')
                 if (error.response) {
                     const { data, status } = error.response
                     const { message } = data
@@ -189,11 +194,8 @@
                     if (status === 401 || status === 405) {
                         toastr.info('Pls logout and login again', 'Session Over')
                     }
-                    if (status === 400) {
-                        toastr.error(`${message}`)
-                    }
                     else {
-                        toastr.error('Unable to process your request', 'Try Again')
+                        toastr.error(`${message || 'Pls contact admin'}`)
                     }
                 }
                 else if (error.request) {
@@ -239,8 +241,12 @@
             }
             service_id = selectedService_id
             submitButton.disabled = true
+            submitButton.classList.add('disabled')
+            submitButton.textContent = 'Fetching price, pls wait'
             axios.post('/api/v1/packages', {service_id})
             .then(response => {
+                submitButton.classList.remove('disabled')
+                submitButton.textContent = 'Buy Now'
                 service_id = selectedService_id
                 const { price } = response.data;
                 const quantityEntered = Number(quantityField.value)
@@ -272,6 +278,8 @@
                     }
                     toastr.error("Check your input and try again", 'Poor Internet')
                 }
+                submitButton.textContent = 'Buy Now'
+                submitButton.classList.remove('disabled')
                 submitButton.disabled = false
             })
         }
