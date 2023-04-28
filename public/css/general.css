@@ -120,6 +120,10 @@ tbody > tr {
     gap: 1rem;
     row-gap: 0;
 }
+button.disabled {
+    background-color: darkgray;
+    cursor: not-allowed;
+}
 @-webkit-keyframes fadeIn {
     0% {
         opacity: 1;
