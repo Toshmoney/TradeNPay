@@ -99,6 +99,7 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         }
+        toastr.options = {...toastOptions }
         const examSelect = document.querySelector('select.exam')
         const emailField = document.querySelector('input.email')
         const phoneField = document.querySelector('input.phone')
@@ -129,9 +130,7 @@
             quantity = 1
             unitPrice = 0;
             amount = 0;
-            submitButton.disabled = false
-            submitButton.classList.remove('disabled')
-            submitButton.textContent = 'Buy Now'
+            activateBuyButton()
         }
 
         const validatedData = () => {
@@ -142,14 +141,12 @@
             const quantityEntered = Number(quantityField.value)
 
             if (!examType || !amount || !quantity || computedAmount !== amount || quantityEntered !== quantity) {
-                toastr.options = {...toastOptions}
                 toastr.error('Please select exam type and then enter quantity')
                 return false
             }
             const walletBalanceField = balanceField = document.querySelector('.wallet-balance')
             const walletBalance = Number(walletBalanceField.dataset.balance )
             if (walletBalance < computedAmount) {
-                toastr.options = {...toastOptions}
                 toastr.error('Kindly fund your wallet', 'Insufficient Balance')
                 return false
             }
@@ -169,9 +166,7 @@
             }
             toastr.options = {...toastOptions, "timeOut": "1000"}
             toastr.info("Processing your purchase, pls wait", "Processing")
-            submitButton.disabled = true
-            submitButton.classList.add('disabled')
-            submitButton.textContent = 'Pls wait...'
+            disableBuyButton()
             // send request to the server to 
             axios.post('/api/v1/exam/buy-result-checker', data)
             .then(response => {
@@ -180,17 +175,13 @@
                 const { balance } = data
                 updateBalance(balance)
                 resetInputs()
-                toastr.options = {...toastOptions }
                 toastr.success("Purchase successful", "Success")
             })
             .catch(error => {
-                submitButton.disabled = false
-                submitButton.textContent = 'Buy Now'
-                submitButton.classList.remove('disabled')
+                activateBuyButton()
                 if (error.response) {
                     const { data, status } = error.response
                     const { message } = data
-                    toastr.options = {...toastOptions }
                     if (status === 401 || status === 405) {
                         toastr.info('Pls logout and login again', 'Session Over')
                     }
@@ -240,13 +231,10 @@
                 return
             }
             service_id = selectedService_id
-            submitButton.disabled = true
-            submitButton.classList.add('disabled')
-            submitButton.textContent = 'Fetching price, pls wait'
+            disableBuyButton('Fetching price, pls wait')
             axios.post('/api/v1/packages', {service_id})
             .then(response => {
-                submitButton.classList.remove('disabled')
-                submitButton.textContent = 'Buy Now'
+                activateBuyButton('Buy Pin')
                 service_id = selectedService_id
                 const { price } = response.data;
                 const quantityEntered = Number(quantityField.value)
@@ -266,21 +254,14 @@
             })
             .catch(error => {
                 if (error.response) {
-                    toastr.options = {
-                        ...toastOptions
-                    }
-                    toastr.error("Check your input and try again", 'Invalid Option')
+                    const message = error.response.data || 'Contact technical support'
+                    toastr.error(message)
                     console.log(error.response.data);
                 }
                 else {
-                    toastr.options = {
-                        ...toastOptions
-                    }
-                    toastr.error("Check your input and try again", 'Poor Internet')
+                    toastr.error('Contact technical support')
                 }
-                submitButton.textContent = 'Buy Now'
-                submitButton.classList.remove('disabled')
-                submitButton.disabled = false
+                activateBuyButton()
             })
         }
 
