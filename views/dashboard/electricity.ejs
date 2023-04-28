@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/aside.css">
     <link rel="stylesheet" href="/css/general.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
     <section class="dashboard-container bill-page">
@@ -25,6 +26,14 @@
                         <img src="/images/Frame 12.png" alt="profile-picture">
                     </div>
                 </div>
+            </div>
+            <div class="balance-box">
+                <div class="flex gap-6 bal-toggle">
+                    <p class="font-medium">Available balance</p>
+                    <span id="" class="balance-toggle hide-balance"><i class="ri-eye-off-line"></i></span>
+                    <span id="" class="balance-toggle show-balance"><i class="ri-eye-line"></i></span>
+                </div>
+                <h3 data-balance="<%= balance %>" class="font-semibold text-3xl wallet-balance"><%= balance %></h3>
             </div>
 
             <section class="bill-box">
@@ -76,14 +85,10 @@
                     </form>
                 </div>
             </section>
-            <div class="balance-box">
-                <p class="wallet-balance">
-                    <%= balance %>
-                </p>
-            </div>
         </main>
     </section>
 
+    <script src="/js/balanceToggle.js"></script>
     <script src="/js/dashboard.js"></script>
     <script src="/js/jquery.js"></script>
     <script src="/js/toastr.js"></script>
@@ -106,6 +111,7 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         }
+        toastr.options = { ...toastOptions }
         const form = document.querySelector('form')
         const providerSelect = document.querySelector('select.provider')
         const packageSelect = document.querySelector('select.package')
@@ -122,8 +128,7 @@
             meterNumberField.value = ''
             emailField.value = ''
             amountField.value = ''
-            submitButton.disabled = false
-            submitButton.textContent = 'Buy Now'
+            activateBuyButton()
         }
 
         const validatedData = () => {
@@ -135,6 +140,30 @@
             const email = emailField.value
             const amount = Number(amountField.value)
             const meterNumber = meterNumberField.value
+
+            if (!service_id) {
+                toastr.error('Pls select your provider and then your meter type')
+                return false
+            }
+            if (!email) {
+                toastr.error('Pls enter your email', 'Email not entered')
+                return false
+            }
+            if (!phoneNumber) {
+                toastr.error('Pls enter your phone number', 'Phone number not entered')
+                return false
+            }
+            if (!meterNumber) {
+                toastr.error('Pls your device card number', 'Device number not entered')
+                return false
+            }
+            if (!amount) {
+                toastr.error('Kindly enter purchase amount')
+            }
+            if (!isBalanceEnough(amount)) {
+                toastr.error('Kindly fund your wallet', 'Insufficient Balance')
+                return false
+            }
             return {
                 service_id,
                 phoneNumber,
@@ -151,8 +180,7 @@
                 return
             }
             console.log(data);
-            submitButton.disabled = true
-            submitButton.textContent = 'Pls wait'
+           disableBuyButton()
             axios.post('/api/v1/power/recharge', data)
             .then(response => {
                 const { data } = response
@@ -161,8 +189,7 @@
                 toastr.success("Purchase successful", "Success")
             })
             .catch(error => {
-                submitButton.disabled = false
-                submitButton.textContent = 'Buy Now'
+                activateBuyButton()
                 if (error.response) {
                     const { data, status } = error.response
                     const { message } = data
