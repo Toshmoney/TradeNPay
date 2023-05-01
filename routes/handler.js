@@ -21,7 +21,10 @@ const {
     newUser,
     signUpPage,
     logInPage,
-    logout
+    logout,
+    forgotPassword,
+    confirmReset,
+    confirmPass
 } = require('../controller/auth')
 
 router.route("/api/v1/packages").post(fetchPackages)
@@ -39,6 +42,10 @@ router.route("/login").post((req, res, next) => {
 })
 router.route('/logout').get(logout)
 router.route("/sign-up").get(signUpPage)
+router.route("/forgot-password").get(forgotPassword)
+router.route("/forgot-password").post(forgotPassword)
+router.route("/confirmation").get(confirmPass)
+router.route("/confirmation").post(confirmReset)
 router.route("/sign-up").post(newUser)
 router.route("/dashboard").get(isLoggedIn, dashboard)
 router.route("/dashboard").post(dashboard)

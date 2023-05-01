@@ -11,6 +11,37 @@ const logInPage = async (req, res) => {
     res.status(200).render("pages/signin", { messages })
 }
 
+const forgotPassword = async (req, res)=>{
+    const errorMg = req.flash('error').join(' ')
+    const infoMg = req.flash('info').join(' ')
+    const messages = {
+        error: errorMg,
+        info: infoMg
+    }
+    res.status(200).render("pages/forgotPassword",{messages})
+}
+const confirmPass = async (req, res)=>{
+    res.status(200).render("pages/confirmation")
+}
+
+const confirmReset = async (req, res, next)=>{
+    const email = req.body.email;
+
+    // check if user enter email
+    if (!email) {
+        req.flash('error', 'You have not entered any email!')
+        return  res.redirect('/forgot-password')
+    }
+
+    // check if email exist
+    const existingEmail = await User.findOne({email: email})
+    if (!existingEmail) {
+        req.flash('error', 'There is no user with this email')
+        return  res.redirect('/forgot-password')
+    }
+    res.redirect("/confirmation")
+}
+
 const signUpPage = async (req, res) => {
     const errorMg = req.flash('error').join(' ')
     const infoMg = req.flash('info').join(' ')
@@ -77,4 +108,7 @@ module.exports = {
     logout:signout,
     newUser,
     signUpPage,
+    forgotPassword,
+    confirmReset,
+    confirmPass
 }
