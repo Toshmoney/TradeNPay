@@ -1,3 +1,6 @@
+require('dotenv').config();
+const {User} = require("../model/User.db")
+const key = process.env.pub_key;
 const Wallet = require("../model/Wallet")
 const Transaction = require("../model/Transaction")
 
@@ -114,7 +117,7 @@ const wallet = async (req, res) => {
     res.status(200).render("dashboard/wallet", data)
 };
 const fundWallet = (req, res)=>{
-    res.status(200).render("dashboard/fundwallet")
+    res.status(200).render("dashboard/fundwallet", {key : key})
 };
 
 const receiveWallet = (req, res)=>{
@@ -126,11 +129,24 @@ const verifyNow = (req, res) => {
 const setting = (req, res) => {
     res.status(200).render("dashboard/setting")
 };
-const profile = (req, res) => {
-    res.status(200).render("dashboard/profile")
+const profile = async(req, res) => {
+    const data = await dashboardData(req.user)
+    const errorMg = req.flash('error').join(' ')
+    const infoMg = req.flash('info').join(' ')
+    const messages = {
+        error: errorMg,
+        info: infoMg
+    }
+    res.status(200).render("dashboard/profile", {messages, data})
 };
+
+
+
+const privacyPolicy = async(req, res)=>{
+    res.status(200).render("dashboard/privacy")
+}
 
 module.exports = {
     homePage, dashboard, airtime, dataplan, billpayment, wallet,
-    fundWallet, receiveWallet, setting, verifyNow, profile, test, billPayer
+    fundWallet, receiveWallet, setting, verifyNow, profile, test, billPayer, privacyPolicy
 }

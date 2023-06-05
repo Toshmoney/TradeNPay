@@ -4,7 +4,7 @@ const router = express.Router();
 const { 
     homePage,dashboard,
     airtime,dataplan, billpayment, wallet, fundWallet,
-    receiveWallet, setting, profile, verifyNow, test, billPayer 
+    receiveWallet, setting, profile, verifyNow, test, billPayer, privacyPolicy 
 } = require("../controller/controller")
 
 const {
@@ -54,6 +54,7 @@ router.route("/wallet/fund").get(fundWallet);
 router.route("/wallet/receive").get(receiveWallet);
 router.route("/setting").get(isLoggedIn, setting);
 router.route("/profile").get(isLoggedIn, profile);
+router.route("/privacy-policy").get(isLoggedIn, privacyPolicy)
 router.route("/verify_now").get(verifyNow);
 router.route("/billpayment/:service").get(isLoggedIn, billPayer);
 
