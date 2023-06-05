@@ -1,6 +1,5 @@
 require('dotenv').config()
 const { generateTransId } = require("../utils")
-const Wallet = require('../model/Wallet')
 const Transaction = require("../model/Transaction")
 const { default: axios } = require("axios")
 
@@ -12,18 +11,8 @@ const buyAirtime = async (req, res) => {
         service_type
     } = req.body
     const user = req.user
-    if (!user) {
-        return res.status(401).json({
-            message: 'Pls log in'
-        })
-    }
     // check if user has enough in his wallet
-    const userWallet = await Wallet.findOne({ user: user._id })
-    if (!userWallet || userWallet.balance < Number(amount)) {
-        return res.status(400).json({
-            message: 'not enough in your wallet'
-        })
-    }
+    const userWallet = req.user.wallet
 
     // create a unique transaction_id
     let transaction_id;

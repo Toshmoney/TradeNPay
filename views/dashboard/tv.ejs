@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/aside.css">
     <link rel="stylesheet" href="/css/general.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
     <section class="dashboard-container bill-page">
@@ -25,6 +26,14 @@
                     <img src="/images/Frame 12.png" alt="profile-picture">
                 </div>
             </div>
+        </div>
+        <div class="balance-box">
+            <div class="flex gap-6 bal-toggle">
+                <p class="font-medium">Available balance</p>
+                <span id="" class="balance-toggle hide-balance"><i class="ri-eye-off-line"></i></span>
+                <span id="" class="balance-toggle show-balance"><i class="ri-eye-line"></i></span>
+            </div>
+            <h3 data-balance="<%= balance %>" class="font-semibold text-3xl wallet-balance"><%= balance %></h3>
         </div>
 
         <section class="bill-box">
@@ -64,10 +73,10 @@
                 </form>
             </div>
         </section>
-        
     </main>
     </section>
     
+    <script src="/js/balanceToggle.js"></script>
     <script src="/js/dashboard.js"></script>
     <script src="/js/jquery.js"></script>
     <script src="/js/toastr.js"></script>
@@ -77,19 +86,20 @@
             "closeButton": true,
             "debug": false,
             "newestOnTop": true,
-            "progressBar": false,
+            "progressBar": true,
             "positionClass": "toast-top-right",
             "preventDuplicates": false,
             "onclick": null,
             "showDuration": "300",
             "hideDuration": "1000",
-            "timeOut": "5000",
+            "timeOut": "3000",
             "extendedTimeOut": "1000",
             "showEasing": "swing",
             "hideEasing": "linear",
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         }
+        toastr.options = {...toastOptions}
         const form = document.querySelector('form')
         const providerSelect = document.querySelector("select.provider")
         const packageSelect = document.querySelector("select.package")
@@ -98,10 +108,11 @@
         const cardField = document.querySelector('input.card')
         const submitButton = document.querySelector('button.submit-btn')
 
-        const nigerianCurrencyFormat = new Intl.NumberFormat('en-NG', {
-            currency: 'NGN',
-            style: 'currency',
-        });
+        const updateBalance = (newBalance) => {
+            const balanceField = document.querySelector('.wallet-balance')
+            balanceField.dataset.balance = newBalance
+            hideBalance()
+        }
 
         const resetInputs = () => {
             providerSelect.value = ''
@@ -109,8 +120,7 @@
             emailField.value = ''
             phoneField.value = ''
             cardField.value = ''
-            submitButton.disabled = false
-            submitButton.textContent = 'Buy Now'
+           activateBuyButton()
         }
 
         const validatedData = () => {
@@ -119,7 +129,7 @@
             const [name, price, productCode] = packageSelect.value.split("**")
             const email = emailField.value
             const phoneNumber = phoneField.value
-            const smartCardNumber = cardField.value
+            const smartcardNumber = cardField.value
             const amount = Number(price)
 
             if (!service_id) {
@@ -138,11 +148,15 @@
                 toastr.error('Pls enter your phone number', 'Phone number not entered')
                 return false
             }
-            if (!smartCardNumber) {
+            if (!smartcardNumber) {
                 toastr.error('Pls your device card number', 'Device number not entered')
                 return false
             }
 
+            if (!isBalanceEnough(amount)) {
+                toastr.error('Kindly fund your wallet', 'Insufficient Balance')
+                return false
+            }
             return {
                 productCode,
                 amount,
@@ -150,7 +164,8 @@
                 service_id,
                 email,
                 phoneNumber,
-                smartCardNumber
+                smartcardNumber,
+                customerAccountId: smartcardNumber
             }
         }
 
@@ -159,38 +174,42 @@
             if (!data) {
                 return
             }
-            console.log(data);
             toastr.info("Processing your purchase, pls wait", "Processing")
-            submitButton.disabled = true
+            disableBuyButton()
             // send request to the server to 
             axios.post('/api/v1/tv/recharge', data)
             .then(response => {
                 const { data } = response
                 console.log(data);
+                updateBalance(data.balance)
                 resetInputs()
                 toastr.success("Purchase successful", "Success")
             })
             .catch(error => {
+                activateBuyButton()
                 if (error.response) {
                     const { data, status } = error.response
+                    const message = data.message || 'Try Again'
                     if (status === 401 || status === 405) {
                         toastr.info('Pls logout and login again', 'Session Over')
                     }
-                    if (status === 400) {
-                        toastr.error('Check your inputs and try again', 'Error')
+                    else {
+                        toastr.error(message)
                     }
-                    // toastr.error('Pls try again later', 'Error')
-                    console.log(error.response.data);
                 }
-                else {
+                else if (error.request) {
                     toastr.error('Pls check your internet connectivity and try again', 'Poor Internet')
                 }
-                submitButton.disabled = false
+                else {
+                    toastr.error('Pls check your inputs and try again')
+                }
             })
         }
 
         providerSelect.addEventListener("change", (event) => {
             const service_id = event.target.value
+            packageSelect.innerHTML = `<option value="">Please wait, fetching packages...</option>`
+            disableBuyButton('Fetching Packages')
             axios.post('/api/v1/packages', {service_id})
             .then(response => {
                 const packages = response.data
@@ -213,21 +232,28 @@
                     packageSelect.innerHTML = `<option value="">Service currently not availble</option>`
                     toastr.info('Choose another provider', 'Not availble')
                 }
+                activateBuyButton()
             })
             .catch(error => {
+                activateBuyButton()
                 if (error.response) {
                     const { data, status } = error.response
+                    const message = data.message || 'Try Again'
                     if (status === 401 || status === 405) {
                         toastr.info('Pls logout and login again', 'Session Over')
                     }
-                    toastr.info('Pls try again later', 'Error')
+                    else {
+                        toastr.error(message)
+                    }
+                }
+                else if (error.request) {
+                    toastr.error('Pls check your internet connectivity and try again', 'Poor Internet')
                 }
                 else {
-                    toastr.error('Pls check your internet connectivity and try again', 'Poor Internet')
+                    toastr.error('Pls check your inputs and try again')
                 }
                 providerSelect.innerHTML = `<option value="">Please select your provider</option>`
                 packageSelect.innerHTML = `<option value="">Please select your provider and then your prefered package</option>`
-                // console.log(error);
             })
         })
 

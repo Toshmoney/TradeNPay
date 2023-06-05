@@ -4,6 +4,7 @@ const axios = require('axios')
 const { randomChars, generateTransId } = require('./randomChars')
 const businessBalance = require('./businessBalance')
 const { transactionQuery } = require('./transactionQuery')
+const { dashboardData } = require("./dashboardData")
 
 const service_ids = {
     'mtn': { service_id:'BCA', requestType:'SME' },
@@ -72,5 +73,6 @@ module.exports = {
     randomChars,
     generateTransId,
     businessBalance,
-    transactionQuery
+    transactionQuery,
+    dashboardData,
 }

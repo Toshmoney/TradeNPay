@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 require('dotenv').config();
 const {User} = require("../model/User.db")
 const key = process.env.pub_key;
@@ -55,6 +56,9 @@ const dashboardData = async (user) => {
     }
     return data
 }
+=======
+const { dashboardData } = require("../utils/dashboardData")
+>>>>>>> bc67ef13adbe7dad829c64297b14afe8d6fb3413
 
 const {
     fetchPrices

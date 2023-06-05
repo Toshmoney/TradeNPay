@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/aside.css">
     <link rel="stylesheet" href="/css/general.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
     <section class="dashboard-container bill-page">
@@ -26,51 +27,59 @@
                     </div>
                 </div>
             </div>
+            <div class="balance-box">
+                <div class="flex gap-6 bal-toggle">
+                    <p class="font-medium">Available balance</p>
+                    <span id="" class="balance-toggle hide-balance"><i class="ri-eye-off-line"></i></span>
+                    <span id="" class="balance-toggle show-balance"><i class="ri-eye-line"></i></span>
+                </div>
+                <h3 data-balance="<%= balance %>" class="font-semibold text-3xl wallet-balance"><%= balance %></h3>
+            </div>
 
             <section class="bill-box">
                 <div class="bill-payer">
                     <form>
                         <div class="form-field">
                             <label id="provider">Provider</label>
-                            <select name="provider" id="provider" class="provider">
+                            <select name="provider" id="provider" class="provider" required>
                                 <option value="">Please select your provider</option>
-                                <option value="">Abuja </option>
-                                <option value="">Eko </option>
-                                <option value="">Ibadan</option>
-                                <option value="">IKeja</option>
-                                <option value="">Jos</option>
-                                <option value="">Kaduna</option>
-                                <option value="">Kano</option>
-                                <option value="">Port-Harcourt</option>
+                                <option value="AHB AHA">Abuja </option>
+                                <option value="ANA ANB">Eko </option>
+                                <option value="AEA AEB">Ibadan</option>
+                                <option value="AMA AMB">IKeja</option>
+                                <option value="ACB ACA">Jos</option>
+                                <option value="AGB AGA">Kaduna</option>
+                                <option value="AFA AFB">Kano</option>
+                                <option value="ADB ADA">Port-Harcourt</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <div class="form-field">
                                 <label for="package">Meter Type</label>
-                                <select name="package" id="package" class="package">
+                                <select name="package" id="package" class="package" required>
                                     <option value="">Please select meter type</option>
-                                    <option value="">Prepaid</option>
-                                    <option value="">Postpaid</option>
+                                    <option value="0">Prepaid</option>
+                                    <option value="1">Postpaid</option>
                                 </select>
                             </div>
                             <div class="form-field">
                                 <label for="meter-number">Meter Number</label>
-                                <input name="meter-number" id="meter-number" class="meter-number" placeholder="Enter Meter Number" />
+                                <input name="meter-number" id="meter-number" class="meter-number" placeholder="Enter Meter Number" required />
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form-field">
                                 <label for="phone">Phone Number</label>
-                                <input name="phone" id="phone" class="phone" placeholder="Enter Phone Number" />
+                                <input name="phone" id="phone" class="phone" placeholder="Enter Phone Number" required />
                             </div>
                             <div class="form-field">
                                 <label for="email">Email Address</label>
-                                <input name="email" id="email" class="email" type="tel" placeholder="Enter Your Email Address" />
+                                <input name="email" id="email" class="email" type="tel" placeholder="Enter Your Email Address" required />
                             </div>
                         </div>
                         <div class="form-field">
                             <label for="amount">Amount</label>
-                            <input name="amount" id="amount" class="amount" type="number" placeholder="Enter Amount" />
+                            <input name="amount" id="amount" class="amount" type="number" placeholder="Enter Amount" required />
                         </div>
                         <button class="block-btn submit-btn cta">Buy Now</button>
                     </form>
@@ -79,6 +88,7 @@
         </main>
     </section>
 
+    <script src="/js/balanceToggle.js"></script>
     <script src="/js/dashboard.js"></script>
     <script src="/js/jquery.js"></script>
     <script src="/js/toastr.js"></script>
@@ -101,6 +111,7 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         }
+        toastr.options = { ...toastOptions }
         const form = document.querySelector('form')
         const providerSelect = document.querySelector('select.provider')
         const packageSelect = document.querySelector('select.package')
@@ -110,13 +121,99 @@
         const amountField = document.querySelector('input.amount')
         const submitButton = document.querySelector('.submit-btn')
 
+        const resetInputs = () => {
+            providerSelect.value = ''
+            packageSelect.value = ''
+            phoneField.value = ''
+            meterNumberField.value = ''
+            emailField.value = ''
+            amountField.value = ''
+            activateBuyButton()
+        }
+
         const validatedData = () => {
-            return
+            const supplier = providerSelect.value.split(" ")
+            const packageIndex = packageSelect.value
+            const serviceIndex = Number(packageIndex)
+            const service_id = supplier[serviceIndex]
+            const phoneNumber = phoneField.value
+            const email = emailField.value
+            const amount = Number(amountField.value)
+            const meterNumber = meterNumberField.value
+
+            if (!service_id) {
+                toastr.error('Pls select your provider and then your meter type')
+                return false
+            }
+            if (!email) {
+                toastr.error('Pls enter your email', 'Email not entered')
+                return false
+            }
+            if (!phoneNumber) {
+                toastr.error('Pls enter your phone number', 'Phone number not entered')
+                return false
+            }
+            if (!meterNumber) {
+                toastr.error('Pls your device card number', 'Device number not entered')
+                return false
+            }
+            if (!amount) {
+                toastr.error('Kindly enter purchase amount')
+            }
+            if (!isBalanceEnough(amount)) {
+                toastr.error('Kindly fund your wallet', 'Insufficient Balance')
+                return false
+            }
+            return {
+                service_id,
+                phoneNumber,
+                email,
+                amount,
+                meterNumber,
+                customerAccountId: meterNumber
+            }
+        }
+
+        const recharge = () => {
+            const data = validatedData()
+            if (!data) {
+                return
+            }
+            console.log(data);
+           disableBuyButton()
+            axios.post('/api/v1/power/recharge', data)
+            .then(response => {
+                const { data } = response
+                console.log(data);
+                updateBalance(data.balance)
+                resetInputs()
+                toastr.success("Purchase successful", "Success")
+            })
+            .catch(error => {
+                activateBuyButton()
+                if (error.response) {
+                    const { data, status } = error.response
+                    const { message } = data
+                    if (status === 401 || status === 405) {
+                        toastr.info('Pls logout and login again', 'Session Over')
+                    }
+                    else {
+                        toastr.error(`${message || 'Pls contact the admin'}`)
+                    }
+                    console.log(error.response.data);
+                }
+                else if (error.request) {
+                    toastr.error('Pls check your internet connectivity and try again', 'Poor Internet')
+                }
+                else {
+                    toastr.error('Pls contact the admin')
+                }
+            })
         }
 
         form.addEventListener('submit', (event) => {
             event.preventDefault()
-            toastr.success("Purchase successful", "Success")
+            recharge()
         })
     </script>      
 </body>

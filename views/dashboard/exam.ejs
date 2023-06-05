@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/aside.css">
     <link rel="stylesheet" href="/css/general.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
     <section class="dashboard-container bill-page">
@@ -25,6 +26,15 @@
                         <img src="/images/Frame 12.png" alt="profile-picture">
                     </div>
                 </div>
+            </div>
+
+            <div class="balance-box">
+                <div class="flex gap-6 bal-toggle">
+                    <p class="font-medium">Available balance</p>
+                    <span id="" class="balance-toggle hide-balance"><i class="ri-eye-off-line"></i></span>
+                    <span id="" class="balance-toggle show-balance"><i class="ri-eye-line"></i></span>
+                </div>
+                <h3 data-balance="<%= balance %>" class="font-semibold text-3xl wallet-balance"><%= balance %></h3>
             </div>
 
             <section class="bill-box">
@@ -66,6 +76,7 @@
         </main>
     </section>
 
+    <script src="/js/balanceToggle.js"></script>
     <script src="/js/dashboard.js"></script>
     <script src="/js/jquery.js"></script>
     <script src="/js/toastr.js"></script>
@@ -81,14 +92,14 @@
             "onclick": null,
             "showDuration": "300",
             "hideDuration": "1000",
-            "timeOut": "5000",
+            "timeOut": "3000",
             "extendedTimeOut": "1000",
             "showEasing": "swing",
             "hideEasing": "linear",
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         }
-        
+        toastr.options = {...toastOptions }
         const examSelect = document.querySelector('select.exam')
         const emailField = document.querySelector('input.email')
         const phoneField = document.querySelector('input.phone')
@@ -102,6 +113,88 @@
         let quantity = 1
         let unitPrice = 0;
         let amount = 0;
+
+        const updateBalance = (newBalance) => {
+            const balanceField = document.querySelector('.wallet-balance')
+            balanceField.dataset.balance = newBalance
+            hideBalance()
+        }
+
+        const resetInputs = () => {
+            examSelect.value = ""
+            emailField.value = ""
+            phoneField.value = ""
+            amountField.value = ""
+            quantityField.value = ""
+            quantityField.value = 1
+            quantity = 1
+            unitPrice = 0;
+            amount = 0;
+            activateBuyButton()
+        }
+
+        const validatedData = () => {
+            const examType = examSelect.value
+            const email = emailField.value
+            const phoneNumber = phoneField.value
+            const computedAmount = Number(amountField.value)
+            const quantityEntered = Number(quantityField.value)
+
+            if (!examType || !amount || !quantity || computedAmount !== amount || quantityEntered !== quantity) {
+                toastr.error('Please select exam type and then enter quantity')
+                return false
+            }
+            if (!isBalanceEnough(computedAmount)) {
+                toastr.error('Kindly fund your wallet', 'Insufficient Balance')
+                return false
+            }
+            return {
+                service_id: examType,
+                email,
+                quantity,
+                amount,
+                phoneNumber
+            }
+        }
+
+        const recharge = () => {
+            const data = validatedData()
+            if (!data) {
+                return
+            }
+            toastr.options = {...toastOptions, "timeOut": "1000"}
+            toastr.info("Processing your purchase, pls wait", "Processing")
+            disableBuyButton()
+            // send request to the server to 
+            axios.post('/api/v1/exam/buy-result-checker', data)
+            .then(response => {
+                const { data } = response
+                console.log(data);
+                const { balance } = data
+                updateBalance(balance)
+                resetInputs()
+                toastr.success("Purchase successful", "Success")
+            })
+            .catch(error => {
+                activateBuyButton()
+                if (error.response) {
+                    const { data, status } = error.response
+                    const { message } = data
+                    if (status === 401 || status === 405) {
+                        toastr.info('Pls logout and login again', 'Session Over')
+                    }
+                    else {
+                        toastr.error(`${message || 'Pls contact admin'}`)
+                    }
+                }
+                else if (error.request) {
+                    toastr.error('Pls check your internet connectivity and try again', 'Poor Internet')
+                }
+                else {
+                    toastr.error('Pls contact admin')
+                }
+            })
+        }
         
         const updateQuantity = () => {
             if (!unitPrice) {
@@ -121,6 +214,7 @@
                 toastr.error("Quantity must be greater than zero")
                 return
             }
+            quantity = quantityEntered
             amount = quantityEntered * unitPrice
             amountField.value = amount
         }
@@ -135,8 +229,11 @@
                 return
             }
             service_id = selectedService_id
+            disableBuyButton('Fetching price, pls wait')
             axios.post('/api/v1/packages', {service_id})
             .then(response => {
+                activateBuyButton('Buy Pin')
+                service_id = selectedService_id
                 const { price } = response.data;
                 const quantityEntered = Number(quantityField.value)
                 unitPrice = price
@@ -151,21 +248,18 @@
                     amountField.value = price
                     amount = price
                 }
+                submitButton.disabled = false
             })
             .catch(error => {
                 if (error.response) {
-                    toastr.options = {
-                        ...toastOptions
-                    }
-                    toastr.error("Check your input and try again", 'Invalid Option')
+                    const message = error.response.data || 'Contact technical support'
+                    toastr.error(message)
                     console.log(error.response.data);
                 }
                 else {
-                    toastr.options = {
-                        ...toastOptions
-                    }
-                    toastr.error("Check your input and try again", 'Poor Internet')
+                    toastr.error('Contact technical support')
                 }
+                activateBuyButton()
             })
         }
 
@@ -179,11 +273,7 @@
 
         form.addEventListener("submit", (event) => {
             event.preventDefault()
-            console.log(amount);
-            toastr.options = {
-                ...toastOptions
-            }
-            toastr.success('Purchased processed', 'Success')
+            recharge()
         })
     </script>
 </body>

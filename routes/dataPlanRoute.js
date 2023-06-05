@@ -1,5 +1,7 @@
 const express = require('express')
 
+const verifyWallet = require("../middleware/checkUserWallet")
+
 const {
     fetchDataPrices,
     buyData
@@ -8,6 +10,6 @@ const {
 const router = express.Router()
 
 router.route('/prices').post(fetchDataPrices)
-router.route('/recharge').post(buyData)
+router.route('/recharge').post(verifyWallet, buyData)
 
 module.exports = router

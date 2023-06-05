@@ -5,9 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AlphaBills | Buy Data</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/aside.css">
-    <link rel="stylesheet" href="css/DataPlans.css">
+    <link rel="stylesheet" href="/css/toastr.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/aside.css">
+    <link rel="stylesheet" href="/css/DataPlans.css">
 </head>
 <body>
     <section class="dashboard-container">
@@ -26,69 +28,100 @@
                     </div>
                 </div>
             </div>
-
-           <div class="form-group">
-                <div class="choose form-field">
-                    <label class="bold" for="network">SELECT NETWORK PROVIDER</label>
-                    <select class="network" name="network" id="network" value="Select Option">
-                        <option value="">Select Option</option>
-                        <option value="BCA SME">MTN NG</option>
-                        <option value="BCC GIFTING">GLO</option>
-                        <option value="BCB GIFTING">9MOBILE</option>
-                        <option value="BCD GIFTING">AIRTEL NG</option>
-                    </select>
-                </div>
-                <div class="choose form-field">
-                    <label class="bold" for="prices">CHOOSE PLAN</label>
-                    <select class="prices" name="prices" id="prices" value="Select Option">
-                        <option value="">Select Option</option>
-                        <% details.forEach(function(detail, i, arr){ -%>
-                            <option value="<%= detail.code %> <%= detail.cost %>"><%= detail.cost %> for <%= detail.value %>MB</option>
-                        <% }); -%>
-                    </select>
-                </div>
-           </div>
-
-            <div class="form-group">
-                <div class="form-field">
-                    <label class="bold" for="phoneNumber">PHONE NO.</label>
-                    <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="90 4563 763 275">
-                </div>
-                <div class="form-field">
-                    <label class="bold" for="amount">AMOUNT</label>
-                    <input type="number" name="amount" id="amount" placeholder="0.00">
-                </div>
+            <div class="bill-payer">
+                <form action="">
+                    <div class="form-group">
+                        <div class="choose form-field">
+                            <label class="bold" for="network">SELECT NETWORK PROVIDER</label>
+                            <select class="network" name="network" id="network" value="Select Option">
+                                <!-- <option value="">Select Option</option> -->
+                                <option value="BCA SME">MTN NG</option>
+                                <option value="BCC GIFTING">GLO</option>
+                                <option value="BCB GIFTING">9MOBILE</option>
+                                <option value="BCD GIFTING">AIRTEL NG</option>
+                            </select>
+                        </div>
+                        <div class="choose form-field">
+                            <label class="bold" for="prices">CHOOSE PLAN</label>
+                            <select class="prices" name="prices" id="prices" value="Select Option">
+                                <option value="">Select Option</option>
+                                <% details.forEach(function(detail, i, arr){ -%>
+                                    <option value="<%= detail.code %> <%= detail.cost %>"><%= detail.cost %> for <%= detail.value %>MB</option>
+                                <% }); -%>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label class="bold" for="phoneNumber">PHONE NO.</label>
+                        <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="0901 2345 678">
+                    </div>
+                    <div class="page-end">
+                        <p class="flex gap-6 bold wallet-balance">
+                            Total Bal.<span><%= balance %></span>
+                        </p>
+                        <div class="ctas">
+                            <button type="button" class="cta share">share</button></a>
+                            <button type="submit" class="cta submit submit-btn">Continue</button>
+                        </div>
+                    </div>
+                </form>
             </div>
 
-            <div class="page-end">
-                <p class="flex gap-6 bold wallet-balance">
-                    Total Bal.<span><%= balance %></span>
-                </p>
-                <div class="ctas">
-                    <button class="cta share">share</button></a>
-                    <button class="cta submit">Continue</button>
-                </div>
-            </div>
         </main>
     </section>
     
-    <script src="js/dashboard.js"></script>
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/toastr.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+        const phoneNumberRegex = /^\d{11}$/;
+        const toastOptions = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "4000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        toastr.options = { ...toastOptions }
         let walletBalance = 0;
         const balanceElement = document.querySelector('.wallet-balance > span')
         walletBalance = Number(balanceElement.textContent)
         balanceElement.textContent = `N${walletBalance}`
 
+        const form = document.querySelector('form')
         const networkSelect = document.querySelector('select.network')
         const pricesSelect = document.querySelector('select.prices')
-        const continueButton = document.querySelector('button.submit')
+        const submitButton = document.querySelector('button.submit-btn')
         const phoneNumberInput = document.querySelector('input#phoneNumber')
+
+        const disableBuyButton = (buttonText='Please wait') => {
+            submitButton.disabled = true
+            submitButton.textContent = buttonText
+            submitButton.classList.add('disabled')
+        }
+
+        const activateBuyButton = (buttonText='Buy Now') => {
+            submitButton.disabled = false
+            submitButton.textContent = buttonText
+            submitButton.classList.remove('disabled')
+        }
 
         const resetInputs = () => {
             networkSelect.value = ""
             pricesSelect.value = ""
             phoneNumber.value = ""
+            activateBuyButton()
         }
 
         const validatedData = () => {
@@ -96,28 +129,25 @@
             let [code, amount] = pricesSelect.value.split(" ")
             amount = Number(amount)
             const [service_id, service_type] = networkSelect.value.split(" ")
-            const phoneNumber = phoneNumberInput.value
+            const phoneNumber = phoneNumberInput.value.replaceAll(" ", "")
 
             // validate data
             if (!service_id || !service_type) {
-                alert('Pls select network')
+                toastr.error('Pls select network provider')
                 return false
             }
-
             if (!amount || !code ) {
-                alert('Pls choose plan')
+                toastr.error('Pls choose plan')
+                return false
+            }
+            if (!phoneNumberRegex.test(phoneNumber)) {
+                toastr.error('Pls enter 11 digits phone number to recharge', 'Invalid Number')
                 return false
             }
             if (walletBalance < amount) {
-                alert('not enough balance in your wallet')
+                toastr.error('Kindly fund your wallet', 'Insufficient Wallet Balance')
                 return false
             }
-
-            if (!phoneNumber) {
-                alert('Pls enter phone number')
-                return false
-            }
-
             return {
                 amount, code,
                 beneficiary: phoneNumber,
@@ -130,14 +160,21 @@
             if (!validatedData()) {
                 return
             }
+<<<<<<< HEAD
 
+=======
+>>>>>>> bc67ef13adbe7dad829c64297b14afe8d6fb3413
             const {
                 amount, code,
                 beneficiary,
                 service_id, service_type
             } = validatedData()
+<<<<<<< HEAD
             
             continueButton.textContent = 'Please wait'
+=======
+            disableBuyButton()
+>>>>>>> bc67ef13adbe7dad829c64297b14afe8d6fb3413
              // send to server for purchase
              axios.post("/api/v1/data_plan/recharge", {
                 amount,
@@ -150,29 +187,33 @@
                 const { data } = res
                 walletBalance = data.balance || walletBalance - amount
                 balanceElement.textContent = `N${walletBalance}`
-                alert('transaction succesfull')
                 resetInputs()
-                continueButton.textContent ='continue'
+                toastr.success('Your transaction is being processed')
             })
             .catch(error => {
                 if (error.response) {
                     const { data, status } = error.response
+                    const { message } = data
                     if (status === 401 || status === 405) {
-                        window.location.href = '/data'
+                        toastr.info('Pls logout and login again', 'Session Over')
                     }
-                    const message = data.message || 'unable to complete transaction'
-                    alert(message)
+                    else {
+                        toastr.error(`${message || 'Pls contact the admin'}`)
+                    }
+                    console.log(error.response.data);
+                }
+                else if (error.request) {
+                    toastr.error('Pls check your internet connectivity and try again', 'Poor Internet')
                 }
                 else {
-                    alert('unable to complete transaction')
+                    toastr.error('Pls contact the admin')
                 }
-                continueButton.textContent ='continue'
-                resetInputs()
-                console.log('error', error);
+                activateBuyButton()
             })
         }
 
-        continueButton.addEventListener('click', () => {
+        form.addEventListener('submit', (event) => {
+            event.preventDefault()
             recharge()
         })
 
@@ -180,8 +221,11 @@
             const data = {
                 service_id, requestType
             }
+            disableBuyButton()
+            pricesSelect.innerHTML = `<option value="">Fetching packages</option>`
             axios.post("/api/v1/data_plan/prices", data)
             .then((response) => {
+                activateBuyButton()
                 const prices = response.data
                 pricesSelect.innerHTML = `<option value="">Select Option</option>`
                 for (let index = 0; index < prices.length; index++) {
@@ -190,6 +234,8 @@
                 }
             })
             .catch(error => {
+                activateBuyButton()
+                pricesSelect.innerHTML = `<option value="">Select your network provider and then desired plan</option>`
                 console.log(error);
             })
         }

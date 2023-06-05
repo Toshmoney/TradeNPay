@@ -1,8 +1,8 @@
 .pay-area{
     display: flex;
     flex-direction: column;
-    gap: 40px;
-    padding-top: 40px;
+    gap: 1rem;
+    margin-top: 40px;
 }
 
 .cable{
@@ -11,25 +11,11 @@
     padding: .5rem 1rem;
 }
 
-.cable:not(.closed) .toggler {
-    transform: rotate(90deg);
-}
-
 .cable .service-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-}
-.service-list-box {
-    height: 0px;
-    overflow: hidden;
-}
-.service-items {
-    padding-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
 }
 .icon{
     display: flex;

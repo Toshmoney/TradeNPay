@@ -5,9 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AlphaBills | Buy Airtime </title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/aside.css">
-    <link rel="stylesheet" href="css/DataPlans.css">
+    <link rel="stylesheet" href="/css/toastr.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/aside.css">
+    <link rel="stylesheet" href="/css/DataPlans.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
     <section class="dashboard-container">
@@ -56,15 +59,36 @@
             </p>
             <div class="ctas">
                 <button class="cta share">share</button></a>
-                <button class="cta submit">Continue</button>
+                <button class="cta submit submit-btn">Buy Now</button>
             </div>
         </div>
     </main>
     </section>
     
     <script src="js/dashboard.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/toastr.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+        const phoneNumberRegex = /^\d{11}$/;
+        const toastOptions = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        toastr.options = { ...toastOptions }
         let walletBalance = 0;
         const balanceElement = document.querySelector('.wallet-balance > span')
         walletBalance = Number(balanceElement.textContent)
@@ -73,12 +97,25 @@
         const networkSelect = document.querySelector('select.network')
         const phoneNumberInput = document.querySelector('input#phoneNumber')
         const amountInput = document.querySelector('input#amount')
-        const submitButton = document.querySelector('button.submit')
+        const submitButton = document.querySelector('button.submit-btn')
+
+        const disableBuyButton = (buttonText='Please wait') => {
+            submitButton.disabled = true
+            submitButton.textContent = buttonText
+            submitButton.classList.add('disabled')
+        }
+
+        const activateBuyButton = (buttonText='Buy Now') => {
+            submitButton.disabled = false
+            submitButton.textContent = buttonText
+            submitButton.classList.remove('disabled')
+        }
 
         const resetInputs = () => {
             networkSelect.value = ""
             phoneNumberInput.value = ""
             amountInput.value = ""
+            activateBuyButton()
         }
 
         const validatedData = () => {
@@ -86,23 +123,19 @@
             const amount = Number(amountInput.value)
             const phoneNumber = phoneNumberInput.value.replaceAll(" ", "")
             if (!service_id || !service_type) {
-                alert('pls select network')
+                toastr.error('Pls select network provider')
                 return false
             }
-            if (!phoneNumber) {
-                alert('pls enter phone number')
+            if (!phoneNumberRegex.test(phoneNumber)) {
+                toastr.error('Pls enter 11 digits phone number to recharge', 'Invalid Number')
                 return false
             }
-            if (!amount) {
-                alert('pls enter amount')
-                return false
-            }
-            if (amount <= 0 || amount % 100 !== 0) {
-                alert('amount must be greater than 0 and must be multiple of 100. e.g 100, 200,...')
+            if (!amount || amount <= 0 || amount % 100 !== 0) {
+                toastr.error('Amount must be greater than 0 and must be multiple of 100. e.g 100, 200,...')
                 return false
             }
             if (walletBalance < amount) {
-                alert('not enough balance in your wallet')
+                toastr.error('Kindly fund your wallet', 'Insufficient Wallet Balance')
                 return false
             }
             return {
@@ -119,7 +152,7 @@
                 service_id, service_type,
                 amount, phoneNumber
             } = validatedData()
-            submitButton.textContent = 'Please wait...'
+            disableBuyButton()
             axios.post('/api/v1/airtime/recharge', {
                 service_id,
                 service_type,
@@ -127,27 +160,31 @@
                 phoneNumber
             })
             .then(response => {
-                submitButton.textContent = 'Continue'
                 const { data } = response
                 walletBalance = data.balance || walletBalance - amount
                 balanceElement.textContent = `N${walletBalance}`
                 resetInputs()
-                alert('Your transaction is being processed')
+                toastr.success('Your transaction is being processed')
             })
             .catch(error => {
                 if (error.response) {
-                    const { status, data } = error.response
-                    if (status === 401 || status === 403) {
-                        window.location.href = '/airtime'
+                    const { data, status } = error.response
+                    const { message } = data
+                    if (status === 401 || status === 405) {
+                        toastr.info('Pls logout and login again', 'Session Over')
                     }
-                    const message = data.message || 'unable to complete transaction'
-                    alert(message)
-                    submitButton.textContent ='Continue'
+                    else {
+                        toastr.error(`${message || 'Pls contact the admin'}`)
+                    }
+                    console.log(error.response.data);
+                }
+                else if (error.request) {
+                    toastr.error('Pls check your internet connectivity and try again', 'Poor Internet')
                 }
                 else {
-                    alert('pls check your network and try again')
+                    toastr.error('Pls contact the admin')
                 }
-                resetInputs()
+                activateBuyButton()
             })
         }
 

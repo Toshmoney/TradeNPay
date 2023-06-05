@@ -1,29 +1,32 @@
 require("dotenv").config()
 const { default: axios } = require("axios")
 const Transaction = require("../model/Transaction")
+
 const { generateTransId } = require("../utils")
 
 const recharge = async (req, res) => {
     const user = req.user
-    const { service_id, smartcardNumber, productCode, amount } = req.body
+    const { service_id, meterNumber, amount, phoneNumber, email } = req.body
     if (!service_id) {
         return res.status(400).json({
             message: 'missing provider',
             error: 'service_id'
         })
     }
-    if (!smartcardNumber) {
+    if (!meterNumber) {
         return res.status(400).json({
-            message: 'missing smart card/device number',
-            error: 'card'
+            message: 'missing meter number',
+            error: 'meter'
         })
     }
     // check if user has enough in his wallet
     const userWallet = req.user.wallet
-    
+
+    console.log('validation started');
     // first validate smart card number
     const customerDetails = req.customerDetails
-    console.log('validation completed');
+    console.log('validation succesful');
+    
     // create a unique transaction_id
     let transaction_id;
     while (true) {
@@ -40,18 +43,30 @@ const recharge = async (req, res) => {
         amount: Number(amount),
         status: 'pending',
         type: 'debit',
-        description: `tv purchase for ${smartcardNumber}`,
+        description: `electricity purchase for ${meterNumber}`,
         reference_number: transaction_id
     })
     // If validation is successful make data to proceed to purchase
+    const customerName = `${customerDetails.firstName} ${customerDetails.lastName}` || ""
     const rechargeRequestData = {
         service_id,
         trans_id: transaction_id,
-        productCode,
-        smartcardNumber,
-        customerName: `${customerDetails.firstName} ${customerDetails.lastName}`,
-        ...customerDetails,
+        meterNumber,
+        customerNumber: meterNumber,
+        customerReference: meterNumber, // account number of the customer
+        customerPhoneNumber: phoneNumber,
+        customerMobileNumber: phoneNumber,
+        customerPhone: phoneNumber,
+        customerEmail: email,
+        customerName,
+        contactType: 'LANDLORD',
+        email: email,
+        phoneNumber,
+        tariffCode: meterNumber,
+        thirdPartyCode: '',
+        serviceBand: "",
         amount: Number(amount),
+        ...customerDetails,
     }
     console.log('recharge request data: ', rechargeRequestData);
     try {
@@ -69,10 +84,10 @@ const recharge = async (req, res) => {
         )
         const rechargeResponseData = rechargeResponse.data
         console.log(rechargeResponseData);
-        if (rechargeResponseData.message !== 'success') {
+        if (rechargeResponseData.message !== 'success' || !rechargeResponseData.details || typeof rechargeResponseData.details !== 'object') {
             console.log('purchase failed');
             return res.status(400).json({
-                message: rechargeResponseData.details || 'Check your inputs and try again',
+                message: `${rechargeResponseData.details || 'Unable to process request'}`,
                 error: 'recharge'
             })
         }
@@ -90,12 +105,12 @@ const recharge = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(422).json({
-            message: 'Check your inputs and try again',
+            message: 'Unable to process request',
             error: 'validation'
         })
     }
 }
 
 module.exports = {
-    rechargeTv: recharge
+    rechargeElectricity: recharge
 }
