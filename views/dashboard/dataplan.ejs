@@ -160,21 +160,12 @@
             if (!validatedData()) {
                 return
             }
-<<<<<<< HEAD
-
-=======
->>>>>>> bc67ef13adbe7dad829c64297b14afe8d6fb3413
             const {
                 amount, code,
                 beneficiary,
                 service_id, service_type
             } = validatedData()
-<<<<<<< HEAD
-            
-            continueButton.textContent = 'Please wait'
-=======
             disableBuyButton()
->>>>>>> bc67ef13adbe7dad829c64297b14afe8d6fb3413
              // send to server for purchase
              axios.post("/api/v1/data_plan/recharge", {
                 amount,
