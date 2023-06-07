@@ -62,12 +62,12 @@ router.route("/airtime").get(isLoggedIn, airtime);
 router.route("/data").get(isLoggedIn, dataplan);
 router.route("/billpayment").get(isLoggedIn, billpayment);
 router.route("/wallet").get(isLoggedIn, wallet);
-router.route("/wallet/fund").get(fundWallet);
-router.route("/wallet/receive").get(receiveWallet);
+router.route("/wallet/fund").get(isLoggedIn, fundWallet);
+router.route("/wallet/receive").get(isLoggedIn, receiveWallet);
 router.route("/setting").get(isLoggedIn, setting);
 router.route("/profile").get(isLoggedIn, profile);
 router.route("/privacy-policy").get(isLoggedIn, privacyPolicy);
-router.route("/verify_now").get(verifyNow);
+router.route("/verify_now").get(isLoggedIn, verifyNow);
 router.route("/billpayment/:service").get(isLoggedIn, billPayer);
 router.route("/wallet/verify-payment").post(isLoggedIn, fundWalletVerify);
 
