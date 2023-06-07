@@ -1,10 +1,12 @@
 require("dotenv").config();
 const { default: axios } = require("axios");
+const { formatTransaction } = require("../utils");
 
 const Transaction = require("../model/Transaction");
 const Wallet = require("../model/Wallet");
 
 const fundWallet = async (req, res) => {
+  const user = req.user;
   const { amount, reference } = req.body;
   if (!amount || !reference) {
     return res.status(400).json({
@@ -12,7 +14,7 @@ const fundWallet = async (req, res) => {
       status: false,
     });
   }
-  let wallet = Wallet.findOne({ user: user });
+  let wallet = await Wallet.findOne({ user: user });
   if (!wallet) {
     wallet = new Wallet({
       user: user,
@@ -25,7 +27,7 @@ const fundWallet = async (req, res) => {
     amount: amount / 100,
     type: "credit",
     status: "pending",
-    description: `wallet funding with ${amount}`,
+    description: `wallet funding with ${amount / 100}`,
     reference_number: reference,
   });
   // call paystack  api to confirm payment
@@ -78,7 +80,10 @@ const fundWallet = async (req, res) => {
   res.status(200).json({
     message: "Verification successful",
     status: true,
-    data: "",
+    data: {
+      current_balance: wallet.balance,
+      transaction: formatTransaction(transaction),
+    },
   });
 };
 
