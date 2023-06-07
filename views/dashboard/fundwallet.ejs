@@ -41,24 +41,39 @@
               </form>
         </div>
     </section>
-
+    <!-- ==Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         const paymentForm = document.getElementById('paymentForm');
         const key = '<%= key %>'
         paymentForm.addEventListener("submit", payWithPaystack, false);
         function payWithPaystack(e) {
         e.preventDefault();
-
         let handler = PaystackPop.setup({
             key: key,
             email: document.getElementById("email-address").value,
             amount: document.getElementById("amount").value * 100,
             onClose: function(){
-            alert('Window closed.');
+            alert('Transaction was not completed, window closed.');
             },
             callback: function(response){
             let message = 'Payment complete! Reference: ' + response.reference;
             alert(message);
+            console.log(response);
+              try {
+                fetch("/wallet/verify-payment",{
+                  method: "POST",
+                  body: JSON.stringify({
+                    reference: response.paystack_reference,
+                    amount: response.amount
+                  }),
+                  headers: {"Content-Type":"application/json"}
+                })
+              } catch (error) {
+                console.log(error);
+              }
+              // window.location = "/wallet";
+                
             }
         });
 
