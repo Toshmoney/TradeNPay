@@ -1,5 +1,5 @@
 require('dotenv').config();
-const key = process.env.pub_key;
+const key = process.env.PAYSTACK_PUBLIC_KEY;
 const { dashboardData } = require("../utils/dashboardData")
 const {
     fetchPrices
