@@ -60,7 +60,7 @@ const fetchPrices = async (service_id = "BCA", requestType = "SME") => {
     details = details.filter((detail) => detail.status === "1");
     return details;
   } catch (error) {
-    console.log(error);
+    return [];
   }
 };
 
