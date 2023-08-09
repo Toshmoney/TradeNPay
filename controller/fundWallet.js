@@ -11,20 +11,24 @@ const fundWallet = async (req, res) => {
   if (!amount || !reference) {
     return res.status(400).json({
       message: "reference or is missing",
-      status: false,
+      success: false,
     });
   }
   let wallet = await Wallet.findOne({ user: user });
   if (!wallet) {
     wallet = new Wallet({
       user: user,
-      balance: 0,
+      current_balance: 0,
+      previous_balance: 0,
     });
   }
+  const userBalance = wallet.current_balance;
   const transaction = new Transaction({
     user: req.user,
-    wallet: wallet,
+    balance_before: userBalance,
+    balance_after: userBalance,
     amount: amount / 100,
+    service: "wallet",
     type: "credit",
     status: "pending",
     description: `wallet funding with ${amount / 100}`,
@@ -40,48 +44,42 @@ const fundWallet = async (req, res) => {
     );
     const { data } = payment;
     if (data?.status === false) {
-      console.log("paystack payment verification failed");
-      console.log(data);
       transaction.status = "failed";
       transaction.description = "paystack payment verification failed";
       await transaction.save();
       return res.status(422).json({
         message: "verification failed",
-        status: false,
+        success: false,
       });
     }
   } catch (error) {
     let message = "paystack payment verification failed";
-    let status = 500;
     if (error.response) {
-      status = error.response.status || 400;
-      console.log(error.response.data || message);
     } else if (error.request) {
-      status = 422;
       message = "unable to verify payment";
-      console.log(error.request.data || message);
     } else {
       message = "error in setting up request to verify payment";
-      console.log(message);
     }
     transaction.status = "failed";
     transaction.description = "paystack payment verification failed";
     await transaction.save();
     return res.status(422).json({
       message: message,
-      status: status,
+      success: false,
     });
   }
 
-  wallet.balance += amount / 100;
+  wallet.previous_balance = userBalance;
+  wallet.current_balance += amount / 100;
   transaction.status = "completed";
+  transaction.balance_after = userBalance + amount / 100;
   await wallet.save();
   await transaction.save();
   res.status(200).json({
     message: "Verification successful",
     status: true,
     data: {
-      current_balance: wallet.balance,
+      balance: wallet.current_balance,
       transaction: formatTransaction(transaction),
     },
   });

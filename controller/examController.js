@@ -10,7 +10,7 @@ const recharge = async (req, res) => {
   if (!service_id) {
     return res.status(400).json({
       message: "missing provider",
-      error: "service_id",
+      success: false,
     });
   }
 
@@ -67,7 +67,7 @@ const recharge = async (req, res) => {
       console.log("purchase failed");
       return res.status(400).json({
         message: rechargeResponseData.details,
-        error: "recharge",
+        success: "false",
       });
     }
     console.log("purchase completed");
@@ -81,13 +81,14 @@ const recharge = async (req, res) => {
     await transaction.save();
     res.status(202).json({
       message: "your transaction is being processed",
-      balance: userWallet.balance,
+      balance: userWallet.current_balance,
+      success: true,
     });
   } catch (error) {
     console.log(error);
     return res.status(422).json({
       message: "failed",
-      error: "validation",
+      success: false,
     });
   }
 };
