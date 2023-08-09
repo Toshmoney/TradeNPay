@@ -57,8 +57,8 @@ const dashboardData = async (user) => {
     transactions: userTransactions,
   };
   if (userWallet) {
-    user_data.balance = userWallet.balance;
-    data.balance = userWallet.balance;
+    user_data.balance = userWallet.current_balance;
+    data.balance = userWallet.current_balance;
   }
   return data;
 };
