@@ -10,7 +10,7 @@ const fundWallet = async (req, res) => {
   const { amount, reference } = req.body;
   if (!amount || !reference) {
     return res.status(400).json({
-      message: "reference or is missing",
+      message: "reference or amount is missing",
       success: false,
     });
   }
@@ -39,7 +39,9 @@ const fundWallet = async (req, res) => {
     const payment = await axios.get(
       `https://api.paystack.co/transaction/verify/${reference}`,
       {
-        headers: { Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}` },
+        headers: {
+          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+        },
       }
     );
     const { data } = payment;
@@ -52,16 +54,19 @@ const fundWallet = async (req, res) => {
         success: false,
       });
     }
-  } catch (error) {
-    let message = "paystack payment verification failed";
-    if (error.response) {
-    } else if (error.request) {
-      message = "unable to verify payment";
-    } else {
-      message = "error in setting up request to verify payment";
+    const payment_data = data.data;
+    if (payment_data.status !== "success") {
+      transaction.description = "paystack payment verification failed";
+      await transaction.save();
+      return res.status(422).json({
+        message: "verification failed",
+        success: false,
+      });
     }
+  } catch (error) {
+    const message = "paystack payment verification failed";
     transaction.status = "failed";
-    transaction.description = "paystack payment verification failed";
+    transaction.description = "payment verification failed";
     await transaction.save();
     return res.status(422).json({
       message: message,
@@ -69,10 +74,11 @@ const fundWallet = async (req, res) => {
     });
   }
 
+  const amount_paid = amount / 100;
   wallet.previous_balance = userBalance;
-  wallet.current_balance += amount / 100;
+  wallet.current_balance = userBalance + amount_paid;
   transaction.status = "completed";
-  transaction.balance_after = userBalance + amount / 100;
+  transaction.balance_after = userBalance + amount_paid;
   await wallet.save();
   await transaction.save();
   res.status(200).json({
