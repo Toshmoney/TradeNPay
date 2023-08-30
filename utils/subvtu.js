@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 const AUTH_TOKEN = `Token ${process.env.SUBVTU_SECRET}`;
 
-export const subvtu_recharge = async (url, body) => {
+const subvtu_recharge = async (url, body) => {
   try {
     const req = await axios.post(url, body, {
       headers: { Authorization: AUTH_TOKEN },
@@ -24,7 +24,7 @@ export const subvtu_recharge = async (url, body) => {
   }
 };
 
-export const subvtu_validate_card = async ({ card_number, provider_name }) => {
+const subvtu_validate_card = async ({ card_number, provider_name }) => {
   const url = new URL("https://subvtu.com/ajax/validate_iuc");
   url.searchParams.append("smart_card_number", card_number);
   url.searchParams.append("cablename", provider_name);
@@ -42,7 +42,7 @@ export const subvtu_validate_card = async ({ card_number, provider_name }) => {
   }
 };
 
-export const subvtu_validate_meter = async ({
+const subvtu_validate_meter = async ({
   meter_number,
   provider_name,
   meter_type,
@@ -72,4 +72,11 @@ export const subvtu_validate_meter = async ({
   }
 };
 
-export const subvtu_balance = async () => {};
+const subvtu_balance = async () => {};
+
+module.exports = {
+  subvtu_balance,
+  subvtu_recharge,
+  subvtu_validate_card,
+  subvtu_validate_meter,
+};

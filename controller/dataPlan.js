@@ -1,7 +1,11 @@
+require("dotenv").config();
 const DataPlan = require("../model/DataPlan");
 const { StatusCodes } = require("http-status-codes");
 const { CustomAPIError } = require("../handleError");
 const { formatPlan } = require("../utils");
+const { subvtu_recharge } = require("../utils/subvtu");
+const Transaction = require("../model/Transaction");
+const PURCHASE_ENDPOINT = process.env.DATA_PURCHASE_ENDPOINT;
 
 const createDataPlan = async (req, res) => {
   const newPlan = await DataPlan.create(req.body);
@@ -98,7 +102,58 @@ const batchUpload = async (req, res) => {
 };
 
 const purchaseDataPlan = async (req, res) => {
-  const {} = req.body;
+  const { plan_id, amount, mobile_number } = req.body;
+  const user = req.user;
+  const user_wallet = req.user.wallet;
+  const initial_balance = user_wallet.current_balance;
+  if (!mobile_number) {
+    throw new CustomAPIError(
+      "mobile number is missing",
+      StatusCodes.BAD_REQUEST
+    );
+  }
+  const data_plan = await DataPlan.findOne({ plan_id });
+  if (!data_plan) {
+    throw new CustomAPIError("unknown data plan", 400);
+  }
+  if (data_plan.sale_price !== amount) {
+    throw new CustomAPIError("amount is not equal to plan price", 400);
+  }
+  const transaction = new Transaction({
+    user: user._id,
+    amount: data_plan.sale_price,
+    balance_before: initial_balance,
+    balance_after: initial_balance,
+    type: "debit",
+    status: "pending",
+    service: "data",
+    description: `payment for ${data_plan.size} ${data_plan.network_name} data`,
+    reference_number: "",
+  });
+
+  // send purchase request to provider endpoint
+  const purchase_id = await subvtu_recharge(PURCHASE_ENDPOINT, {
+    network: data_plan.network_id,
+    mobile_number: mobile_number,
+    plan: plan_id,
+    Ported_number: true,
+  });
+
+  if (!purchase_id) {
+    throw new CustomAPIError(
+      "unable to process transaction, try again later",
+      422
+    );
+  }
+
+  const new_balance = initial_balance - amount;
+  user_wallet.previous_balance = initial_balance;
+  user_wallet.current_balance = new_balance;
+  transaction.reference_number = purchase_id;
+  transaction.balance_after = new_balance;
+  transaction.status = "completed";
+  await transaction.save();
+  await user_wallet.save();
   res.status(StatusCodes.ACCEPTED).json({
     message: "purchase request is being processed",
     success: true,
