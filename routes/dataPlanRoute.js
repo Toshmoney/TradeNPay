@@ -1,15 +1,32 @@
-const express = require('express')
-
-const verifyWallet = require("../middleware/checkUserWallet")
-
+const express = require("express");
+const { isAuthenticated, isAdmin } = require("../middleware/authenticate");
+const verifyWallet = require("../middleware/checkUserWallet");
+const { fetchDataPrices, buyData } = require("../controller/dataController");
 const {
-    fetchDataPrices,
-    buyData
-} = require('../controller/dataController')
+  createDataPlan,
+  getDataPlans,
+  getSingleDataPlan,
+  updateDataPlan,
+  deleteDataPlan,
+  batchUpload,
+  purchaseDataPlan,
+} = require("../controller/dataPlan");
 
-const router = express.Router()
+const router = express.Router();
 
-router.route('/prices').post(fetchDataPrices)
-router.route('/recharge').post(verifyWallet, buyData)
-
-module.exports = router
+router.route("/prices").post(fetchDataPrices);
+router.route("/recharge").post([isAuthenticated, verifyWallet], buyData);
+router
+  .route("/purchase")
+  .post([isAuthenticated, verifyWallet], purchaseDataPlan);
+router
+  .route("/")
+  .post([isAuthenticated, isAdmin], createDataPlan)
+  .get(getDataPlans);
+router
+  .route("/:plan_id")
+  .get(getSingleDataPlan)
+  .patch([isAuthenticated, isAdmin], updateDataPlan)
+  .delete([isAuthenticated, isAdmin], deleteDataPlan);
+router.route("/upload").post([isAuthenticated, isAdmin], batchUpload);
+module.exports = router;

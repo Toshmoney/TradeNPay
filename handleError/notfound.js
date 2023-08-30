@@ -1,7 +1,5 @@
-const notFoundMiddleWare = (err, req, res, next)=>{
-    console.log(err);
-    return res.status(404).json({msg: "Page not found!"})
-    next(err)
-}
+const notFoundMiddleWare = (req, res) => {
+  return res.status(404).json({ message: "Page not found!" });
+};
 
-module.exports = notFoundMiddleWare
+module.exports = notFoundMiddleWare;
