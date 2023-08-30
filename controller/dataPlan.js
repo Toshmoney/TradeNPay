@@ -158,6 +158,7 @@ const purchaseDataPlan = async (req, res) => {
   res.status(StatusCodes.ACCEPTED).json({
     message: "purchase request is being processed",
     success: true,
+    balance: new_balance,
   });
 };
 

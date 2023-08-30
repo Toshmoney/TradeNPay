@@ -62,7 +62,11 @@ const wallet = async (req, res) => {
   res.status(200).render("dashboard/wallet", data);
 };
 const fundWallet = (req, res) => {
-  res.status(200).render("dashboard/fundwallet", { key: key });
+  res.status(200).render("dashboard/fundwallet", {
+    key: key,
+    name: req.user.name,
+    email: req.user.email,
+  });
 };
 
 const receiveWallet = (req, res) => {
