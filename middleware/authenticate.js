@@ -10,12 +10,15 @@ function isLoggedIn(req, res, next) {
   res.redirect(`/login?redirect=${requestedUrl}`);
 }
 
-function isAdmin(req, res, next) {
-  if (!req.isAuthenticated()) {
-    throw new CustomAPIError("session expired, login to continue", 401);
+function isAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
   }
-  // check if user is admin
-  if (req.user.is_admin) {
+  throw new CustomAPIError("session expired, login to continue", 401);
+}
+
+function isAdmin(req, res, next) {
+  if (req.user?.is_admin) {
     return next();
   }
   throw new CustomAPIError("unauthorized user", 403);
@@ -24,4 +27,5 @@ function isAdmin(req, res, next) {
 module.exports = {
   isLoggedIn,
   isAdmin,
+  isAuthenticated,
 };
