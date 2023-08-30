@@ -1,220 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlphaBills | Buy Electricity </title>
-    <link rel="stylesheet" href="/css/toastr.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/aside.css">
-    <link rel="stylesheet" href="/css/general.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AlphaBills | Buy Electricity </title>
+	<link rel="stylesheet" href="/css/toastr.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/aside.css">
+	<link rel="stylesheet" href="/css/general.css">
+	<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
+
 <body>
-    <section class="dashboard-container bill-page">
-        <%- include('../partials/aside') %>
-        <main>
-            <%- include('../partials/mobileHeader') %>
-            <div class="dashboard-main-top">
-                <h1>BUY Electricity</h1>
-                <div class="input-bar">
-                    <div>
-                        <img src="/images/tabler-icon-bell.png" alt="">
-                    </div>
-                    <div class="profile-picture">
-                        <img src="/images/Frame 12.png" alt="profile-picture">
-                    </div>
-                </div>
-            </div>
-            <div class="balance-box">
-                <div class="flex gap-6 bal-toggle">
-                    <p class="font-medium">Available balance</p>
-                    <span id="" class="balance-toggle hide-balance"><i class="ri-eye-off-line"></i></span>
-                    <span id="" class="balance-toggle show-balance"><i class="ri-eye-line"></i></span>
-                </div>
-                <h3 data-balance="<%= balance %>" class="font-semibold text-3xl wallet-balance"><%= balance %></h3>
-            </div>
+	<section class="dashboard-container bill-page">
+		<%- include('../partials/aside') %>
+			<main>
+				<%- include('../partials/mobileHeader') %>
+					<div class="dashboard-main-top">
+						<h1>BUY Electricity</h1>
+						<div class="input-bar">
+							<div>
+								<img src="/images/tabler-icon-bell.png" alt="">
+							</div>
+							<div class="profile-picture">
+								<img src="/images/Frame 12.png" alt="profile-picture">
+							</div>
+						</div>
+					</div>
+					<div class="balance-box">
+						<div class="flex gap-6 bal-toggle">
+							<p class="font-medium">Available balance</p>
+							<span id="" class="balance-toggle hide-balance"><i class="ri-eye-off-line"></i></span>
+							<span id="" class="balance-toggle show-balance"><i class="ri-eye-line"></i></span>
+						</div>
+						<h3 data-balance="<%= balance %>" class="font-semibold text-3xl wallet-balance">
+							<%= balance %>
+						</h3>
+					</div>
 
-            <section class="bill-box">
-                <div class="bill-payer">
-                    <form>
-                        <div class="form-field">
-                            <label id="provider">Provider</label>
-                            <select name="provider" id="provider" class="provider" required>
-                                <option value="">Please select your provider</option>
-                                <option value="AHB AHA">Abuja </option>
-                                <option value="ANA ANB">Eko </option>
-                                <option value="AEA AEB">Ibadan</option>
-                                <option value="AMA AMB">IKeja</option>
-                                <option value="ACB ACA">Jos</option>
-                                <option value="AGB AGA">Kaduna</option>
-                                <option value="AFA AFB">Kano</option>
-                                <option value="ADB ADA">Port-Harcourt</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-field">
-                                <label for="package">Meter Type</label>
-                                <select name="package" id="package" class="package" required>
-                                    <option value="">Please select meter type</option>
-                                    <option value="0">Prepaid</option>
-                                    <option value="1">Postpaid</option>
-                                </select>
-                            </div>
-                            <div class="form-field">
-                                <label for="meter-number">Meter Number</label>
-                                <input name="meter-number" id="meter-number" class="meter-number" placeholder="Enter Meter Number" required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-field">
-                                <label for="phone">Phone Number</label>
-                                <input name="phone" id="phone" class="phone" placeholder="Enter Phone Number" required />
-                            </div>
-                            <div class="form-field">
-                                <label for="email">Email Address</label>
-                                <input name="email" id="email" class="email" type="tel" placeholder="Enter Your Email Address" required />
-                            </div>
-                        </div>
-                        <div class="form-field">
-                            <label for="amount">Amount</label>
-                            <input name="amount" id="amount" class="amount" type="number" placeholder="Enter Amount" required />
-                        </div>
-                        <button class="block-btn submit-btn cta">Buy Now</button>
-                    </form>
-                </div>
-            </section>
-        </main>
-    </section>
+					<section class="bill-box">
+						<div class="bill-payer">
+							<form>
+								<div class="form-field">
+									<label id="provider">Provider</label>
+									<select name="provider" id="provider" class="provider" required>
+										<option value="">Please select your provider</option>
+										<option value="AHB AHA">Abuja </option>
+										<option value="ANA ANB">Eko </option>
+										<option value="AEA AEB">Ibadan</option>
+										<option value="AMA AMB">IKeja</option>
+										<option value="ACB ACA">Jos</option>
+										<option value="AGB AGA">Kaduna</option>
+										<option value="AFA AFB">Kano</option>
+										<option value="ADB ADA">Port-Harcourt</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<div class="form-field">
+										<label for="package">Meter Type</label>
+										<select name="package" id="package" class="package" required>
+											<option value="">Please select meter type</option>
+											<option value="0">Prepaid</option>
+											<option value="1">Postpaid</option>
+										</select>
+									</div>
+									<div class="form-field">
+										<label for="meter-number">Meter Number</label>
+										<input name="meter-number" id="meter-number" class="meter-number" placeholder="Enter Meter Number"
+											required />
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="form-field">
+										<label for="phone">Phone Number</label>
+										<input name="phone" id="phone" class="phone" placeholder="Enter Phone Number" required />
+									</div>
+									<div class="form-field">
+										<label for="email">Email Address</label>
+										<input name="email" id="email" class="email" type="tel" placeholder="Enter Your Email Address"
+											required />
+									</div>
+								</div>
+								<div class="form-field">
+									<label for="amount">Amount</label>
+									<input name="amount" id="amount" class="amount" type="number" placeholder="Enter Amount" required />
+								</div>
+								<button class="block-btn submit-btn cta">Buy Now</button>
+							</form>
+						</div>
+					</section>
+			</main>
+	</section>
 
-    <script src="/js/balanceToggle.js"></script>
-    <script src="/js/dashboard.js"></script>
-    <script src="/js/jquery.js"></script>
-    <script src="/js/toastr.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        const toastOptions = {
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": true,
-            "progressBar": true,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-        toastr.options = { ...toastOptions }
-        const form = document.querySelector('form')
-        const providerSelect = document.querySelector('select.provider')
-        const packageSelect = document.querySelector('select.package')
-        const phoneField = document.querySelector('input.phone')
-        const meterNumberField = document.querySelector('input.meter-number')
-        const emailField = document.querySelector('input.email')
-        const amountField = document.querySelector('input.amount')
-        const submitButton = document.querySelector('.submit-btn')
+	<script src="/js/balanceToggle.js"></script>
+	<script src="/js/dashboard.js"></script>
+	<script src="/js/jquery.js"></script>
+	<script src="/js/toastr.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script>
+		const toastOptions = {
+			"closeButton": true,
+			"debug": false,
+			"newestOnTop": true,
+			"progressBar": true,
+			"positionClass": "toast-top-right",
+			"preventDuplicates": false,
+			"onclick": null,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeOut": "5000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		}
+		toastr.options = { ...toastOptions }
+		const form = document.querySelector('form')
+		const providerSelect = document.querySelector('select.provider')
+		const packageSelect = document.querySelector('select.package')
+		const phoneField = document.querySelector('input.phone')
+		const meterNumberField = document.querySelector('input.meter-number')
+		const emailField = document.querySelector('input.email')
+		const amountField = document.querySelector('input.amount')
+		const submitButton = document.querySelector('.submit-btn')
 
-        const resetInputs = () => {
-            providerSelect.value = ''
-            packageSelect.value = ''
-            phoneField.value = ''
-            meterNumberField.value = ''
-            emailField.value = ''
-            amountField.value = ''
-            activateBuyButton()
-        }
+		const resetInputs = () => {
+			providerSelect.value = ''
+			packageSelect.value = ''
+			phoneField.value = ''
+			meterNumberField.value = ''
+			emailField.value = ''
+			amountField.value = ''
+			activateBuyButton()
+		}
 
-        const validatedData = () => {
-            const supplier = providerSelect.value.split(" ")
-            const packageIndex = packageSelect.value
-            const serviceIndex = Number(packageIndex)
-            const service_id = supplier[serviceIndex]
-            const phoneNumber = phoneField.value
-            const email = emailField.value
-            const amount = Number(amountField.value)
-            const meterNumber = meterNumberField.value
+		const validatedData = () => {
+			const supplier = providerSelect.value.split(" ")
+			const packageIndex = packageSelect.value
+			const serviceIndex = Number(packageIndex)
+			const service_id = supplier[serviceIndex]
+			const phoneNumber = phoneField.value
+			const email = emailField.value
+			const amount = Number(amountField.value)
+			const meterNumber = meterNumberField.value
 
-            if (!service_id) {
-                toastr.error('Pls select your provider and then your meter type')
-                return false
-            }
-            if (!email) {
-                toastr.error('Pls enter your email', 'Email not entered')
-                return false
-            }
-            if (!phoneNumber) {
-                toastr.error('Pls enter your phone number', 'Phone number not entered')
-                return false
-            }
-            if (!meterNumber) {
-                toastr.error('Pls your device card number', 'Device number not entered')
-                return false
-            }
-            if (!amount) {
-                toastr.error('Kindly enter purchase amount')
-            }
-            if (!isBalanceEnough(amount)) {
-                toastr.error('Kindly fund your wallet', 'Insufficient Balance')
-                return false
-            }
-            return {
-                service_id,
-                phoneNumber,
-                email,
-                amount,
-                meterNumber,
-                customerAccountId: meterNumber
-            }
-        }
+			if (!service_id) {
+				toastr.error('Pls select your provider and then your meter type')
+				return false
+			}
+			if (!email) {
+				toastr.error('Pls enter your email', 'Email not entered')
+				return false
+			}
+			if (!phoneNumber) {
+				toastr.error('Pls enter your phone number', 'Phone number not entered')
+				return false
+			}
+			if (!meterNumber) {
+				toastr.error('Pls your device card number', 'Device number not entered')
+				return false
+			}
+			if (!amount) {
+				toastr.error('Kindly enter purchase amount')
+			}
+			if (!isBalanceEnough(amount)) {
+				toastr.error('Kindly fund your wallet', 'Insufficient Balance')
+				return false
+			}
+			return {
+				service_id,
+				phoneNumber,
+				email,
+				amount,
+				meterNumber,
+				customerAccountId: meterNumber
+			}
+		}
 
-        const recharge = () => {
-            const data = validatedData()
-            if (!data) {
-                return
-            }
-            console.log(data);
-           disableBuyButton()
-            axios.post('/api/v1/power/recharge', data)
-            .then(response => {
-                const { data } = response
-                console.log(data);
-                updateBalance(data.balance)
-                resetInputs()
-                toastr.success("Purchase successful", "Success")
-            })
-            .catch(error => {
-                activateBuyButton()
-                if (error.response) {
-                    const { data, status } = error.response
-                    const { message } = data
-                    if (status === 401 || status === 405) {
-                        toastr.info('Pls logout and login again', 'Session Over')
-                    }
-                    else {
-                        toastr.error(`${message || 'Pls contact the admin'}`)
-                    }
-                    console.log(error.response.data);
-                }
-                else if (error.request) {
-                    toastr.error('Pls check your internet connectivity and try again', 'Poor Internet')
-                }
-                else {
-                    toastr.error('Pls contact the admin')
-                }
-            })
-        }
+		const recharge = () => {
+			const data = validatedData()
+			if (!data) {
+				return
+			}
+			console.log(data);
+			disableBuyButton()
+			axios.post('/api/v1/power/recharge', data)
+				.then(response => {
+					const { data } = response
+					console.log(data);
+					updateBalance(data.balance)
+					resetInputs()
+					toastr.success("Purchase successful", "Success")
+				})
+				.catch(error => {
+					activateBuyButton()
+					let message = "Try again letter"
+					if (error.response) {
+						const { data, status } = error.response
+						message = data?.message || message
+					}
+					toastr.info(message, 'Purchase failed')
+				})
+		}
 
-        form.addEventListener('submit', (event) => {
-            event.preventDefault()
-            recharge()
-        })
-    </script>      
+		form.addEventListener('submit', (event) => {
+			event.preventDefault()
+			recharge()
+		})
+	</script>
 </body>
+
 </html>

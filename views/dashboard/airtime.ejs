@@ -1,217 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AlphaBills | Buy Airtime</title>
-    <link rel="stylesheet" href="/css/toastr.css" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/general.css" />
-    <link rel="stylesheet" href="/css/aside.css" />
-    <link rel="stylesheet" href="/css/DataPlans.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <section class="dashboard-container">
-      <%- include('../partials/aside') %>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AlphaBills | Buy Airtime</title>
+  <link rel="stylesheet" href="/css/toastr.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/general.css" />
+  <link rel="stylesheet" href="/css/aside.css" />
+  <link rel="stylesheet" href="/css/DataPlans.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+
+<body>
+  <section class="dashboard-container">
+    <%- include('../partials/aside') %>
       <main>
         <%- include('../partials/mobileHeader') %>
-        <div class="dashboard-main-top">
-          <h1>BUY Airtime</h1>
-          <div class="input-bar">
-            <div>
-              <img src="images/tabler-icon-bell.png" alt="" />
+          <div class="dashboard-main-top">
+            <h1>BUY Airtime</h1>
+            <div class="input-bar">
+              <div>
+                <img src="images/tabler-icon-bell.png" alt="" />
+              </div>
+              <div class="profile-picture">
+                <img src="images/Frame 12.png" alt="profile-picture" />
+              </div>
             </div>
-            <div class="profile-picture">
-              <img src="images/Frame 12.png" alt="profile-picture" />
+          </div>
+
+          <div class="form-group">
+            <div class="choose form-field">
+              <label class="bold" for="network">SELECT NETWORK PROVIDER</label>
+              <select class="network" name="network" id="network" value="Select Option">
+                <option value="">Select Option</option>
+                <option value="BAD STANDARD">MTN NG</option>
+                <option value="BAB STANDARD">GLO</option>
+                <option value="BAC STANDARD">9MOBILE</option>
+                <option value="BAA STANDARD">AIRTEL NG</option>
+              </select>
             </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="choose form-field">
-            <label class="bold" for="network">SELECT NETWORK PROVIDER</label>
-            <select
-              class="network"
-              name="network"
-              id="network"
-              value="Select Option"
-            >
-              <option value="">Select Option</option>
-              <option value="BAD STANDARD">MTN NG</option>
-              <option value="BAB STANDARD">GLO</option>
-              <option value="BAC STANDARD">9MOBILE</option>
-              <option value="BAA STANDARD">AIRTEL NG</option>
-            </select>
+          <div class="form-group">
+            <div class="form-field">
+              <label class="bold" for="phoneNumber">PHONE NO.</label>
+              <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="0901 2345 678" />
+            </div>
+            <div class="form-field">
+              <label class="bold" for="amount">AMOUNT</label>
+              <input type="number" name="amount" id="amount" placeholder="0.00" />
+            </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="form-field">
-            <label class="bold" for="phoneNumber">PHONE NO.</label>
-            <input
-              type="tel"
-              name="phoneNumber"
-              id="phoneNumber"
-              placeholder="0901 2345 678"
-            />
+          <div class="page-end">
+            <p class="flex gap-6 bold wallet-balance">
+              Total Bal.<span>
+                <%= balance %>
+              </span>
+            </p>
+            <div class="ctas">
+              <button class="cta share">share</button>
+              <button class="cta submit submit-btn">Buy Now</button>
+            </div>
           </div>
-          <div class="form-field">
-            <label class="bold" for="amount">AMOUNT</label>
-            <input type="number" name="amount" id="amount" placeholder="0.00" />
-          </div>
-        </div>
-
-        <div class="page-end">
-          <p class="flex gap-6 bold wallet-balance">
-            Total Bal.<span><%= balance %></span>
-          </p>
-          <div class="ctas">
-            <button class="cta share">share</button>
-            <button class="cta submit submit-btn">Buy Now</button>
-          </div>
-        </div>
       </main>
-    </section>
+  </section>
 
-    <script src="js/dashboard.js"></script>
-    <script src="/js/jquery.js"></script>
-    <script src="/js/toastr.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-      const phoneNumberRegex = /^\d{11}$/;
-      const toastOptions = {
-        closeButton: true,
-        debug: false,
-        newestOnTop: true,
-        progressBar: true,
-        positionClass: "toast-top-right",
-        preventDuplicates: false,
-        onclick: null,
-        showDuration: "300",
-        hideDuration: "1000",
-        timeOut: "5000",
-        extendedTimeOut: "1000",
-        showEasing: "swing",
-        hideEasing: "linear",
-        showMethod: "fadeIn",
-        hideMethod: "fadeOut",
+  <script src="js/dashboard.js"></script>
+  <script src="/js/jquery.js"></script>
+  <script src="/js/toastr.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const phoneNumberRegex = /^\d{11}$/;
+    const toastOptions = {
+      closeButton: true,
+      debug: false,
+      newestOnTop: true,
+      progressBar: true,
+      positionClass: "toast-top-right",
+      preventDuplicates: false,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      timeOut: "5000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+    };
+    toastr.options = { ...toastOptions };
+    let walletBalance = 0;
+    const balanceElement = document.querySelector(".wallet-balance > span");
+    walletBalance = Number(balanceElement.textContent);
+    balanceElement.textContent = `N${walletBalance}`;
+    const networkSelect = document.querySelector("select.network");
+    const phoneNumberInput = document.querySelector("input#phoneNumber");
+    const amountInput = document.querySelector("input#amount");
+    const submitButton = document.querySelector("button.submit-btn");
+
+    const disableBuyButton = (buttonText = "Please wait") => {
+      submitButton.disabled = true;
+      submitButton.textContent = buttonText;
+      submitButton.classList.add("disabled");
+    };
+
+    const activateBuyButton = (buttonText = "Buy Now") => {
+      submitButton.disabled = false;
+      submitButton.textContent = buttonText;
+      submitButton.classList.remove("disabled");
+    };
+
+    const resetInputs = () => {
+      networkSelect.value = "";
+      phoneNumberInput.value = "";
+      amountInput.value = "";
+      activateBuyButton();
+    };
+
+    const validatedData = () => {
+      const [service_id, service_type] = networkSelect.value.split(" ");
+      const amount = Number(amountInput.value);
+      const phoneNumber = phoneNumberInput.value.replaceAll(" ", "");
+      if (!service_id || !service_type) {
+        toastr.error("Pls select network provider");
+        return false;
+      }
+      if (!phoneNumberRegex.test(phoneNumber)) {
+        toastr.error(
+          "Pls enter 11 digits phone number to recharge",
+          "Invalid Number"
+        );
+        return false;
+      }
+      if (!amount || amount <= 0 || amount % 100 !== 0) {
+        toastr.error(
+          "Amount must be greater than 0 and must be multiple of 100. e.g 100, 200,..."
+        );
+        return false;
+      }
+      if (walletBalance < amount) {
+        toastr.error(
+          "Kindly fund your wallet",
+          "Insufficient Wallet Balance"
+        );
+        return false;
+      }
+      return {
+        service_id,
+        service_type,
+        amount,
+        phoneNumber,
       };
-      toastr.options = { ...toastOptions };
-      let walletBalance = 0;
-      const balanceElement = document.querySelector(".wallet-balance > span");
-      walletBalance = Number(balanceElement.textContent);
-      balanceElement.textContent = `N${walletBalance}`;
-      const networkSelect = document.querySelector("select.network");
-      const phoneNumberInput = document.querySelector("input#phoneNumber");
-      const amountInput = document.querySelector("input#amount");
-      const submitButton = document.querySelector("button.submit-btn");
+    };
 
-      const disableBuyButton = (buttonText = "Please wait") => {
-        submitButton.disabled = true;
-        submitButton.textContent = buttonText;
-        submitButton.classList.add("disabled");
-      };
-
-      const activateBuyButton = (buttonText = "Buy Now") => {
-        submitButton.disabled = false;
-        submitButton.textContent = buttonText;
-        submitButton.classList.remove("disabled");
-      };
-
-      const resetInputs = () => {
-        networkSelect.value = "";
-        phoneNumberInput.value = "";
-        amountInput.value = "";
-        activateBuyButton();
-      };
-
-      const validatedData = () => {
-        const [service_id, service_type] = networkSelect.value.split(" ");
-        const amount = Number(amountInput.value);
-        const phoneNumber = phoneNumberInput.value.replaceAll(" ", "");
-        if (!service_id || !service_type) {
-          toastr.error("Pls select network provider");
-          return false;
-        }
-        if (!phoneNumberRegex.test(phoneNumber)) {
-          toastr.error(
-            "Pls enter 11 digits phone number to recharge",
-            "Invalid Number"
-          );
-          return false;
-        }
-        if (!amount || amount <= 0 || amount % 100 !== 0) {
-          toastr.error(
-            "Amount must be greater than 0 and must be multiple of 100. e.g 100, 200,..."
-          );
-          return false;
-        }
-        if (walletBalance < amount) {
-          toastr.error(
-            "Kindly fund your wallet",
-            "Insufficient Wallet Balance"
-          );
-          return false;
-        }
-        return {
+    const recharge = () => {
+      if (!validatedData()) {
+        return;
+      }
+      const { service_id, service_type, amount, phoneNumber } =
+        validatedData();
+      disableBuyButton();
+      axios
+        .post("/api/v1/airtime/recharge", {
           service_id,
           service_type,
           amount,
           phoneNumber,
-        };
-      };
+        })
+        .then((response) => {
+          const { data } = response;
+          walletBalance = data.balance || walletBalance - amount;
+          balanceElement.textContent = `N${walletBalance}`;
+          resetInputs();
+          toastr.success("Your transaction is being processed");
+        })
+        .catch((error) => {
+          let message = "Try again letter"
+          if (error.response) {
+            const { data, status } = error.response
+            message = data?.message || message
+          }
+          toastr.info(message, 'Purchase failed')
+          activateBuyButton();
+        });
+    };
 
-      const recharge = () => {
-        if (!validatedData()) {
-          return;
-        }
-        const { service_id, service_type, amount, phoneNumber } =
-          validatedData();
-        disableBuyButton();
-        axios
-          .post("/api/v1/airtime/recharge", {
-            service_id,
-            service_type,
-            amount,
-            phoneNumber,
-          })
-          .then((response) => {
-            const { data } = response;
-            walletBalance = data.balance || walletBalance - amount;
-            balanceElement.textContent = `N${walletBalance}`;
-            resetInputs();
-            toastr.success("Your transaction is being processed");
-          })
-          .catch((error) => {
-            if (error.response) {
-              const { data, status } = error.response;
-              const { message } = data;
-              if (status === 401 || status === 405) {
-                toastr.info("Pls logout and login again", "Session Over");
-              } else {
-                toastr.error(`${message || "Pls contact the admin"}`);
-              }
-              console.log(error.response.data);
-            } else if (error.request) {
-              toastr.error(
-                "Pls check your internet connectivity and try again",
-                "Poor Internet"
-              );
-            } else {
-              toastr.error("Pls contact the admin");
-            }
-            activateBuyButton();
-          });
-      };
+    submitButton.addEventListener("click", () => {
+      recharge();
+    });
+  </script>
+</body>
 
-      submitButton.addEventListener("click", () => {
-        recharge();
-      });
-    </script>
-  </body>
 </html>
