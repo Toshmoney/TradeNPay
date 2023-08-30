@@ -5,13 +5,7 @@ const { randomChars, generateTransId } = require("./randomChars");
 const businessBalance = require("./businessBalance");
 const { transactionQuery } = require("./transactionQuery");
 const { dashboardData, formatTransaction } = require("./dashboardData");
-
-const service_ids = {
-  mtn: { service_id: "BCA", requestType: "SME" },
-  "9mobile": { service_id: "BCB", requestType: "GIFTING" },
-  glo: { service_id: "BCC", requestType: "GIFTING" },
-  airtel: { service_id: "BCD", requestType: "GIFTING" },
-};
+const { formatPlan } = require("./dataPlan");
 
 const getStatus = async (service_id = "BCA", requestType = "SME") => {
   try {
@@ -73,4 +67,5 @@ module.exports = {
   transactionQuery,
   dashboardData,
   formatTransaction,
+  formatPlan,
 };
