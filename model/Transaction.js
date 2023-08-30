@@ -46,6 +46,10 @@ const TransactionSchema = new Schema(
       trim: true,
       required: [true, "transaction not referenced"],
     },
+    external_id: {
+      type: String,
+      trim: true,
+    },
   },
   { timestamps: true }
 );

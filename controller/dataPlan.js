@@ -150,6 +150,7 @@ const purchaseDataPlan = async (req, res) => {
   user_wallet.previous_balance = initial_balance;
   user_wallet.current_balance = new_balance;
   transaction.reference_number = purchase_id;
+  transaction.external_id = purchase_id;
   transaction.balance_after = new_balance;
   transaction.status = "completed";
   await transaction.save();

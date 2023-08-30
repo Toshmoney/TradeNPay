@@ -35,6 +35,7 @@ const fundWallet = async (req, res) => {
     reference_number: reference,
   });
   // call paystack  api to confirm payment
+  let trans_id = "";
   try {
     const payment = await axios.get(
       `https://api.paystack.co/transaction/verify/${reference}`,
@@ -55,6 +56,8 @@ const fundWallet = async (req, res) => {
       });
     }
     const payment_data = data.data;
+    trans_id = payment_data.id;
+    transaction.external_id = trans_id;
     if (payment_data.status !== "success") {
       transaction.description = "paystack payment verification failed";
       await transaction.save();
@@ -65,6 +68,7 @@ const fundWallet = async (req, res) => {
     }
   } catch (error) {
     const message = "paystack payment verification failed";
+    transaction.external_id = trans_id;
     transaction.status = "failed";
     transaction.description = "payment verification failed";
     await transaction.save();
