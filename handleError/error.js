@@ -22,7 +22,7 @@ const errorHandler = async (err, req, res, next) => {
   }
 
   return res.status(errorResponse.statusCode).json({
-    messsage: errorResponse.message,
+    message: errorResponse.message,
     success: false,
   });
 };
