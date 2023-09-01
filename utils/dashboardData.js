@@ -17,11 +17,13 @@ const formatTransactionDate = (date_string) => {
 
 const formatTransaction = (transaction) => {
   return {
+    id: transaction._id,
     description: transaction.description,
+    balance_before: transaction.balance_before,
+    balance_after: transaction.balance_after,
     amount: transaction.amount,
     status: transaction.status,
     date: formatTransactionDate(transaction.createdAt),
-    createdAt: formatTransactionDate(transaction.createdAt),
   };
 };
 

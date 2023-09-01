@@ -19,6 +19,7 @@ const examRoutes = require("./routes/examRouter");
 const airtimeRoutes = require("./routes/airtimeRoute");
 const dataPlanRoutes = require("./routes/dataPlanRoute");
 const tvRoutes = require("./routes/tvRouter");
+const transactionRoutes = require("./routes/transaction");
 
 const port = 4000;
 const app = express();
@@ -55,6 +56,7 @@ app.use("/api/v1/airtime", airtimeRoutes);
 app.use("/api/v1/tv", tvRoutes);
 app.use("/api/v1/power", powerRoutes);
 app.use("/api/v1/exam", examRoutes);
+app.use("/api/v1/transactions", transactionRoutes);
 
 app.use(notFoundMiddleWare);
 app.use(errorHandler);
