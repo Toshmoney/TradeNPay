@@ -1,6 +1,6 @@
 require("dotenv").config();
 const key = process.env.PAYSTACK_PUBLIC_KEY;
-const { dashboardData } = require("../utils/dashboardData");
+const { dashboardData, formatTransaction } = require("../utils/dashboardData");
 const { formatPlan, formatDate } = require("../utils");
 const DataPlan = require("../model/DataPlan");
 const User = require("../model/User.db");
@@ -129,8 +129,19 @@ const businessBal = async (req, res) => {
 };
 
 const adminTrans = async (req, res) => {
-  const data = await dashboardData(req.user);
-  res.status(200).render("admin/transactions", data);
+  // const data = await dashboardData(req.user);
+  let transactions = await Transaction.find()
+    .sort("-createdAt")
+    .populate("user", "name email _id");
+  transactions = transactions.map((item) => {
+    const transaction = item.toObject();
+    return {
+      ...transaction,
+      createdAt: formatDate(transaction.createdAt),
+      updatedAt: formatDate(transaction.updatedAt),
+    };
+  });
+  res.status(200).render("admin/transactions", { transactions });
 };
 
 const adminSettings = async (req, res) => {
