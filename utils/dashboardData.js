@@ -45,18 +45,34 @@ const fetchUserTransactions = async (userId, limit = 20) => {
   return transactions;
 };
 
-const dashboardData = async (user) => {
+const dashboardData = async (user, is_admin = false, limit = 20) => {
   const userWallet = await Wallet.findOne({
     user: user._id,
   });
-  const userTransactions = await fetchUserTransactions(user._id);
+  let trxns = [];
+  if (is_admin) {
+    trxns = await Transaction.find()
+      .sort("-createdAt")
+      .limit(limit)
+      .populate("user", "name email, _id");
+    trxns = trxns.map((transaction) => {
+      const item = transaction.toObject();
+      return {
+        ...item,
+        createdAt: formatTransactionDate(item.createdAt),
+        updatedAt: formatTransactionDate(item.updatedAt),
+      };
+    });
+  } else {
+    trxns = await fetchUserTransactions(user._id, limit);
+  }
   const user_data = {
     name: user.name,
     email: user.email,
   };
   const data = {
     user: user_data,
-    transactions: userTransactions,
+    transactions: trxns,
   };
   if (userWallet) {
     user_data.balance = userWallet.current_balance;

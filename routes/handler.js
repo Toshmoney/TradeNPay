@@ -24,14 +24,12 @@ const {
   adminDataReset,
   adminCableReset,
   adminExamReset,
-  adminElectricityReset
+  adminElectricityReset,
 } = require("../controller/controller");
 
 const { fetchPackages } = require("../controller/packageController");
 
-// middlewares
-
-const { isLoggedIn } = require("../middleware/authenticate");
+const { isLoggedIn, isAdmin } = require("../middleware/authenticate");
 
 const {
   newUser,
@@ -74,16 +72,6 @@ router.route("/billpayment").get(isLoggedIn, billpayment);
 router.route("/wallet").get(isLoggedIn, wallet);
 router.route("/wallet/fund").get(isLoggedIn, fundWallet);
 
-router.route("/admin").get(isLoggedIn, adminDashboard);
-router.route("/business-balance").get(isLoggedIn, businessBal);
-router.route("/all-users").get(isLoggedIn, allUsers);
-router.route("/admin-setting").get(isLoggedIn, adminSettings);
-router.route("/transactions").get(isLoggedIn, adminTrans);
-router.route("/data-reset").get(isLoggedIn, adminDataReset);
-router.route("/tv-reset").get(isLoggedIn, adminCableReset);
-router.route("/exam-reset").get(isLoggedIn, adminExamReset);
-router.route("/electricity-reset").get(isLoggedIn, adminElectricityReset);
-
 router.route("/wallet/receive").get(isLoggedIn, receiveWallet);
 router.route("/setting").get(isLoggedIn, setting);
 router.route("/profile").get(isLoggedIn, profile);
@@ -91,5 +79,18 @@ router.route("/privacy-policy").get(isLoggedIn, privacyPolicy);
 router.route("/verify_now").get(isLoggedIn, verifyNow);
 router.route("/billpayment/:service").get(isLoggedIn, billPayer);
 router.route("/wallet/verify-payment").post(isLoggedIn, fundWalletVerify);
+
+// Admin only
+router.route("/admin").get([isLoggedIn, isAdmin], adminDashboard);
+router.route("/business-balance").get([isLoggedIn, isAdmin], businessBal);
+router.route("/all-users").get([isLoggedIn, isAdmin], allUsers);
+router.route("/admin-setting").get([isLoggedIn, isAdmin], adminSettings);
+router.route("/transactions").get([isLoggedIn, isAdmin], adminTrans);
+router.route("/data-reset").get([isLoggedIn, isAdmin], adminDataReset);
+router.route("/tv-reset").get([isLoggedIn, isAdmin], adminCableReset);
+router.route("/exam-reset").get([isLoggedIn, isAdmin], adminExamReset);
+router
+  .route("/electricity-reset")
+  .get([isLoggedIn, isAdmin], adminElectricityReset);
 
 module.exports = router;

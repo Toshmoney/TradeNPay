@@ -74,9 +74,26 @@ const subvtu_validate_meter = async ({
 
 const subvtu_balance = async () => {};
 
+const subvtu_details = async () => {
+  try {
+    const req = await axios.get("https://subvtu.com/api/user/", {
+      headers: {
+        Authorization: AUTH_TOKEN,
+        "Content-Type": "application/json",
+      },
+    });
+    // console.log(req.data);
+    return req.data;
+  } catch (error) {
+    // console.log(error.response || error.request || "error");
+    return {};
+  }
+};
+
 module.exports = {
   subvtu_balance,
   subvtu_recharge,
   subvtu_validate_card,
   subvtu_validate_meter,
+  subvtu_details,
 };

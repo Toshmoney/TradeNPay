@@ -3,6 +3,9 @@ const key = process.env.PAYSTACK_PUBLIC_KEY;
 const { dashboardData } = require("../utils/dashboardData");
 const { formatPlan } = require("../utils");
 const DataPlan = require("../model/DataPlan");
+const User = require("../model/User.db");
+const { subvtu_details } = require("../utils/subvtu");
+const Transaction = require("../model/Transaction");
 
 const homePage = async (req, res) => {
   res.status(200).render("pages/home");
@@ -93,11 +96,29 @@ const privacyPolicy = async (req, res) => {
   res.status(200).render("dashboard/privacy");
 };
 
-
 // Admin dashboard
 const adminDashboard = async (req, res) => {
-  const data = await dashboardData(req.user);
-  res.status(200).render("admin/dashboard", data);
+  const subvtu_ = await subvtu_details();
+  console.log(subvtu_);
+  const targetDate = new Date();
+  const startDate = new Date(targetDate);
+  startDate.setHours(0, 0, 0, 0);
+  const todayTransactions = await Transaction.find({
+    createdAt: { $gte: startDate, $lte: targetDate },
+    status: "completed",
+  });
+  const daily = todayTransactions.length;
+  const purchase = todayTransactions
+    .filter((item) => item.type === "debit")
+    .reduce((sum, current) => sum + current.amount, 0);
+  const data = await dashboardData(req.user, true);
+  const totalUser = await User.countDocuments();
+  res.status(200).render("admin/dashboard", {
+    ...data,
+    total_user: totalUser,
+    daily,
+    purchase,
+  });
 };
 
 const businessBal = async (req, res) => {
@@ -163,5 +184,5 @@ module.exports = {
   adminDataReset,
   adminCableReset,
   adminElectricityReset,
-  adminExamReset
+  adminExamReset,
 };
