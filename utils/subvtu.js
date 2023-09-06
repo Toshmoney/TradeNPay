@@ -72,7 +72,16 @@ const subvtu_validate_meter = async ({
   }
 };
 
-const subvtu_balance = async () => {};
+const subvtu_balance = async () => {
+  try {
+    const req = await axios.get("https://subvtu.com/api/user_balance/", {
+      headers: { Authorization: AUTH_TOKEN },
+    });
+    return req.data;
+  } catch (error) {
+    return {};
+  }
+};
 
 const subvtu_details = async () => {
   try {

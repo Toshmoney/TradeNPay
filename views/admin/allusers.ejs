@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,27 +12,29 @@
     <link rel="stylesheet" href="css/wallet.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
+
 <body>
     <section class="dashboard-container">
         <%- include('../partials/adminAside') %>
-       <!-- mobile dashboard end -->
-        <main>
-            <%- include('../partials/mobileHeader') %>
-            <div class="dashboard-main-top">
-                    <h1>ALL Registered Users</h1>
-                    <div class="input-bar">
-                        <div>
-                            <img src="images/tabler-icon-bell.png" alt="">
-                        </div>
-                        <div class="profile-picture">
-                            <img src="images/Frame 12.png" alt="profile-picture">
+            <!-- mobile dashboard end -->
+            <main>
+                <%- include('../partials/mobileHeader') %>
+                    <div class="dashboard-main-top">
+                        <h1>ALL Registered Users</h1>
+                        <div class="input-bar">
+                            <div>
+                                <img src="images/tabler-icon-bell.png" alt="">
+                            </div>
+                            <div class="profile-picture">
+                                <img src="images/Frame 12.png" alt="profile-picture">
+                            </div>
                         </div>
                     </div>
-            </div>
-            <%- include('../partials/allusers', {transactions: transactions}) %>
-        </main>
+                    <%- include('../partials/allusers', {users: users}) %>
+            </main>
     </section>
     <script src="js/dashboard.js"></script>
     <script src="js/wallet.js"></script>
 </body>
+
 </html>

@@ -1,11 +1,12 @@
 require("dotenv").config();
 const key = process.env.PAYSTACK_PUBLIC_KEY;
 const { dashboardData } = require("../utils/dashboardData");
-const { formatPlan } = require("../utils");
+const { formatPlan, formatDate } = require("../utils");
 const DataPlan = require("../model/DataPlan");
 const User = require("../model/User.db");
-const { subvtu_details } = require("../utils/subvtu");
+const { subvtu_details, subvtu_balance } = require("../utils/subvtu");
 const Transaction = require("../model/Transaction");
+const Wallet = require("../model/Wallet");
 
 const homePage = async (req, res) => {
   res.status(200).render("pages/home");
@@ -98,8 +99,8 @@ const privacyPolicy = async (req, res) => {
 
 // Admin dashboard
 const adminDashboard = async (req, res) => {
-  const subvtu_ = await subvtu_details();
-  console.log(subvtu_);
+  const subvtu_bal = await subvtu_balance();
+  const business_bal = subvtu_bal?.user?.Account_Balance;
   const targetDate = new Date();
   const startDate = new Date(targetDate);
   startDate.setHours(0, 0, 0, 0);
@@ -118,6 +119,7 @@ const adminDashboard = async (req, res) => {
     total_user: totalUser,
     daily,
     purchase,
+    business_balance: business_bal,
   });
 };
 
@@ -137,8 +139,20 @@ const adminSettings = async (req, res) => {
 };
 
 const allUsers = async (req, res) => {
-  const data = await dashboardData(req.user);
-  res.status(200).render("admin/allusers", data);
+  // const page = Number(req.query.page) || 1
+  let wallets = await Wallet.find().populate("user");
+  wallets = wallets.map((item) => {
+    const wallet = item.toObject();
+    return {
+      user_id: wallet.user._id,
+      name: wallet.user.name,
+      email: wallet.user.email,
+      createdAt: formatDate(wallet.user.createdAt),
+      previous_balance: wallet.previous_balance,
+      current_balance: wallet.current_balance,
+    };
+  });
+  res.status(200).render("admin/allusers", { users: wallets });
 };
 
 const adminDataReset = async (req, res) => {
