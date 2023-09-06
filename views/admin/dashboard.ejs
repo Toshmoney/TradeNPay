@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlphaBills Admin Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/aside.css">
+    <link rel="stylesheet" href="css/Maindashboard.css">
+</head>
+<body>
+    <section class="dashboard-container">
+        <%- include('../partials/adminAside') %>
+        <main>
+            <%- include('../partials/mobileHeader') %>
+           <div class="dashboard-main-top">
+                <h1>Dashboard</h1>
+                <div class="input-bar">
+                    <div>
+                        <img src="images/tabler-icon-bell.png" alt="">
+                    </div>
+                    <div class="profile-picture">
+                        <img src="images/Frame 12.png" alt="profile-picture">
+                    </div>
+                </div>
+           </div>
+
+            <div class="dash-items">
+                <div class="blue-background">
+                    <div class="welcome-msg">
+                        <h1>WELCOME BACK, <%= user.name %></h1>
+                        <p>Track Record all the users transactions on this admin dashboard!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="airtime-area">
+                <div class="main-airtime">
+                    <a href="/transactions">
+                        <div class="icon-box">
+                            <img src="images/tabler-icon-access-point.png" alt="">
+                        </div>
+                        <div>
+                            <h3>Total Daily Trans</h3>
+                            <h3>0</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="main-airtime">
+                    <a href="/transactions">
+                        <div class="icon-box">
+                            <img src="images/tabler-icon-id.png" alt="">
+                        </div>
+                        <div>
+                            <h3>Total Daily Purchase</h3>
+                            <h3>₦0.0</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="main-airtime">
+                    <a href="/all-users">
+                        <div class="icon-box">
+                            <img src="/images/tabler-icon-address-book.png" alt="">
+                        </div>
+                        <div>
+                            <h3>All Users</h3>
+                            <p>22 Users</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="main-airtime">
+                    <a href="/business-balance">
+                        <div class="icon-box">
+                            <img src="images/tabler-icon-wallet.png" alt="">
+                        </div>
+                        <div>
+                            <h3>Business Balance</h3>
+                            <h3>₦0.0</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <%- include('../partials/alltransactions', {transactions: transactions}) %>
+        </main>
+    </section>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

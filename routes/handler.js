@@ -16,6 +16,15 @@ const {
   test,
   billPayer,
   privacyPolicy,
+  adminDashboard,
+  businessBal,
+  adminSettings,
+  allUsers,
+  adminTrans,
+  adminDataReset,
+  adminCableReset,
+  adminExamReset,
+  adminElectricityReset
 } = require("../controller/controller");
 
 const { fetchPackages } = require("../controller/packageController");
@@ -35,6 +44,7 @@ const {
 } = require("../controller/auth");
 
 const fundWalletVerify = require("../controller/fundWallet");
+const { businessBalance } = require("../utils");
 
 router.route("/api/v1/packages").post(fetchPackages);
 router.route("/").get(homePage);
@@ -63,6 +73,17 @@ router.route("/data").get(isLoggedIn, dataplan);
 router.route("/billpayment").get(isLoggedIn, billpayment);
 router.route("/wallet").get(isLoggedIn, wallet);
 router.route("/wallet/fund").get(isLoggedIn, fundWallet);
+
+router.route("/admin").get(isLoggedIn, adminDashboard);
+router.route("/business-balance").get(isLoggedIn, businessBal);
+router.route("/all-users").get(isLoggedIn, allUsers);
+router.route("/admin-setting").get(isLoggedIn, adminSettings);
+router.route("/transactions").get(isLoggedIn, adminTrans);
+router.route("/data-reset").get(isLoggedIn, adminDataReset);
+router.route("/tv-reset").get(isLoggedIn, adminCableReset);
+router.route("/exam-reset").get(isLoggedIn, adminExamReset);
+router.route("/electricity-reset").get(isLoggedIn, adminElectricityReset);
+
 router.route("/wallet/receive").get(isLoggedIn, receiveWallet);
 router.route("/setting").get(isLoggedIn, setting);
 router.route("/profile").get(isLoggedIn, profile);

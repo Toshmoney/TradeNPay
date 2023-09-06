@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AlphaBills | Buy Electricity </title>
+	<link rel="stylesheet" href="/css/toastr.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/aside.css">
+	<link rel="stylesheet" href="/css/general.css">
+	<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body>
+	<section class="dashboard-container bill-page">
+		<%- include('../partials/adminAside') %>
+			<main>
+				<%- include('../partials/mobileHeader') %>
+					<div class="dashboard-main-top">
+						<h1>UPDATE Electricity</h1>
+						<div class="input-bar">
+							<div>
+								<img src="/images/tabler-icon-bell.png" alt="">
+							</div>
+							<div class="profile-picture">
+								<img src="/images/Frame 12.png" alt="profile-picture">
+							</div>
+						</div>
+					</div>
+
+					<section class="bill-box">
+						<div class="bill-payer">
+							<form>
+								<div class="form-field">
+									<label id="provider">Provider</label>
+									<select name="provider" id="provider" class="provider" required>
+										<option value="">Please select your provider</option>
+										<option value="AHB AHA">Abuja </option>
+										<option value="ANA ANB">Eko </option>
+										<option value="AEA AEB">Ibadan</option>
+										<option value="AMA AMB">IKeja</option>
+										<option value="ACB ACA">Jos</option>
+										<option value="AGB AGA">Kaduna</option>
+										<option value="AFA AFB">Kano</option>
+										<option value="ADB ADA">Port-Harcourt</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<div class="form-field">
+										<label for="package">Meter Type</label>
+										<select name="package" id="package" class="package" required>
+											<option value="">Please select meter type</option>
+											<option value="0">Prepaid</option>
+											<option value="1">Postpaid</option>
+										</select>
+									</div>
+									<div class="form-field">
+										<label for="unit-volume">Unit</label>
+										<input name="unit-volume" id="unit-volume" class="unit-volume" placeholder="Enter Unit Volume"
+											required />
+									</div>
+								</div>
+								<div class="form-field">
+									<label for="amount">Amount</label>
+									<input name="amount" id="amount" class="amount" type="number" placeholder="Enter Amount" required />
+								</div>
+								<button class="block-btn submit-btn cta">Update Price</button>
+							</form>
+						</div>
+					</section>
+			</main>
+	</section>
+
+	<script src="/js/balanceToggle.js"></script>
+	<script src="/js/dashboard.js"></script>
+	<script src="/js/jquery.js"></script>
+	<script src="/js/toastr.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script>
+		
+	</script>
+</body>
+
+</html>

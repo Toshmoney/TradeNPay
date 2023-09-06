@@ -19,6 +19,15 @@
     gap: 20px;
 }
 
+.flex-new{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+}
+
 .acct-statement{
     background: #FFFFFF;
     border: 1px solid #F6F8FE;
@@ -29,6 +38,13 @@
     font-family: 'Raleway', sans-serif;
     width: 100%;
     gap: 20px;
+}
+
+.flex-settings{
+    display: flex !important;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
 }
 
 .disactive{
@@ -50,6 +66,7 @@
     justify-content: space-around;
     padding: 20px;
     width: 100%;
+    
 }
 
 .links{
@@ -57,12 +74,17 @@
     gap: 20px;
 }
 
+a{
+    text-decoration: none;
+    color: black;
+}
 
 @media screen and (max-width:950px) {
-    .main-setting{
+    .main-setting, .flex-settings{
         flex-direction: column;
     }
     .second{
         padding-top: 50px;
     }
+    
 }

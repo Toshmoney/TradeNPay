@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AlphaBills | Reset Data Prices</title>
+	<link rel="stylesheet" href="/css/toastr.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/general.css">
+	<link rel="stylesheet" href="/css/aside.css">
+	<link rel="stylesheet" href="/css/DataPlans.css">
+</head>
+
+<body>
+	<section class="dashboard-container">
+		<%- include('../partials/adminAside') %>
+
+			<main>
+				<%- include('../partials/mobileHeader') %>
+					<div class="dashboard-main-top">
+						<h1>UPDATE Cable Price</h1>
+						<div class="input-bar">
+							<div>
+								<img src="images/tabler-icon-bell.png" alt="">
+							</div>
+							<div class="profile-picture">
+								<img src="images/Frame 12.png" alt="profile-picture">
+							</div>
+						</div>
+					</div>
+					<div class="bill-payer">
+						<form action="">
+							<div class="form-group">
+								<div class="choose form-field">
+									<label class="bold" for="network">SELECT PROVIDER</label>
+									<select class="network" name="network" id="network" value="Select Option">
+										<!-- <option value="">Select Option</option> -->
+										<option value="1 MTN">DSTV</option>
+										<option value="2 GLO">GOTV</option>
+										<option value="3 9MOBILE">Startimes</option>
+										<option value="4 AIRTEL">Showmax</option>
+									</select>
+								</div>
+								<div class="choose form-field">
+									<label class="bold" for="data_plans">CHOOSE PLAN</label>
+										<input name="cable_plan" id="cable_plan" class="amount" type="text" placeholder="Enter Plan" required />
+								</div>
+							</div>
+							<div class="form-field">
+								<label class="bold" for="phoneNumber">PRICE</label>
+								<input type="number" name="price" id="price" placeholder="Set data price">
+							</div>
+							<div class="page-end">
+                                <button type="submit" class="cta submit submit-btn">Update Price</button>
+							</div>
+						</form>
+					</div>
+
+			</main>
+	</section>
+
+	<script src="/js/dashboard.js"></script>
+	<script src="/js/jquery.js"></script>
+	<script src="/js/toastr.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script>
+		
+	</script>
+</body>
+
+</html>

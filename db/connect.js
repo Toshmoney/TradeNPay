@@ -19,7 +19,8 @@ if (NODE_ENV === "development") {
 
 // const MONGO_URI =`mongodb+srv://Toshbaba:${pass}@tosh.e022gw2.mongodb.net/AlphabillsDB?retryWrites=true&w=majority`
 
-const connectDB = async () => {
-  return await mongoose.connect(MONGO_URI);
+const connectDB = async (msg) => {
+ await mongoose.connect(MONGO_URI);
+  return console.log(msg);
 };
 module.exports = connectDB;

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlphaBills | Business Balance</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/aside.css">
+    <link rel="stylesheet" href="css/wallet.css">
+    <link rel="stylesheet" href="css/Maindashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+    <section class="dashboard-container">
+        <%- include('../partials/adminAside') %>
+       <!-- mobile dashboard end -->
+        <main>
+            <%- include('../partials/mobileHeader') %>
+            <div class="dashboard-main-top">
+                    <h1>BUSINESS Balance</h1>
+                    <div class="input-bar">
+                        <div>
+                            <img src="images/tabler-icon-bell.png" alt="">
+                        </div>
+                        <div class="profile-picture">
+                            <img src="images/Frame 12.png" alt="profile-picture">
+                        </div>
+                    </div>
+            </div>
+
+            <div class="main-page">
+                <div class="balance-box">
+                    <div class="flex gap-6 bal-toggle">
+                        <p class="font-medium">Available balance</p>
+                        <span id="toggle-balance" class="hide-balance"><i class="ri-eye-off-line"></i></span>
+                        <span id="toggle-balance" class="show-balance"><i class="ri-eye-line"></i></span>
+                    </div>
+                    <h3 data-balance="<%= balance %>" class="font-semibold text-3xl wallet-balance"><%= balance %></h3>
+                    <p class="font-medium">Estimated Of Total Business Balance</p>
+                </div>
+
+                <div class="airtime-area">
+                    <div class="main-airtime">
+                        <a href="/transactions">
+                            <div class="icon-box">
+                                <img src="images/tabler-icon-access-point.png" alt="">
+                            </div>
+                            <div>
+                                <h3>Overal Transactions</h3>
+                                <h3>0</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="main-airtime">
+                        <a href="/transactions">
+                            <div class="icon-box">
+                                <img src="images/tabler-icon-id.png" alt="">
+                            </div>
+                            <div>
+                                <h3>Overal Income</h3>
+                                <h3>₦0.0</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="main-airtime">
+                        <a href="/all-users">
+                            <div class="icon-box">
+                                <img src="/images/tabler-icon-address-book.png" alt="">
+                            </div>
+                            <div>
+                                <h3>All Users</h3>
+                                <p>22 Users</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="main-airtime">
+                        <a href="/business-balance">
+                            <div class="icon-box">
+                                <img src="images/tabler-icon-wallet.png" alt="">
+                            </div>
+                            <div>
+                                <h3>Business Balance</h3>
+                                <h3>₦0.0</h3>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <%- include('../partials/alltransactions', {transactions: transactions}) %>
+        </main>
+    </section>
+    <script src="js/dashboard.js"></script>
+    <script src="js/wallet.js"></script>
+</body>
+</html>

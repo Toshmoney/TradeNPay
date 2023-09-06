@@ -93,6 +93,53 @@ const privacyPolicy = async (req, res) => {
   res.status(200).render("dashboard/privacy");
 };
 
+
+// Admin dashboard
+const adminDashboard = async (req, res) => {
+  const data = await dashboardData(req.user);
+  res.status(200).render("admin/dashboard", data);
+};
+
+const businessBal = async (req, res) => {
+  const data = await dashboardData(req.user);
+  res.status(200).render("admin/businessbal", data);
+};
+
+const adminTrans = async (req, res) => {
+  const data = await dashboardData(req.user);
+  res.status(200).render("admin/transactions", data);
+};
+
+const adminSettings = async (req, res) => {
+  const data = await dashboardData(req.user);
+  res.status(200).render("admin/adminsettings", data);
+};
+
+const allUsers = async (req, res) => {
+  const data = await dashboardData(req.user);
+  res.status(200).render("admin/allusers", data);
+};
+
+const adminDataReset = async (req, res) => {
+  const data = await dashboardData(req.user);
+  res.status(200).render("resets/data", data);
+};
+
+const adminCableReset = async (req, res) => {
+  const data = await dashboardData(req.user);
+  res.status(200).render("resets/tv", data);
+};
+
+const adminExamReset = async (req, res) => {
+  const data = await dashboardData(req.user);
+  res.status(200).render("resets/exam", data);
+};
+
+const adminElectricityReset = async (req, res) => {
+  const data = await dashboardData(req.user);
+  res.status(200).render("resets/electricity", data);
+};
+
 module.exports = {
   homePage,
   dashboard,
@@ -108,4 +155,13 @@ module.exports = {
   test,
   billPayer,
   privacyPolicy,
+  adminDashboard,
+  businessBal,
+  adminSettings,
+  allUsers,
+  adminTrans,
+  adminDataReset,
+  adminCableReset,
+  adminElectricityReset,
+  adminExamReset
 };

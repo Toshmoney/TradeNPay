@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlphaBills | Buy Exam Pin </title>
+  <link rel="stylesheet" href="/css/toastr.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/aside.css">
+  <link rel="stylesheet" href="/css/general.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body>
+  <section class="dashboard-container bill-page">
+    <%- include('../partials/adminAside') %>
+      <main>
+        <%- include('../partials/mobileHeader') %>
+          <div class="dashboard-main-top">
+            <h1>UPDATE Exam Pin</h1>
+            <div class="input-bar">
+              <div>
+                <img src="/images/tabler-icon-bell.png" alt="">
+              </div>
+              <div class="profile-picture">
+                <img src="/images/Frame 12.png" alt="profile-picture">
+              </div>
+            </div>
+          </div>
+
+          <section class="bill-box">
+            <div class="bill-payer">
+              <form>
+                <div class="form-field">
+                  <label id="exam">Select Exam Type</label>
+                  <select name="exam" id="exam" class="exam">
+                    <option value="">Please select your exam type</option>
+                    <option value="AJA">Waec </option>
+                    <option value="AJC">NECO </option>
+                    <option value="AJB">JAMB</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <div class="form-field">
+                    <label for="quantity">Quantity</label>
+                    <input name="quantity" id="quantity" class="quantity" type="number" min="1"
+                      placeholder="Enter Quantity" />
+                  </div>
+                  <div class="form-field">
+                    <label for="amount">Amount</label>
+                    <input name="amount" id="amount" class="amount" type="number" placeholder="Amount" />
+                  </div>
+                </div>
+                
+                <button class="block-btn submit-btn cta">Update Price</button>
+              </form>
+            </div>
+          </section>
+      </main>
+  </section>
+
+  <script src="/js/balanceToggle.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/jquery.js"></script>
+  <script src="/js/toastr.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    
+  </script>
+</body>
+
+</html>
