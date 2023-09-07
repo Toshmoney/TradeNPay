@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,71 +11,73 @@
     <link rel="stylesheet" href="css/general.css">
 
 </head>
+
 <body>
     <section class="dashboard-container">
         <%- include('../partials/adminAside') %>
-       <!-- mobile dashboard end -->
-        <main>
-            <%- include('../partials/mobileHeader') %>
-           <div class="dashboard-main-top">
-                <h1>SETTINGS</h1>
-                <div class="input-bar">
-                    <div>
-                        <img src="images/tabler-icon-bell.png" alt="">
-                    </div>
-                    <div class="profile-picture">
-                        <img src="images/Frame 12.png" alt="profile-picture">
-                    </div>
-                </div>
-           </div>
-
-
-           <div class="flex-new">
-                <div class="main-setting">
-                <div class="second">
-                    <h1>DATA PRICES</h1>
-                    <div class="inner-1">
-                        <a href="/data-reset" class="acct-statement">
-                            <h1>Reset Data Price</h1>
-                        </a>
+            <!-- mobile dashboard end -->
+            <main>
+                <%- include('../partials/mobileHeader') %>
+                    <div class="dashboard-main-top">
+                        <h1>SETTINGS</h1>
+                        <div class="input-bar">
+                            <div>
+                                <img src="images/tabler-icon-bell.png" alt="">
+                            </div>
+                            <div class="profile-picture">
+                                <img src="images/Frame 12.png" alt="profile-picture">
+                            </div>
+                        </div>
                     </div>
 
-                </div>
-                <div class="second">
-                    <h1>CABLE TV</h1>
-                    <div class="inner-1">
-                        <a href="/tv-reset" class="acct-statement">
-                            <h1>Reset tv subscriptions price</h1>
-                        </a>
-                        
-                    </div>
-                </div>
-           </div>
 
-           <div class="flex-settings">
-                <div class="second">
-                    <h1>ELECTRICITY</h1>
-                    <div class="inner-1">
-                        <a href="/electricity-reset" class="acct-statement">
-                            <h1>Reset Electricity Price</h1>
-                        </a>
+                    <div class="flex-new">
+                        <div class="main-setting">
+                            <div class="second">
+                                <h1>DATA PRICES</h1>
+                                <div class="inner-1">
+                                    <a href="/admin/data-plans" class="acct-statement">
+                                        <h1>Reset Data Price</h1>
+                                    </a>
+                                </div>
+
+                            </div>
+                            <div class="second">
+                                <h1>CABLE TV</h1>
+                                <div class="inner-1">
+                                    <a href="/tv-reset" class="acct-statement">
+                                        <h1>Reset tv subscriptions price</h1>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex-settings">
+                            <div class="second">
+                                <h1>ELECTRICITY</h1>
+                                <div class="inner-1">
+                                    <a href="/electricity-reset" class="acct-statement">
+                                        <h1>Reset Electricity Price</h1>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="second">
+                                <h1>EXAM PINS</h1>
+                                <div class="inner-1">
+                                    <a href="/exam-reset" class="acct-statement">
+                                        <h1>Reset Exam pins price</h1>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="second">
-                    <h1>EXAM PINS</h1>
-                    <div class="inner-1">
-                        <a href="/exam-reset" class="acct-statement">
-                            <h1>Reset Exam pins price</h1>
-                        </a>
-                        
-                    </div>
-                </div>
-                </div>
-           </div>
-        </main>
+            </main>
     </section>
-    
+
 
     <script src="js/dashboard.js"></script>
 </body>
+
 </html>

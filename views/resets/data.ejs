@@ -2,78 +2,75 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>AlphaBills | Reset Data Prices</title>
-	<link rel="stylesheet" href="/css/toastr.css">
-	<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="/css/general.css">
-	<link rel="stylesheet" href="/css/aside.css">
-	<link rel="stylesheet" href="/css/DataPlans.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlphaBills | Reset Data Prices</title>
+  <link rel="stylesheet" href="/css/toastr.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/general.css">
+  <link rel="stylesheet" href="/css/aside.css">
+  <link rel="stylesheet" href="/css/DataPlans.css">
 </head>
 
 <body>
-	<section class="dashboard-container">
-		<%- include('../partials/adminAside') %>
+  <section class="dashboard-container">
+    <%- include('../partials/adminAside') %>
 
-			<main>
-				<%- include('../partials/mobileHeader') %>
-					<div class="dashboard-main-top">
-						<h1>UPDATE Data Price</h1>
-						<div class="input-bar">
-							<div>
-								<img src="images/tabler-icon-bell.png" alt="">
-							</div>
-							<div class="profile-picture">
-								<img src="images/Frame 12.png" alt="profile-picture">
-							</div>
-						</div>
-					</div>
-					<div class="bill-payer">
-						<form action="">
-							<div class="form-group">
-								<div class="choose form-field">
-									<label class="bold" for="network">SELECT NETWORK PROVIDER</label>
-									<select class="network" name="network" id="network" value="Select Option">
-										<!-- <option value="">Select Option</option> -->
-										<option value="1 MTN">MTN NG</option>
-										<option value="2 GLO">GLO</option>
-										<option value="3 9MOBILE">9MOBILE</option>
-										<option value="4 AIRTEL">AIRTEL NG</option>
-									</select>
-								</div>
-								<div class="choose form-field">
-									<label class="bold" for="data_plans">CHOOSE PLAN</label>
-									<select class="data_plans" name="data_plans" id="data_plans" value="Select Option">
-										<option value="">Select Option</option>
-										<option value="1 500">500 MB</option>
-										<option value="2 1000">1 GB</option>
-										<option value="3 2000">2 GB</option>
-										<option value="4 3000">3 GB</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-field">
-								<label class="bold" for="phoneNumber">PRICE</label>
-								<input type="number" name="price" id="price" placeholder="Set data price">
-							</div>
-							<div class="page-end">
-                                <button type="submit" class="cta submit submit-btn">Update Price</button>
-							</div>
-						</form>
-					</div>
+      <main>
+        <%- include('../partials/mobileHeader') %>
+          <div class="dashboard-main-top">
+            <h1>UPDATE Data Price</h1>
+            <div class="input-bar">
+              <div>
+                <img src="/images/tabler-icon-bell.png" alt="">
+              </div>
+              <div class="profile-picture">
+                <img src="/images/Frame 12.png" alt="profile-picture">
+              </div>
+            </div>
+          </div>
+          <div class="bill-payer">
+            <form action="">
+              <div class="form-group">
+                <div class="choose form-field">
+                  <label class="bold" for="network">SELECT NETWORK PROVIDER</label>
+                  <select class="network" name="network" id="network">
+                    <% for ( let i=0; i < networks.length; i++ ) { let selected=( networks[i].id==data_plan.plan_id )
+                      ? "selected" : "" ; %>
+                      <option value="<%=networks[i].id %>" <%=selected %>><%=networks[i].name %>
+                      </option>
+                      <% } %>
 
-			</main>
-	</section>
+                  </select>
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="bold" for="data-size">SIZE</label>
+                <input value="<%= data_plan.size %>" type="text" name="data-size" id="data-size"
+                  placeholder="Set data price">
+              </div>
+              <div class="form-field">
+                <label class="bold" for="phoneNumber">PRICE</label>
+                <input value="<%= data_plan.sale_price %>" type="number" name="price" id="price"
+                  placeholder="Set data price">
+              </div>
+              <div class="page-end">
+                <button type="submit" class="cta submit submit-btn">Update Price</button>
+              </div>
+            </form>
+          </div>
 
-	<script src="/js/dashboard.js"></script>
-	<script src="/js/jquery.js"></script>
-	<script src="/js/toastr.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-	<script>
-		
-	</script>
+      </main>
+  </section>
+
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/jquery.js"></script>
+  <script src="/js/toastr.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+
+  </script>
 </body>
 
 </html>
