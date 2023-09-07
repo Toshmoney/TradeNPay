@@ -6,7 +6,7 @@ const businessBalance = require("./businessBalance");
 const { transactionQuery } = require("./transactionQuery");
 const { dashboardData, formatTransaction } = require("./dashboardData");
 const { formatPlan } = require("./dataPlan");
-const { formatDate } = require("./lib");
+const { formatDate, data_provider } = require("./lib");
 const getStatus = async (service_id = "BCA", requestType = "SME") => {
   try {
     const response = await axios.post(
@@ -69,4 +69,5 @@ module.exports = {
   formatTransaction,
   formatPlan,
   formatDate,
+  data_provider,
 };

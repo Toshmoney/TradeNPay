@@ -12,6 +12,14 @@ const formatDate = (date_string) => {
   return `${year}-${month}-${day}`;
 };
 
+const data_provider = [
+  { name: "MTN", id: "1" },
+  { name: "GLO", id: "2" },
+  { name: "9MOBILE", id: "3" },
+  { name: "AIRTEL", id: "4" },
+];
+
 module.exports = {
   formatDate,
+  data_provider,
 };
