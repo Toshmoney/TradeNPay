@@ -16,16 +16,20 @@ const {
   test,
   billPayer,
   privacyPolicy,
-  adminDashboard,
   businessBal,
-  adminSettings,
-  allUsers,
+} = require("../controller/controller");
+
+const {
+  adminDashboard,
   adminTrans,
+  allUsers,
+  adminSettings,
+  adminDataPlans,
   adminDataReset,
   adminCableReset,
   adminExamReset,
   adminElectricityReset,
-} = require("../controller/controller");
+} = require("../controller/admin");
 
 const { fetchPackages } = require("../controller/packageController");
 
@@ -42,7 +46,6 @@ const {
 } = require("../controller/auth");
 
 const fundWalletVerify = require("../controller/fundWallet");
-const { businessBalance } = require("../utils");
 
 router.route("/api/v1/packages").post(fetchPackages);
 router.route("/").get(homePage);
@@ -86,11 +89,14 @@ router.route("/business-balance").get([isLoggedIn, isAdmin], businessBal);
 router.route("/all-users").get([isLoggedIn, isAdmin], allUsers);
 router.route("/admin-setting").get([isLoggedIn, isAdmin], adminSettings);
 router.route("/transactions").get([isLoggedIn, isAdmin], adminTrans);
-router.route("/data-reset").get([isLoggedIn, isAdmin], adminDataReset);
+router
+  .route("/data-plans/:plan_id/change")
+  .get([isLoggedIn, isAdmin], adminDataReset);
 router.route("/tv-reset").get([isLoggedIn, isAdmin], adminCableReset);
 router.route("/exam-reset").get([isLoggedIn, isAdmin], adminExamReset);
 router
   .route("/electricity-reset")
   .get([isLoggedIn, isAdmin], adminElectricityReset);
+router.route("/admin/data-plans").get([isLoggedIn, isAdmin], adminDataPlans);
 
 module.exports = router;

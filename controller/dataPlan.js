@@ -49,7 +49,7 @@ const getSingleDataPlan = async (req, res) => {
 const updateDataPlan = async (req, res) => {
   const { plan_id } = req.params;
   const upadated_data_plan = await DataPlan.findOneAndUpdate(
-    { plan_id: plan_id },
+    { _id: plan_id },
     req.body,
     { new: true, runValidators: true }
   );
@@ -69,7 +69,7 @@ const updateDataPlan = async (req, res) => {
 const deleteDataPlan = async (req, res) => {
   const { plan_id } = req.params;
   const deleted_data_plan = await DataPlan.findOneAndRemove({
-    plan_id: plan_id,
+    _id: plan_id,
   });
   if (!deleted_data_plan) {
     throw new CustomAPIError(
