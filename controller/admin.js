@@ -71,7 +71,7 @@ const adminSettings = async (req, res) => {
 
 const adminDataPlans = async (req, res) => {
   const data_plans = await DataPlan.find().sort("-network_name");
-  res.status(200).render("admin/dataPlans", { data_plans });
+  res.status(200).render("admin/dataplans", { data_plans });
 };
 
 const adminDataReset = async (req, res) => {
