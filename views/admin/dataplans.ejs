@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlphaBills | All Data Plans</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/general.css">
+  <link rel="stylesheet" href="/css/aside.css">
+  <link rel="stylesheet" href="/css/wallet.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body>
+  <section class="dashboard-container">
+    <%- include('../partials/adminAside') %>
+      <!-- mobile dashboard end -->
+      <main>
+        <%- include('../partials/mobileHeader') %>
+          <div class="dashboard-main-top">
+            <h1>ALL Data Plans</h1>
+            <div class="input-bar">
+              <div>
+                <img src="/images/tabler-icon-bell.png" alt="">
+              </div>
+              <div class="profile-picture">
+                <img src="/images/Frame 12.png" alt="profile-picture">
+              </div>
+            </div>
+          </div>
+          <%- include('../partials/dataPlanTable', { data_plans: data_plans }) %>
+      </main>
+  </section>
+  <script src="/js/dashboard.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const dataPlans = document.querySelectorAll('.data-plan')
+    dataPlans.forEach((row) => {
+      const id = row.getAttribute("data-id")
+      const updateButton = row.querySelector(".price-button")
+      const priceField = row.querySelector(".price-field")
+      updateButton.addEventListener("click", () => {
+        axios.patch(`/api/v1/data_plan/${id}`, { sale_price: priceField.value })
+          .then((res) => {
+            alert("price updated successfully")
+          })
+          .catch(error => {
+            const message = error.response?.data?.message || "unable to update data plan"
+            alert(message)
+          })
+      })
+    })
+  </script>
+</body>
+
+</html>
