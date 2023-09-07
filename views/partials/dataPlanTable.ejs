@@ -1,0 +1,59 @@
+<div class="history-table">
+  <% if (data_plans.length> 0) { %>
+    <div class="flex flex-col">
+      <div class="overflow-x-auto">
+        <div class="inline-block min-w-full">
+          <div class="overflow-hidden">
+            <table class="min-w-full text-left text-sm font-light">
+              <thead class="font-medium dark:border-neutral-500 dark:bg-neutral-600">
+                <tr>
+                  <th scope="col" class="whitespace-nowrap px-6 py-4">Data ID</th>
+                  <th scope="col" class="px-6 py-4">Network</th>
+                  <th scope="col" class="px-6 py-4">Type</th>
+                  <th scope="col" class="px-6 py-4">Amount</th>
+                  <th scope="col" class="px-6 py-4">Size</th>
+                  <th scope="col" class="px-6 py-4">Validity</th>
+                  <th scope="col" class="px-6 py-4">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% data_plans.forEach(function(data_plan) { %>
+                  <tr data-id="<%= data_plan._id %>" data-plan_id="<%= data_plan.plan_id %>"
+                    class="data-plan bg-white dark:border-neutral-500 dark:bg-neutral-600 dark:text-white">
+                    <td class="whitespace-nowrap px-6 py-4">
+                      <%= data_plan.plan_id %>
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                      <%= data_plan.network_name %>
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                      <%= data_plan.plan_type %>
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                      <input class="price-field bg-white dark:border-neutral-500 dark:bg-neutral-600 dark:text-white"
+                        value="<%= data_plan.sale_price %>" type="text">
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                      <%= data_plan.size %>
+                    </td>
+                    <td class="px-6 py-4">
+                      <%= data_plan.validity %>
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                      <div class="flex gap-2 items-center">
+                        <button type="button" class="price-button bg-blue-500 text-white px-4 py-2">Update</button>
+                        <a href="/data-plans/<%= data_plan.plan_id %>/change">View</a>
+                      </div>
+                    </td>
+                  </tr>
+                  <% }); %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } else { %>
+      <p>No Data Plans</p>
+      <% } %>
+</div>
