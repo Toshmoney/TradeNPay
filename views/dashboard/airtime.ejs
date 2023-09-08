@@ -36,10 +36,10 @@
               <label class="bold" for="network">SELECT NETWORK PROVIDER</label>
               <select class="network" name="network" id="network" value="Select Option">
                 <option value="">Select Option</option>
-                <option value="BAD STANDARD">MTN NG</option>
-                <option value="BAB STANDARD">GLO</option>
-                <option value="BAC STANDARD">9MOBILE</option>
-                <option value="BAA STANDARD">AIRTEL NG</option>
+                <option value="1 MTN">MTN NG</option>
+                <option value="2 GLO">GLO</option>
+                <option value="3 9MOBILE">9MOBILE</option>
+                <option value="4 AIRTEL">AIRTEL NG</option>
               </select>
             </div>
           </div>
@@ -122,10 +122,10 @@
     };
 
     const validatedData = () => {
-      const [service_id, service_type] = networkSelect.value.split(" ");
+      const [network_id, network_name] = networkSelect.value.split(" ");
       const amount = Number(amountInput.value);
       const phoneNumber = phoneNumberInput.value.replaceAll(" ", "");
-      if (!service_id || !service_type) {
+      if (!network_id || !network_name) {
         toastr.error("Pls select network provider");
         return false;
       }
@@ -150,8 +150,8 @@
         return false;
       }
       return {
-        service_id,
-        service_type,
+        network_id,
+        network_name,
         amount,
         phoneNumber,
       };
@@ -161,16 +161,11 @@
       if (!validatedData()) {
         return;
       }
-      const { service_id, service_type, amount, phoneNumber } =
+      const req_body =
         validatedData();
       disableBuyButton();
       axios
-        .post("/api/v1/airtime/recharge", {
-          service_id,
-          service_type,
-          amount,
-          phoneNumber,
-        })
+        .post("/api/v1/airtime/recharge", req_body)
         .then((response) => {
           const { data } = response;
           walletBalance = data.balance || walletBalance - amount;
@@ -181,7 +176,7 @@
         .catch((error) => {
           let message = "Try again letter"
           if (error.response) {
-            const { data, status } = error.response
+            const { data } = error.response
             message = data?.message || message
           }
           toastr.info(message, 'Purchase failed')

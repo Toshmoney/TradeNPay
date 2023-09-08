@@ -1,14 +1,15 @@
 require("dotenv").config();
 const { generateTransId } = require("../utils");
 const Transaction = require("../model/Transaction");
-const { default: axios } = require("axios");
+const { CustomAPIError } = require("../handleError");
+const { subvtu_recharge } = require("../utils/subvtu");
+const PURCHASE_ENDPOINT = process.env.AIRTIME_PURCHASE_ENDPOINT;
 
 const buyAirtime = async (req, res) => {
-  const { amount, phoneNumber, service_id, service_type } = req.body;
+  const { amount, phoneNumber, network_id } = req.body;
   const user = req.user;
-  // check if user has enough in his wallet
   const userWallet = req.user.wallet;
-  const userBalance = userWallet.current_balance;
+  const initialBalance = userWallet.current_balance;
 
   // create a unique transaction_id
   let transaction_id;
@@ -25,8 +26,8 @@ const buyAirtime = async (req, res) => {
   const transaction = new Transaction({
     user: user._id,
     amount: Number(amount),
-    balance_before: userBalance,
-    balance_after: userBalance,
+    balance_before: initialBalance,
+    balance_after: initialBalance,
     status: "pending",
     service: "airtime",
     type: "debit",
@@ -35,51 +36,37 @@ const buyAirtime = async (req, res) => {
   });
   // form request data
   const req_data = {
+    network: network_id,
     amount: Number(amount),
-    phoneNumber,
-    service_id,
-    service_type,
-    trans_id: transaction_id,
+    mobile_number: phoneNumber,
+    Ported_number: false,
+    airtime_type: "VTU",
   };
   // send request to server
-  try {
-    const response = await axios.post(
-      "https://enterprise.mobilenig.com/api/services/",
-      req_data,
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.API_SECRET_KEY}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const { data } = response;
-    const { message } = data;
-    if (message !== "success") {
-      return res.status(422).json({
-        message: "unable to process transaction, pls check your inputs ",
-        success: false,
-      });
-    }
-    // update transaction to be concluded
-    transaction.status = "completed";
-    transaction.balance_after = userBalance - Number(amount);
-    // deduct transaction amount from user wallet
-    userWallet.previous_balance = userBalance;
-    userWallet.current_balance = userBalance - Number(amount);
-    await userWallet.save();
+  const purchase_id = await subvtu_recharge(PURCHASE_ENDPOINT, req_data);
+  if (!purchase_id) {
+    transaction.status = "failed";
     await transaction.save();
-    res.status(202).json({
-      message: "your transaction is being processed",
-      balance: userWallet.current_balance,
-      success: true,
-    });
-  } catch (error) {
-    return res.status(422).json({
-      message: "failed transaction",
-      success: false,
-    });
+    throw new CustomAPIError(
+      "unable to process transaction, try again later",
+      422
+    );
   }
+  // update transaction to be concluded
+  const newBalance = initialBalance - Number(amount);
+  transaction.status = "completed";
+  transaction.external_id = purchase_id;
+  transaction.balance_after = newBalance;
+  // deduct transaction amount from user wallet
+  userWallet.previous_balance = initialBalance;
+  userWallet.current_balance = newBalance;
+  await userWallet.save();
+  await transaction.save();
+  res.status(202).json({
+    message: "your transaction is being processed",
+    balance: newBalance,
+    success: true,
+  });
 };
 
 module.exports = {
