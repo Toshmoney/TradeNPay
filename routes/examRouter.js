@@ -1,11 +1,14 @@
-const express = require("express")
+const express = require("express");
 
-const router = express.Router()
+const router = express.Router();
+const { isAuthenticated } = require("../middleware/authenticate");
+const verifyWallet = require("../middleware/checkUserWallet");
+const { verifyUserPin } = require("../middleware/checkUserPin");
 
-const verifyWallet = require("../middleware/checkUserWallet")
+const { buyExamPin } = require("../controller/examController");
 
-const { buyExamPin } = require("../controller/examController")
+router
+  .route("/buy-result-checker")
+  .post([isAuthenticated, verifyUserPin, verifyWallet], buyExamPin);
 
-router.route('/buy-result-checker').post(verifyWallet, buyExamPin)
-
-module.exports = router
+module.exports = router;

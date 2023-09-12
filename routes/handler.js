@@ -47,6 +47,9 @@ const {
 
 const fundWalletVerify = require("../controller/fundWallet");
 
+const { newPin } = require("../controller/transactionPin");
+const { checkUserPin } = require("../middleware/checkUserPin");
+
 router.route("/api/v1/packages").post(fetchPackages);
 router.route("/").get(homePage);
 router.route("/test").get(test);
@@ -69,9 +72,12 @@ router.route("/confirmation").post(confirmReset);
 router.route("/sign-up").post(newUser);
 router.route("/dashboard").get(isLoggedIn, dashboard);
 router.route("/dashboard").post(dashboard);
-router.route("/airtime").get(isLoggedIn, airtime);
-router.route("/data").get(isLoggedIn, dataplan);
-router.route("/billpayment").get(isLoggedIn, billpayment);
+router.route("/airtime").get([isLoggedIn, checkUserPin], airtime);
+router.route("/data").get([isLoggedIn, checkUserPin], dataplan);
+router.route("/billpayment").get([isLoggedIn, checkUserPin], billpayment);
+router
+  .route("/billpayment/:service")
+  .get([isLoggedIn, checkUserPin], billPayer);
 router.route("/wallet").get(isLoggedIn, wallet);
 router.route("/wallet/fund").get(isLoggedIn, fundWallet);
 
@@ -80,7 +86,6 @@ router.route("/setting").get(isLoggedIn, setting);
 router.route("/profile").get(isLoggedIn, profile);
 router.route("/privacy-policy").get(isLoggedIn, privacyPolicy);
 router.route("/verify_now").get(isLoggedIn, verifyNow);
-router.route("/billpayment/:service").get(isLoggedIn, billPayer);
 router.route("/wallet/verify-payment").post(isLoggedIn, fundWalletVerify);
 
 // Admin only
@@ -98,5 +103,8 @@ router
   .route("/electricity-reset")
   .get([isLoggedIn, isAdmin], adminElectricityReset);
 router.route("/admin/data-plans").get([isLoggedIn, isAdmin], adminDataPlans);
+
+// transaction pain
+router.route("/new-pin").get([isLoggedIn], newPin).post([isLoggedIn], newPin);
 
 module.exports = router;
