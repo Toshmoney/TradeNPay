@@ -29,16 +29,16 @@
       </section>
       <section class="px-4">
         <div class="main-form w-screen max-w-lg">
-          <h2 class="text-sm">Four to six characters only</h2>
+          <h2 class="text-xl">Four to six characters only</h2>
           <form action="/update-pin" method="post">
             <div class="flex flex-col gap-4 mb-6">
               <div>
-                <label class="block mb-2" for="pin">Old pin</label>
-                <input type="password" name="pin" id="pin" placeholder="New pin">
+                <label class="block mb-2" for="old_pin">Old pin</label>
+                <input type="password" name="old_pin" id="pin" placeholder="Old pin">
               </div>
               <div>
-                <label class="block mb-2" for="confirm_pin">New pin</label>
-                <input type="password" name="confirm_pin" id="confirm_pin" placeholder="Confirm pin">
+                <label class="block mb-2" for="new_pin">New pin</label>
+                <input type="password" name="new_pin" id="new_pin" placeholder="New pin">
               </div>
             </div>
             <button type="submit" class="rounded-lg block bg-blue-500 w-full py-2 text-white">Submit</button>

@@ -47,7 +47,7 @@ const {
 
 const fundWalletVerify = require("../controller/fundWallet");
 
-const { newPin } = require("../controller/transactionPin");
+const { newPin, updatePin } = require("../controller/transactionPin");
 const { checkUserPin } = require("../middleware/checkUserPin");
 
 router.route("/api/v1/packages").post(fetchPackages);
@@ -106,5 +106,9 @@ router.route("/admin/data-plans").get([isLoggedIn, isAdmin], adminDataPlans);
 
 // transaction pain
 router.route("/new-pin").get([isLoggedIn], newPin).post([isLoggedIn], newPin);
+router
+  .route("/update-pin")
+  .get([isLoggedIn], updatePin)
+  .post([isLoggedIn], updatePin);
 
 module.exports = router;
