@@ -11,14 +11,17 @@ const {
   batchUpload,
   purchaseDataPlan,
 } = require("../controller/dataPlan");
+const { verifyUserPin } = require("../middleware/checkUserPin");
 
 const router = express.Router();
 
 router.route("/prices").post(fetchDataPrices);
-router.route("/recharge").post([isAuthenticated, verifyWallet], buyData);
+router
+  .route("/recharge")
+  .post([isAuthenticated, verifyUserPin, verifyWallet], buyData);
 router
   .route("/purchase")
-  .post([isAuthenticated, verifyWallet], purchaseDataPlan);
+  .post([isAuthenticated, verifyUserPin, verifyWallet], purchaseDataPlan);
 router
   .route("/")
   .post([isAuthenticated, isAdmin], createDataPlan)

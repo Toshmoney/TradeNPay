@@ -54,6 +54,10 @@
               <input type="number" name="amount" id="amount" placeholder="0.00" />
             </div>
           </div>
+          <div class="form-field">
+            <label class="bold" for="pin">PIN</label>
+            <input type="password" name="pin" id="pin" placeholder="****" />
+          </div>
 
           <div class="page-end">
             <p class="flex gap-6 bold wallet-balance">
@@ -100,6 +104,7 @@
     const networkSelect = document.querySelector("select.network");
     const phoneNumberInput = document.querySelector("input#phoneNumber");
     const amountInput = document.querySelector("input#amount");
+    const pinInput = document.querySelector("input#pin");
     const submitButton = document.querySelector("button.submit-btn");
 
     const disableBuyButton = (buttonText = "Please wait") => {
@@ -118,6 +123,7 @@
       networkSelect.value = "";
       phoneNumberInput.value = "";
       amountInput.value = "";
+      pinInput.value = ""
       activateBuyButton();
     };
 
@@ -125,8 +131,13 @@
       const [network_id, network_name] = networkSelect.value.split(" ");
       const amount = Number(amountInput.value);
       const phoneNumber = phoneNumberInput.value.replaceAll(" ", "");
+      const pin = pinInput.value
       if (!network_id || !network_name) {
-        toastr.error("Pls select network provider");
+        toastr.error("Select network provider");
+        return false;
+      }
+      if (!pin) {
+        toastr.error("Enter your pin");
         return false;
       }
       if (!phoneNumberRegex.test(phoneNumber)) {
@@ -154,15 +165,15 @@
         network_name,
         amount,
         phoneNumber,
+        pin
       };
     };
 
     const recharge = () => {
-      if (!validatedData()) {
+      const req_body = validatedData();
+      if (!req_body) {
         return;
       }
-      const req_body =
-        validatedData();
       disableBuyButton();
       axios
         .post("/api/v1/airtime/recharge", req_body)
