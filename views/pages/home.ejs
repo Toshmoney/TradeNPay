@@ -2,244 +2,192 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/tailstyle.css">
+    <link rel="stylesheet" href="css/newtail.css">
+    <link rel="stylesheet" href="css/custom.css">
     <title>AlphaBills | Buy Reputable databundle and airtime at affordable prices in Nigeria</title>
-    <link rel="stylesheet" href="css/home.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
-    <section class="hero">
-        <header>
-            <img  src="images/ALPHABILLS STRAIGHT 1.png" alt="" height="30px">
-            <nav>
-                <a href="">Home <span class="icon"><img src="Vector.png" alt=""></span></a>
-                <a href="#about">About us <span class="icon"><img src="Vector.png" alt=""></span></a>
-                <a href="#service">Services</a>
-                <a href="/login">Sign in</a>
-            </nav>
-            <button class="toggle"></button>
-        </header>
-        <div class="mobile-nav">
-            <a href="">Home <span class="icon"><img src="Vector.png" alt=""></span></a>
-            <a href="#about">About us <span class="icon"><img src="Vector.png" alt=""></span></a>
-            <a href="#service">Services</a>
-            <a href="/sign-in">Sign in</a>
-        </div>
-        <div class="hero-content">
-            <!-- <div class="hero-blur"></div> -->
-            <div class="data-text">
-                <div class="cheap-class">
-                    <p class="cheap">Cheap <span> Data</span></p>
-                    <p>You Can Now DO MORE for Less <br>On All Networks</p>
-                    <a href="/sign-up" class="btn-1">Get Started</a>
-                </div>
-                <div class="cheap-image">
-                    <img src="images/Premium_Photo___Happy_african_wjkkoman_showing_a_mobile_screen-removebg-preview 1.png" alt="">
-                </div>
-            </div>         
-        </div>
-    </section>
-    <section class="about-data" id="about">
-        <div class="heading">
-            <p>FIRST THING YOU SHOULD KNOW</p>
-            <h3>About <span>Alpha</span>Bills</h3>
-        </div>
-        <div class="content">
-            <div class="content-text">
-                <p>AlphaBills is the new reliable and affordable way to data bundles on any Nigerian network. We offer the best prices rates for Airtel, MTN, 9mobile and Glo.CEO</p>
-                <p>Whether you are a casual surfer using just 500MB a month or a heavy data addict consuming 20GB+ monthly, we have an affordable data plan for you.</p>                    
-                <p>With multiple payment options and 24/7 availability, take advantage of our cheap data offering for all networks and do more in every area of your life.</p>
-                    
+    <div class="hero bg-sky-500 bg-[url('/image/herorec.png')] bg-no-repeat bg-cover  p-6 w-[100%]  ">
+        <div class="bar w-[70%] flex rounded-3xl p-4 bg-white items-center justify-evenly ml-40 static">
+            <img src="image/ALPHABILLS STRAIGHT 1.png" alt="">
+            <div class="menu lg:block md:hidden">
+                    <li class="list-none">
+                        <a class="mr-6" href="">About Us</a>
+                        <a class="mr-6" href="">Bills</a>
+                        <a class="mr-6" href="https://chat.whatsapp.com/GktoSxKHEShJS8j2kuUnZb">Support</a>
+                    </li>
             </div>
-            <div class="image">
-                <img src="images/cool 1.png" alt="">
+            <div class="buttons lg:block md:hidden">
+                <button class=" px-4 p-1 border border-black rounded-md"><a href="/login">Sign in</a></button>
+                    <button class=" px-4 p-1 bg-black text-white rounded-md"><a href="/sign-up">Register</a></button>
             </div>
+           <div class="lg:hidden md:block">
+            <button onclick="myfunction()">
+              <img class="toggle-btn" src="image/Group 44 (1).png" alt="">
+            </button>
+           </div>
         </div>
-    </section>
-    <section class="family-bundle" id="service">
-        <div class="data-bundle">
-            <p>AVAILABLE DATA BUNDLES</p>
-            <H1>Family <span>Bundle</span></H1>
-            <p>Family the solution to all your data problem is here... we have the best prices and with convinient payment <br>option. Click on your preffered network below to get your cheap data</p>
+        <div class="mobile-menu">
+            <li class="mobilenav-link ">
+                <a class="mr-6" href="">About Us</a>
+                <a class="mr-6" href="">Bills</a>
+                <a class="mr-6" href="">Support</a>
+                <div class="button-mobile">
+                    <button class=" px-4 p-1 border border-black rounded-md"><a href="/login">Sign in</a></button>
+                    <button class=" px-4 p-1 bg-black text-white rounded-md"><a href="/sign-up">Register</a></button>
+                </div>
+            </li>
         </div>
-        <div class="net-deco">
-            <div class="network">
-                <div class="mtn-sub">
-                    <div class="mtn">
-                        <ol>
-                            <img src="images/mtn 1.png" alt="">
-                            <li>500MB</li>
-                            <li>1GB</li>
-                            <li>2GB</li>
-                            <li>5GB</li>
-                        </ol>
-                    </div>
+        <div class="hero-page flex md::flex-col lg:flex-row items-center justify-center text-white w-[100%] ml-5">
+            <div class="hero-page1">
+                <h1 class="text-3xl w-3/4 mb-5">The Ultimate Online Bill Payment Solution</h1>
+                <p class="w-[75%] mb-5">Say goodbye the stress of due dates, late fees and missed Payment.</p>
+                <button class="bg-black text-white rounded-md px-8 p-2 mb-5"><a href="/sign-up">Get Started</a></button>
+                <div class=" other flex items-center mb-5">
+                    <div class="bg-white p-0.5 w-1/4"></div>
+                    <P class="mx-2">Or</P> 
+                    <div class="bg-white w-1/4 p-0.5"></div>
                 </div>
-                <div class="etisalat">
-                    <div class="mtn">
-                        <ol>
-                        <img class="class" src="images/9-Mobile-Logo-Portrait-1 1.png" alt="">
-                            <li>500MB</li>
-                            <li>1GB</li>
-                            <li>2GB</li>
-                            <li>5GB</li>
-                        </ol>
-                    </div>
-                </div>
-                <div class="glo">
-                    <div class="mtn">
-                        <ol>
-                        <img class="class" src="images/GLO.png" alt="">
-                            <li>500MB</li>
-                            <li>1GB</li>
-                            <li>2GB</li>
-                            <li>5GB</li>
-                        </ol>
-                    </div>
-                </div>
-                <div class="airtel">
-                    <div class="mtn">
-                        <ol>
-                        <img class="class" src="images/AIRTEL.png" alt="">
-                            <li>500MB</li>
-                            <li>1GB</li>
-                            <li>2GB</li>
-                            <li>5GB</li>
-                        </ol>
-                    </div>
+                <div class="download2 flex items-center gap-4 mt-5">
+                   <div class="down flex items-center bg-black text-white p-4 rounded-2xl gap-2">
+                        <img src="image/image 11.png" alt="">
+                        <a href="">Download On PlayStore</a>
+                   </div>
+                   <div class=" up flex items-center bg-black text-white p-4 rounded-2xl gap-2 ">
+                        <img src="image/image 12.png" alt="">
+                        <a href="">Download On AppStore</a>
+                   </div>
                 </div>
             </div>
-            <div class="net-foot">
-                <div class="bus-page">
-                    <h4>WANT TO DO BUSINESS WITH US?</h4>
-                </div>
-                <div class="client">
-                    <p>WHAT PEOPLE SAY</p>
-                    <h1>Our Clients</h1>
-                    <div class="excellent">
-                        <h4>"Excellent Service!"</h4>
-                        <p><i><span>Moshood Yusuf</span> AlphaBills</i></p>
-                        <div class="tab">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                </div>
+            <div class="hero-page2">
+            <img class="w-[90%] ml-5" src="image/Group 42.png" alt="">
             </div>
         </div>
-    </section>
-    <section class="contact-here">
-        <div class="contact">
-            <div class="reach-us">
-                <p>WANT TO REACH US?</p>
-                <h1><span>Contact</span> Here</h1>
-            </div>
-            <div id="address">
-                <div>
-                    <img src="images/Vector.png" alt="">
-                    <p>Phone: 08169942930</p>
-                    <p>Phone: 09022237641</p>
-                </div>
-                <div class="taiwo">
-                    <img src="images/Vector (1).png" alt="">
-                    <div>
-                        <p>Number 30, Ibrahim Taiwo road,</p>
-                        <p>Taiwo Isale, Ilorin, Kwara State</p>
-                    </div>
-                </div>
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#0905E0" class="bi bi-envelope" viewBox="0 0 16 16">
-                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
-                      </svg>
-                    <p>alphabills@gmail.com</p> 
-                </div>
-            </div>
-            <div class="btn">
-                <button><a href="">CONTACT ALPHA-BILLS</a></button>
-            </div>
-        </div>
+    </div>
 
+    <section class="bayo flex flex-col justify-center items-center">
+        <div class="ade flex items-center justify-center flex-col">
+            <h1 class="w-[35%] text-3xl pt-10 pb-3">Streamline Bills Payments with 50+ Service Providers</h1>
+            <p class="w-[60%] pb-10">We've partnered with over 50+ renowned service providers and brands to offer you a comprehensive platform for managing and paying your bills effortlessly</p>
+        </div>
+        <div class=" shy grid sm: grid-cols-2 md:grid-cols-3 lg:grid-cols-5 p-8 gap-4">
+            <img src="image/Group 22.png" alt="">
+            <img src="image/Group 21.png" alt="">
+            <img src="image/Group 20.png" alt="">
+            <img src="image/Group 19.png" alt="">
+            <img src="image/Group 18.png" alt="">
+            <img src="image/Group 27.png" alt="">
+            <img src="image/Group 23.png" alt="">
+            <img src="image/Group 24.png" alt="">
+            <img src="image/Group 26.png" alt="">
+            <img src="image/Group 25.png" alt="">
+        </div>
     </section>
-    <footer>
+    <section class="shot flex section-two w-[100%]">
+        <div class="guy flex  justify-center items-center">
+            <div class="sector">
+                <div class="one text-white">
+                    <h1 class="w-[30%] text-2xl mb-5"> Get the Best Data Bundle and Airtime Rates!</h1>
+                    <P class="w-[50%] mb-10">Discover unbeatable deals on data bundles and airtime with us! Enjoy the best rates and never overpay for your mobile needs again. Start saving today</P>
+                    <a class=" bg-black text-white px-8 p-3 rounded-md gap-2" href="/sign-up">Get Started</a>
+                </div>
+            </div>
+            <img class="w-[30%]" src="image/image 15.png" alt="">
+        </div>
+    </section>
+    <section class="guy2 lg:flex justify-center items-center mt-10 ">
+        <div class="omo  text-white">
+            <h1 class="w-[30%] text-2xl mb-5">Enjoy Your Favorite Music and Movies Stress-Free!</h1>
+            <p class="w-[50%] mb-10">Experience uninterrupted entertainment! Stream your beloved music and movies without a hitch. Relax and enjoy endless entertainment with ease.</p>
+            <a class="bg-blue-800 text-white px-8 p-3 rounded-md gap-2 " href="/sign-up">Get Started</a>
+        </div>
+        <img class="w-[30%]" src="image/sectimg2 (2).png" alt="">
+    </section>
+    <section class=" ash flex items-center justify-center mt-10 p-10">
         <div>
-            <h2>Alpha <span class="text-blue">Bills</span></h2>
-            <p>Data service, ilorin, Kwara state</p>
-            <div class="foot-data">
-                <b>Phone:+2348169942930</b>
-                <b>Email: <span>alphabills@gmail.com</span></b>
+            <h1 class="w-[30%] text-2xl mb-5">Internet Connectivity, Anytime, Every Day</h1>
+            <p class="w-[60%] mb-10">Experience the internet without boundaries! Stay connected effortlessly, 24/7, and enjoy a world of possibilities at your fingertips. Say goodbye to downtime and hello to uninterrupted online adventures</p>
+            <a class=" bg-black text-white px-8 p-3 rounded-md gap-2" href="/sign-up">Get Started</a>
+        </div>
+        <img src="image/Group 43.png" alt="">
+    </section>
+    <section class="bundle flex flex-col items-center justify-center mt-10">
+        <h2 class="text-4xl">It’s easy to get started</h1>
+        <p class="bund">Say goodbye to the stress of due dates, late fees, and missed payments</p>
+        <div class="cardes lg:flex gap-5 items-center justify-center mt-5">
+            <div class="card1 flex flex-col items-center text-center w-[30%] bg-[url('/dist/image/rectangle.png')] bg-no-repeat bg-cover">
+                <img class="mb-5 mt-10" src="image/Group 30.png" alt="">
+                <h1 class="text-2xl mb-5">Create your Account</h1>
+                <p class="w-[60%] mb-5">Get the ball rolling by signing up on our user friendly web app or by downloading our mobile app. Setting up your AlphaBills account is quick and 
+                hassle free.</p>
+            </div>
+            <div class="card2 flex flex-col items-center text-center w-[30%] bg-[url('/dist/image/rectangle1.png')] bg-no-repeat bg-cover">
+                <img class="mb-5 mt-10" src="image/Group 31.png" alt="">
+                <h1 class="text-2xl mb-5">Add funds to your wallets</h1>
+                <p class="w-[60%] mb-5"> To start enjoying the convenience of AlphaBills, simply load funds into your wallet securely. You'll have complete control over your finances at your fingertips</p>
+            </div>
+            <div class="card3 flex flex-col items-center text-center w-[30%] bg-[url('/dist/image/rectangle2.png')] bg-no-repeat bg-cover">
+                <img class="mb-5 mt-10" src="image/Group 32.png" alt="">
+                <h1 class="text-2xl mb-5">Begin your Bills</h1>
+                <p class="w-[60%] mb-5"> Now that your wallet is topped up,  dive into the world of effortless bill payments. From utilities to subscriptions, AlphaBills has you covered</p>
             </div>
         </div>
-        <div class="footer-product">
-            <h2>Our Products</h2>
-            <a href="/data">
-                <div>
-                    <img src="images/Vector5.png" alt="">
-                    <span>Data Bundle</span>
-                </div>
-            </a>
-            <a href="/airtime">
-                <div>
-                    <img src="images/Vector5.png" alt="">
-                    <span>Airtime</span>
-                </div>
-            </a>
-            <a href="/billpayment">
-                <div>
-                    <img src="images/Vector5.png" alt="">
-                    <span>Cable TV Subscription</span>
-                </div>
-            </a>
-            <a href="/billpayment">
-                <div>
-                    <img src="images/Vector5.png" alt="">
-                    <span>Bill Payment</span>
-                </div>
-            </a>
-            <a href="">
-                <div>
-                    <img src="images/Vector5.png" alt="">
-                    <span>WAEC Result Pin</span>
-                </div>
-            </a>
-            <a href="">
-                <div>
-                    <img src="images/Vector5.png" alt="">
-                    <span>NECO Result Pin</span>
-                </div>
-            </a>
-            <a href="">
-                <div>
-                    <img src="images/Vector5.png" alt="">
-                    <span>NABTEB Result Pin</span>
-                </div>
-            </a>
-        </div>
+    </section>
+    <section class=" nw-foot flex items-center justify-center mt-10" >
         <div>
-            <H2>Our Social Networks</H2>
+            <h1 class="text-3xl w-[50%] text">Download Our App for a Personalized Experience</h1>
+            <p>Enhance your AlphaBills journey by downloading our app today!!</p>
+            <div class="download flex items-center gap-4 mt-5">
+                <div class="shop flex items-center bg-black text-white p-4 rounded-2xl gap-2">
+                     <img src="image/image 11.png" alt="">
+                     <a href="">Download On PlayStore</a>
+                </div>
+                <div class=" shop flex items-center bg-black text-white p-4 rounded-2xl gap-2 ">
+                     <img src="image/image 12.png" alt="">
+                     <a href="">Download On AppStore</a>
+                </div>
+             </div>
         </div>
-
-    </footer>
-    <p style="text-align: center;">Copyright &copy; <span id="year"></span> AlphaBills | All Rights Reserved.</p>
-
-
-
-
-
-
+        <img class="two" src="image/Group 46.png" alt="">
+    </section>
+    <section class="kult flex justify-center items-center p-10">
+        <div class="foot">
+            <div><img src="image/ALPHABILLS STRAIGHT 1.png" alt=""></div>
+            <p class="w-[40%]">AlphaBills is your trusted partner for simplified bill management. We offer a seamless platform to pay bills, manage finances, and stay in control. Join us on the path to financial convenience today!</p>
+            <p>( +234 ) 91 6824 2931</p>
+            <p>alphabills4u@gmail.com</p>
+        </div>
+        <div class="club flex gap-10">
+            <div>
+                <h1 class="text-blue-700 text-2xl">Services</h1>
+                <p>Data Bundle</p>
+                <p>Airtime</p>
+                <p>Cable TV</p>
+                <p>Electricity</p>
+            </div>
+            <div>
+                <h1 class="text-blue-700 text-2xl">Company</h1>
+                <p>About Us</p>
+                <p>Contact</p>
+                <p>Terms of services</p>
+                <p>Privacy & Policy</p>
+            </div>
+        </div>
+    </section>
+    <div class="ars flex items-center justify-center p-10">
+        <h1>2023 Copyright Alphabills Ng Ltd | All Rights Reserved</h1>
+    </div>
 
     <script>
-        document.querySelector('.toggle').addEventListener('click', () => {
-        document.querySelector('.mobile-nav').classList.toggle('display')
-        document.querySelector('.toggle').classList.toggle("entity")
-        })
-
-        const year = document.querySelector("#year");
-        const yr = new Date().getFullYear();
-        year.innerHTML = yr;
+        function myfunction() {
+            var mobileMenu = document.querySelector('.mobile-menu');
+            var rounded = document.querySelector(".rounded-3xl")
+            mobileMenu.classList.toggle('show-menu');
+            rounded.classList.toggle("clear-radius")
+        }
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    
 </body>
 </html>

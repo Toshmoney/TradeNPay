@@ -17,6 +17,7 @@ const {
   billPayer,
   privacyPolicy,
   businessBal,
+  updateProfile,
 } = require("../controller/controller");
 
 const {
@@ -43,6 +44,8 @@ const {
   forgotPassword,
   confirmReset,
   confirmPass,
+  getPasswordUpdatedPage,
+  updatePassword,
 } = require("../controller/auth");
 
 const fundWalletVerify = require("../controller/fundWallet");
@@ -69,6 +72,8 @@ router.route("/forgot-password").get(forgotPassword);
 router.route("/forgot-password").post(forgotPassword);
 router.route("/confirmation").get(confirmPass);
 router.route("/confirmation").post(confirmReset);
+router.route("/reset-password/:token").get(getPasswordUpdatedPage);
+router.route("/reset-password/:token").post(updatePassword);
 router.route("/sign-up").post(newUser);
 router.route("/dashboard").get(isLoggedIn, dashboard);
 router.route("/dashboard").post(dashboard);

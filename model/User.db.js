@@ -28,14 +28,12 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    kyc_ver: {
+    has_set_pin: {
       type: Boolean,
       default: false,
     },
-    two_step_ver: {
-      type: Boolean,
-      default: false,
-    },
+    resetToken: String,
+    resetExpires: Date,
   },
   { timestamps: true }
 );
