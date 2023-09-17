@@ -75,6 +75,7 @@
     }
     .hero{
         background-size: cover;
+        padding-bottom: 0;
     }
     .bar{
         margin-left: 0px;
@@ -115,9 +116,10 @@
     .hero-page1 p{
         width: 100%;
     }
+
     .hero-page2 img{
         width: 100%;
-        margin-left: -50px;
+        margin-left: -20px;
     }
     .ade h1{
         width: 90%;
