@@ -55,7 +55,7 @@ const confirmReset = async (req, res, next)=>{
             await existingEmail.save();
 
             // Send an email with the reset link
-            const resetLink = `http://localhost:4000/reset-password/${resetToken}`;
+            const resetLink = `http://alphabills.onrender.com/reset-password/${resetToken}`;
 
             // Use Nodemailer to send the reset email
             const transporter = nodemailer.createTransport({
@@ -70,7 +70,7 @@ const confirmReset = async (req, res, next)=>{
                 from: process.env.EMAIL_USERNAME,
                 to: email,
                 subject: 'Password Reset From Alphabills',
-                text: `Click the following link to reset your password: ${resetLink} <br>Ignore if you didn't request for password reset`,
+                text: `Click the following link to reset your password: ${resetLink} \n Ignore if you didn't request for password reset`,
             };
 
             transporter.sendMail(mailOptions, (err)=>{
