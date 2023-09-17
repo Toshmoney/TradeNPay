@@ -69,6 +69,7 @@ const dashboardData = async (user, is_admin = false, limit = 20) => {
   const user_data = {
     name: user.name,
     email: user.email,
+    phoneNumber: user.phoneNumber
   };
   const data = {
     user: user_data,

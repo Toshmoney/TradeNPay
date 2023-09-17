@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha Bills | Reset Password</title>
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/SignIn.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+    <section>
+        <% if (messages.error) { %>
+            <div class="alert alert-danger" role="alert">
+              <%= messages.error %>
+            </div>
+        <% } %>
+        <% if (messages.info) { %>
+            <div class="alert alert-info" role="alert">
+              <%= messages.info %>
+            </div>
+        <% } %>
+        <div class="sign-in">
+            <div class="image">
+                <img src="/images/signin-img.png" alt="">
+            </div>
+            <div class="form-area">
+                <div>
+                    <a href="/"><img src="/images/small-logo.png" alt=""></a>
+                </div>
+                <h1>Reset Your Password!</h1>
+                <div class="main-form">
+                    <form action="/reset-password/<%= token %>" method="post" onsubmit="return handleSubmit()">
+                        <div>
+                            <label for="password">New Password</label>
+                            <input type="password" name="password" id="password" required>
+                        </div>
+                        <div>
+                            <label for="confirm">Confirm Password</label>
+                            <input type="password" name="confirm" id="confirm" required>
+                        </div>
+                        <button type="submit" class="submit">Reset Password</button>
+                    </form>                    
+                </div>
+               
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

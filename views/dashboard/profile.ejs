@@ -16,15 +16,6 @@
             <%- include('../partials/mobileHeader') %>
            <div class="dashboard-main-top">
                 <h1>Profile</h1>
-                <div class="input-bar">
-                    <div>
-                        <img src="images/tabler-icon-bell.png" alt="">
-                    </div>
-                    <div class="profile-picture">
-                        <img src="images/Frame 12.png" alt="profile-picture">
-                    </div>
-                    
-                </div>
            </div>
            <div class="container">
                 <div class="firste">
@@ -44,11 +35,11 @@
                                 <img src="images/Group 68.png" alt="">
                             </div>
                             <div class="content">
-                                <h3>KYC VERIFICATION</h3>
-                                <p>It also emphasizes the value that your team brings to clients in terms of expertise.</p>
+                                <h3>Become a Reseller</h3>
+                                <p>We have special packages for our resellers, right from building a reseller website for them to the marketing strategies. <br>What are you still waiting for? Get start now!</p>
                             </div>
                         </div>
-                        <a class="btn" href="/verify_now"><button>Edit</button></a>
+                        <a class="btn" href="https://wa.me/2348103856846"><button>Get Started</button></a>
                     </div>
                     <div class="one">
                         <div class="one-div">
@@ -56,11 +47,11 @@
                                 <img src="images/Group 67.png" alt="">
                             </div>
                             <div class="content">
-                                <h3>TWO STEP VERIFICATION</h3>
-                                <p>It also emphasizes the value that your team brings to clients in terms of expertise.</p>
+                                <h3>Build a Website for your next Project</h3>
+                                <p>Do you have a project you are planning to launch? We've got amazing offer for you! <br>Our Developers are ready to make your dreams come through using the power of technologies.</p>
                             </div>
                         </div>
-                        <a class="btn" href="/verify_now"><button>Verify</button></a>
+                        <a class="btn" href="https://toshconsultinc.com"><button>Get Started</button></a>
                     </div>
                     <div class="three">
                         <div>
@@ -74,32 +65,18 @@
                 </div>
                 <div class="seconde">
                     <div class="profile">
-                        <img class="userpic" src="" alt="profile">
+                        <img src="images/small-logo.png" alt="profile">
                         <div class="name">
-                            <input class="username" type="text" value="ALIMI MOHAMMED-JAMIU">
+                            <input class="username" type="text" value="<%= name %>">
                             <img src="images/tabler-icon-edit.png" alt="">
                         </div>
                     </div>
-                    <form action="">
-                        <div class="field">
-                            <input type="email" name="" id="" value="Talk2jays0x@gmail.com" >
-                            <button class="view-input"><img src="images/tabler-icon-edit.png" alt=""></button>
-                        </div>
-                        <div class="field">
-                            <input type="text" name="" id="" value="+2349168243714" >
-                            <button class="view-input"><img src="images/tabler-icon-edit.png" alt=""></button>
-                        </div>
-                        <div class="field">
-                            <input type="password" name="" id="input" value="dhakjsjhaljdhak" placeholder="">
-                            <button class="view-input"><img src="images/tabler-icon-edit.png" alt=""></button>
-
-                        </div>
-                        <div class="show">
-                            <input type="checkbox" name="" id="check">
-                            <span class="password">Show Password</span>
-                        </div>
-                        <button class="update">Update</button>
-                    </form>
+                            <div class="pro-flex">
+                                <h2>User's Informations</h2>
+                                <p><%= email %></p>
+                                <p><%= name  %></p>
+                                <p><%= tel %></p>
+                            </div>                    
                 </div>
             </div>
         </main>
@@ -108,5 +85,7 @@
 
     <script src="js/profile.js"></script>
     <script src="js/dashboard.js"></script>
+
+  </script>
 </body>
 </html>

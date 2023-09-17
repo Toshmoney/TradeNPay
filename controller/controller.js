@@ -3,6 +3,10 @@ const key = process.env.PAYSTACK_PUBLIC_KEY;
 const { dashboardData } = require("../utils/dashboardData");
 const { formatPlan } = require("../utils");
 const DataPlan = require("../model/DataPlan");
+const User = require('../model/User.db');
+const { CustomAPIError } = require("../handleError");
+const { StatusCodes } = require("http-status-codes");
+
 
 const homePage = async (req, res) => {
   res.status(200).render("pages/home");
@@ -33,6 +37,7 @@ const dataplan = async (req, res) => {
     res.status(200).render("dashboard/dataplan", data);
   }
 };
+
 const billpayment = (req, res) => {
   res.status(200).render("dashboard/billpayment");
 };
@@ -84,8 +89,13 @@ const profile = async (req, res) => {
     error: errorMg,
     info: infoMg,
   };
-  res.status(200).render("dashboard/profile", { messages, data });
+  res.status(200).render("dashboard/profile", { messages,
+    tel: req.user.phoneNumber,
+    name: req.user.name,
+    email: req.user.email, });
 };
+
+
 
 const privacyPolicy = async (req, res) => {
   res.status(200).render("dashboard/privacy");

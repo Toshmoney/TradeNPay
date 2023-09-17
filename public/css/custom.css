@@ -1,0 +1,264 @@
+.mobile-menu{
+    background-color: rgba(255, 255, 255, 0.9);
+    height: 0;
+    width:100%;
+    transition: ease-in-out .8s;
+    overflow: hidden;
+
+}
+.button-mobile{
+    display: none;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.hero{
+    background-color: #708BEB;
+}
+
+.section-two{
+    padding: 30px 25px 0 25px;
+    background: radial-gradient(34.1% 77.04% at 53.05% 34.1%, #0235EA 0%, rgba(33, 73, 217, 0.714882) 50.26%, rgba(29, 72, 226, 0.6) 100%);
+
+}
+
+.guy2{
+    background: radial-gradient(34.1% 77.04% at 53.05% 34.1%, #000000 0%, #131313 50.26%, #000000 100%) ;
+}
+
+.guy2{
+    padding: 50px 25px 0 25px;
+}
+
+.ash{
+    background: #F6F8FE;
+}
+
+.card1, .card2, .card3, .nw-foot{
+    background: #F6F8FE;
+
+}
+
+.foot{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+
+@media screen  and (max-width:970px){
+    .show-menu{
+        height: 50vh;
+        transition: ease-in-out .8s;
+    }
+
+    .clear-radius{
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+    .button-mobile{
+        display: flex;
+       margin-top: 220px;
+    }
+    .mobilenav-link{
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+        align-items: center;
+    }
+    .cardes{
+        flex-direction: column;
+        width: 100%;
+    }
+    .hero{
+        background-size: cover;
+        padding-bottom: 0;
+    }
+    .bar{
+        margin-left: 0px;
+        width: 100%;
+        padding: 10px;
+    }
+    .menu{
+        display: none;
+    }
+    .buttons{
+        display: none;
+    }
+    .hero-page{
+        align-items: center;
+        overflow: hidden;
+    }
+    .download2{
+        flex-direction: column;
+        align-items: normal;
+        padding: 0px;
+    }
+    .down , .up{
+        padding: 10px;
+        align-items: normal;
+        width: 70%;
+    }
+    .other{
+        display: none;
+    }
+    .other p{
+        margin-left: 4px;
+        margin-right: 4px;
+    }
+    .hero-page1 h1{
+        font-size: 1.5rem;
+        margin-top: 20px;
+    }
+    .hero-page1 p{
+        width: 100%;
+    }
+
+    .hero-page2 img{
+        width: 100%;
+        margin-left: -20px;
+    }
+    .ade h1{
+        width: 90%;
+        margin-left: 20px;
+    }
+    .ade p{
+        width:80%
+    }
+    .shy{
+        gap: 0px;
+        padding: 10px;
+    }
+    .bayo{
+        align-items: center;
+    }
+    .nw-foot{
+        flex-direction: column;
+        align-items: normal;
+        padding: 20px;
+    }
+    .two{
+        width: 50%;
+        margin-top: 20px;
+    }
+    
+    .nw-foot h1{
+        width: 100%;
+    }
+    .download{
+        flex-direction: column;
+        align-items: normal;
+    }
+    .ash{
+        flex-direction: column;
+        align-items: normal;
+        padding-bottom: 0;
+    }
+    .ash h1{
+        width: 100%;
+    }
+    .ash p{
+        width: 100%;
+    }
+    .ash img{
+        margin-top: 25px;
+        width: 100%;
+    }
+    .guy{
+        flex-direction: column;
+        align-items: normal;
+    }
+    .guy img{
+        width: 90%;
+        margin-top: 20px;
+    }
+    .guy2 h1{
+        width: 80%;
+    }
+    .guy2 p{
+        width: 80%;
+    }
+    .guy2 img{
+        width: 80%;
+        margin-top: 20px;
+    }
+    .hero-page{
+        flex-direction: column;
+    }
+    .card2{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .card1, .card2, .card3{
+        width: 90%;
+        margin-left: 20px;
+    }
+    .card1 p,.card2 p,.card3 p{
+        margin-right: 0px;
+        /* background-color: red; */
+    }
+    .one h1{
+        width: 100%;
+    }
+    .one p{
+        width: 100%;
+    }
+    .omo h1{
+        width: 100%;
+    }
+    .omo p{
+        width: 100%;
+    }
+    .sector img{
+        width: 70%;
+    }
+    .bundle{
+        display: flex;
+        flex-direction: column;
+        align-items: normal;
+    }
+    .bundle h2{
+        width: 80%;
+        margin-left:30px
+    }
+    .bund{
+        width: 90%;
+        margin-left: 30px;
+    }
+    .shop{
+        padding: 10px;
+        align-items: normal;
+    }
+    .kult{
+        flex-direction: column;
+        padding: 5px;
+        align-items: start;
+        padding: 20px;
+    }
+    .foot{
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .foot p{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .club{
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: 5px;
+    }
+    .ars{
+        flex-direction: column;
+        align-items: normal;
+        padding: 20px;
+        text-align: center;
+    }
+
+
+}

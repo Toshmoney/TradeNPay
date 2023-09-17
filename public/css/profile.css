@@ -38,11 +38,25 @@ main{
     font-weight: 600;
 
 }
+
+.pro-flex{
+    display: flex;
+    height: 40vh;
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pro-flex h2{
+    text-decoration: underline;
+}
 .profile-picture{
     height: 50px;
     width: 50px;
     border-radius: 50%;
 }
+
+
 .input-bar{
     height: 100px;
     display: flex;
@@ -117,8 +131,7 @@ form{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0 20px;
-    height: 25vh;
+    padding: 10px;
     border: 1px solid #F6F8FE;
     border-radius: 10px;
 }

@@ -22,7 +22,7 @@
 .flex-new{
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 50vh;
     width: 100%;
     align-items: center;
     justify-content: space-around;
@@ -30,14 +30,14 @@
 
 .acct-statement{
     background: #FFFFFF;
-    border: 1px solid #F6F8FE;
+    border: 1px solid blue;
     border-radius: 14px;
     display: flex;
     align-items: center;
-    padding: 20px;
+    padding: 10px;
     font-family: 'Raleway', sans-serif;
     width: 100%;
-    gap: 20px;
+    gap: 10px;
 }
 
 .flex-settings{
@@ -79,12 +79,26 @@ a{
     color: black;
 }
 
+.second{
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 @media screen and (max-width:950px) {
     .main-setting, .flex-settings{
         flex-direction: column;
     }
+
+    .flex-new{
+        height: 100vh;
+    justify-content: flex-start;
+
+    }
+
     .second{
-        padding-top: 50px;
+        padding: 20px 10px;
     }
     
 }

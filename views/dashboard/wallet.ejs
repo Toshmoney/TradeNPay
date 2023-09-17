@@ -19,14 +19,7 @@
             <%- include('../partials/mobileHeader') %>
             <div class="dashboard-main-top">
                     <h1>WALLET</h1>
-                    <div class="input-bar">
-                        <div>
-                            <img src="images/tabler-icon-bell.png" alt="">
-                        </div>
-                        <div class="profile-picture">
-                            <img src="images/Frame 12.png" alt="profile-picture">
-                        </div>
-                    </div>
+                    
             </div>
 
             <div class="main-page">
@@ -43,12 +36,11 @@
                 <div class="wallet-area">
                     <div class="linear-gradient">
                         <div class="domain">
-                            <p><%= user.name %> -Alphabills</p>
-                            <span>2344566677777</span>
+                            <p><%= user.name %></p>
+                            <span>Click on fund wallet button to fund your wallet</span>
                         </div>
 
                         <div class="btn-group">
-                            <a href="/wallet/receive"><button class="cta-btn btn-1">Recieve</button></a>
                             <a href="/wallet/fund"><button class="cta-btn btn-2">Fund Wallet</button></a>
                         </div>
                     </div>

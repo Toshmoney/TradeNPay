@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/general.css">
     <link rel="stylesheet" href="css/aside.css">
     <link rel="stylesheet" href="css/Maindashboard.css">
+    
 </head>
 <body>
     <section class="dashboard-container">
@@ -17,25 +18,15 @@
             <%- include('../partials/mobileHeader') %>
            <div class="dashboard-main-top">
                 <h1>Dashboard</h1>
-                <div class="input-bar">
-                    <div>
-                        <img src="images/tabler-icon-bell.png" alt="">
-                    </div>
-                    <div class="profile-picture">
-                        <img src="images/Frame 12.png" alt="profile-picture">
-                    </div>
-                </div>
            </div>
 
             <div class="dash-items">
                 <div class="blue-background">
                     <div class="welcome-msg">
                         <h1>WELCOME BACK, <%= user.name %></h1>
-                        <p>Verify Your Identity To Get Started.</p>
                     </div>
                     <div class="verify-btn">
-                        <p></p>
-                        <a href="/verify_now"><button>Verify Now</button></a>
+                        <a href="/wallet/fund"><button>Fund Wallet</button></a>
                     </div>
                 </div>
             </div>
