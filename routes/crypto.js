@@ -9,7 +9,7 @@ const sellCrypto = require("../controller/cryptoController");
 const router = express.Router();
 
 router
-  .route("/sell-giftcard")
+  .route("/sell-crypto")
   .post([isAuthenticated, verifyUserPin, verifyWallet], sellCrypto
 );
 module.exports = router;
