@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlphaBills | Trade Payoneer</title>
+  <link rel="stylesheet" href="/css/toastr.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/general.css">
+  <link rel="stylesheet" href="/css/aside.css">
+  <link rel="stylesheet" href="/css/DataPlans.css">
+  <link rel="stylesheet" href="/css/paypal.css">
+
+</head>
+
+<body>
+  <section class="dashboard-container">
+    <%- include('../partials/aside') %>
+
+      <main>
+        <%- include('../partials/mobileHeader') %>
+          <div class="dashboard-main-top">
+            <div>
+              <h1>TRADE CRYPTOCURRENCY</h1>
+              <p>Select Buy or Sell</p>
+            </div>
+          </div>
+          <div class="bill-payer">
+            <div class="tab">
+                <button class="tablinks" onclick="openTrade(event, 'Buy')">Buy</button>
+                <button class="tablinks" onclick="openTrade(event, 'Sell')">Sell</button>
+            </div>
+        <div id="Buy" class="tabcontent">
+            <h2>Buying Price: NGN 945 per $</h2>
+            <form class="buy-now" action="">
+                <div class="form-group">
+                    <div class="choose form-field">
+                        <label class="bold" for="service_id">SELECT TRADE TYPE</label>
+                        <select class="service_id" name="service_id" id="service_id" value="Select Option">
+                            <!-- <option value="">Select Option</option> -->
+                            <option value="EBAY">BCH</option>
+                            <option value="ONEVANILLA">BTC</option>
+                            <!-- <option value="STEAMWALLET">STEAM WALLET</option> -->
+                        </select>
+                    </div>
+
+                    <div class="choose form-field">
+                        <label class="bold" for="currency">SELECT CURRENCY</label>
+                        <select class="currency" name="currency" id="currency" value="Select Option">
+                            <!-- <option value="">Select Option</option> -->
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="CAD">CAD</option>
+                            <option value="AUD">AUD</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-field">
+                  <label for="file" class="bole">UPLOAD CARD</label>
+                  <input type="file" name="file" id="file">
+                </div>
+
+                <div class="form-group">
+                    <div class="form-field">
+                        <label class="bold" for="amount">AMOUNT</label>
+                        <input type="number" name="amount" id="amount" placeholder="Amount here">
+                    </div>
+                    <div class="form-field">
+                        <label class="bold" for="pin">PIN</label>
+                        <input type="password" name="pin" id="pin" placeholder="****" />
+                    </div>
+                </div>
+              <div class="page-end">
+                <p class="flex gap-6 bold wallet-balance">
+                  Total Bal.<span>
+                    <%= balance %>
+                  </span>
+                </p>
+                <div class="ctas">
+                  <button type="button" class="cta share">share</button></a>
+                  <button type="submit" class="cta submit submit-btn">Buy</button>
+                </div>
+              </div>
+            </form>
+        </div>
+
+          <div id="Sell" class="tabcontent">
+            <h1>Coming soon ...</h1>
+          </div>
+        </div>
+
+      </main>
+  </section>
+
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/paypal.js"></script>
+  <script src="/js/jquery.js"></script>
+  <script src="/js/toastr.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+
+    const toastOptions = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": true,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "4000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+    toastr.options = { ...toastOptions }
+    let walletBalance = 0;
+    const balanceElement = document.querySelector('.wallet-balance > span')
+    walletBalance = Number(balanceElement.textContent)
+    balanceElement.textContent = `N${walletBalance}`
+
+    const form = document.querySelector('form')
+    const sellform = document.querySelector('.sell-form')
+    
+    const validatedData = () => {
+    // const formData = new FormData();
+    // const fileInput = document.getElementById('file');
+    const amount = Number(document.querySelector("#amount").value);
+    const pin = document.querySelector("#pin").value;
+    const currency = document.querySelector("#currency").value;
+    const service_id = document.querySelector("#service_id").value;
+    const submitButton = document.querySelector('button.submit-btn')
+
+    // const formData = new FormData();
+    // formData.append('file', fileInput.files[0]);
+    // formData.append('amount', amount);
+    // formData.append('pin', pin);
+    // formData.append('currency', currency);
+    // formData.append('service_id', service_id);
+
+    // formData.append('file', fileInput.files[0]);
+      // validate data
+      if (!service_id) {
+        toastr.error('Pls select Trade Type')
+        return false
+      }
+      if (!amount) {
+        toastr.error('Pls input amount')
+        return false
+      }
+    //   if (!full_name || !email) {
+    //     toastr.error('Pls kindly provide your paypal details', 'Invalid Paypal Details')
+    //     return false
+    //   }
+      if (walletBalance < amount) {
+        toastr.error('Kindly fund your wallet', 'Insufficient Wallet Balance')
+        return false
+      }
+      if (!pin) {
+        toastr.error("Enter your pin");
+        return false;
+      }
+
+      
+
+      return {
+        pin,
+        amount,
+        currency,
+        service_id
+      }
+    }
+
+    const recharge = () => {
+    const submitButton = document.querySelector('button.submit-btn')
+
+      const purchase_data = validatedData()
+      if (!purchase_data) {
+        return
+      }
+    //   disableBuyButton
+      submitButton.textContent = 'please wait';
+      submitButton.disable = true;
+      submitButton.classList.add('disabled')
+      // send to server for purchase
+      axios.post("/api/v1/trades/sell-crypto", purchase_data)
+        .then(res => {
+          const { data } = res
+          walletBalance = data.balance || walletBalance - purchase_data.amount
+          balanceElement.textContent = `N${walletBalance}`
+
+          submitButton.disabled = false
+          submitButton.textContent = 'Buy';
+          submitButton.classList.remove('disabled')
+          toastr.success('Your transaction is being processed')
+        })
+        .catch(error => {
+          let message = "Try again letter"
+          if (error.response) {
+            const { data, status } = error.response
+            message = data?.message || message
+          }
+
+          submitButton.disabled = false
+          submitButton.textContent = 'Buy';
+          submitButton.classList.remove('disabled')
+          toastr.info(message, 'Purchase failed')
+        })
+    }
+
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault()
+      recharge()
+    })
+  </script>
+</body>
+
+</html>

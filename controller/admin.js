@@ -5,6 +5,7 @@ const { formatDate, data_provider } = require("../utils");
 const { subvtu_balance } = require("../utils/subvtu");
 const Transaction = require("../model/Transaction");
 const Wallet = require("../model/Wallet");
+const Trades = require("../model/Trades");
 
 const adminDashboard = async (req, res) => {
   const subvtu_bal = await subvtu_balance();
@@ -83,6 +84,15 @@ const adminDataReset = async (req, res) => {
   });
 };
 
+const adminTradeReset = async (req, res) => {
+  const { service_id } = req.params;
+  const data_plan = await DataPlan.findOne({ plan_id: plan_id });
+  res.status(200).render("resets/data", {
+    data_plan: data_plan || {},
+    networks: data_provider,
+  });
+};
+
 const adminCableReset = async (req, res) => {
   const data = await dashboardData(req.user);
   res.status(200).render("resets/tv", data);
@@ -97,6 +107,10 @@ const adminElectricityReset = async (req, res) => {
   const data = await dashboardData(req.user);
   res.status(200).render("resets/electricity", data);
 };
+
+const approveTrades = async(req, res)=>{
+  const trades = await Trades.find()
+}
 
 module.exports = {
   adminDashboard,

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlphaBills | Trade Payoneer</title>
+  <link rel="stylesheet" href="/css/toastr.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/general.css">
+  <link rel="stylesheet" href="/css/aside.css">
+  <link rel="stylesheet" href="/css/DataPlans.css">
+  <link rel="stylesheet" href="/css/paypal.css">
+
+</head>
+
+<body>
+  <section class="dashboard-container">
+    <%- include('../partials/aside') %>
+
+      <main>
+        <%- include('../partials/mobileHeader') %>
+          <div class="dashboard-main-top">
+            <div>
+              <h1>TRADE PAYONEER</h1>
+              <p>Select Buy or Sell</p>
+            </div>
+          </div>
+          <div class="bill-payer">
+            <div class="tab">
+                <button class="tablinks" onclick="openTrade(event, 'Buy')">Buy</button>
+                <button class="tablinks" onclick="openTrade(event, 'Sell')">Sell</button>
+            </div>
+        <div id="Buy" class="tabcontent">
+            <h2>Buying Price: NGN 945 per $</h2>
+            <form class="buy-now" action="">
+                <div class="form-group">
+                    <div class="choose form-field">
+                        <label class="bold" for="service_id">SELECT TRADE TYPE</label>
+                        <select class="service_id" name="service_id" id="service_id" value="Select Option">
+                            <!-- <option value="">Select Option</option> -->
+                            <option value="payoneer">PAYONEER FUNDS</option>
+                        </select>
+                    </div>
+
+                    <div class="choose form-field">
+                        <label class="bold" for="currency">SELECT CURRENCY</label>
+                        <select class="currency" name="currency" id="currency" value="Select Option">
+                            <!-- <option value="">Select Option</option> -->
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="CAD">CAD</option>
+                            <option value="AUD">AUD</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-field">
+                        <label class="bold" for="full_name">PAYPAL NAME</label>
+                        <input type="text" name="full_name" id="full_name" placeholder="Payoneer Name">
+                    </div>
+
+                    <div class="form-field">
+                        <label class="bold" for="email">PAYPAL EMAIL</label>
+                        <input type="email" name="email" id="email" placeholder="Payoneer email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-field">
+                        <label class="bold" for="amount">AMOUNT</label>
+                        <input type="number" name="amount" id="amount" placeholder="Amount here">
+                    </div>
+                    <div class="form-field">
+                        <label class="bold" for="pin">PIN</label>
+                        <input type="password" name="pin" id="pin" placeholder="****" />
+                    </div>
+                </div>
+              <div class="page-end">
+                <p class="flex gap-6 bold wallet-balance">
+                  Total Bal.<span>
+                    <%= balance %>
+                  </span>
+                </p>
+                <div class="ctas">
+                  <button type="button" class="cta share">share</button></a>
+                  <button type="submit" class="cta submit submit-btn">Buy</button>
+                </div>
+              </div>
+            </form>
+        </div>
+
+        <div id="Sell" class="tabcontent">
+            <h2>Selling Price: NGN 945 per $</h2>
+            <form action="" class="sell-form">
+                <div class="form-group">
+                    <div class="choose form-field">
+                        <label class="bold" for="service_id">SELECT TRADE TYPE</label>
+                        <select class="service_id" name="service_id" id="sell-service" value="Select Option">
+                            <!-- <option value="">Select Option</option> -->
+                            <option value="payoneer">PAYONEER FUNDS</option>
+                        </select>
+                    </div>
+
+                    <div class="choose form-field">
+                        <label class="bold" for="network">SELECT CURRENCY</label>
+                        <select class="service_id" name="service_id" id="sell-currency" value="Select Option">
+                            <!-- <option value="">Select Option</option> -->
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="CAD">CAD</option>
+                            <option value="AUD">AUD</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-field">
+                        <label class="bold" for="full_name">PAYONEER NAME</label>
+                        <input type="text" name="full_name" id="sell-name" placeholder="Payoneer Name">
+                    </div>
+
+                    <div class="form-field">
+                        <label class="bold" for="email">PAYONEER EMAIL</label>
+                        <input type="email" name="email" id="sell-email" placeholder="Payoneer email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-field">
+                        <label class="bold" for="amount">AMOUNT</label>
+                        <input type="number" name="amount" id="sell-amount" placeholder="Amount here">
+                    </div>
+                    <div class="form-field">
+                        <label class="bold" for="pin">PIN</label>
+                        <input type="password" name="pin" id="sell-pin" placeholder="****" />
+                    </div>
+                </div>
+              <div class="page-end">
+                <p class="flex gap-6 bold wallet-balance">
+                  Total Bal.<span>
+                    <%= balance %>
+                  </span>
+                </p>
+                <div class="ctas">
+                  <button type="button" class="cta share">share</button></a>
+                  <button type="submit" class="cta submit sell-submit-btn">Sell</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </main>
+  </section>
+
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/paypal.js"></script>
+  <script src="/js/jquery.js"></script>
+  <script src="/js/toastr.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+
+    const toastOptions = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": true,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "4000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+    toastr.options = { ...toastOptions }
+    let walletBalance = 0;
+    const balanceElement = document.querySelector('.wallet-balance > span')
+    walletBalance = Number(balanceElement.textContent)
+    balanceElement.textContent = `N${walletBalance}`
+
+    const form = document.querySelector('form')
+    const sellform = document.querySelector('.sell-form')
+    
+    const validatedData = () => {
+    const email = document.querySelector("#email").value;
+    const full_name = document.querySelector("#full_name").value;
+    const amount = Number(document.querySelector("#amount").value);
+    const pin = document.querySelector("#pin").value;
+    const currency = document.querySelector("#currency").value;
+    const service_id = document.querySelector("#service_id").value;
+    const submitButton = document.querySelector('button.submit-btn')
+      // validate data
+      if (!service_id) {
+        toastr.error('Pls select Trade Type')
+        return false
+      }
+      if (!amount) {
+        toastr.error('Pls input amount')
+        return false
+      }
+      if (!full_name || !email) {
+        toastr.error('Pls kindly provide your paypal details', 'Invalid Paypal Details')
+        return false
+      }
+      if (walletBalance < amount) {
+        toastr.error('Kindly fund your wallet', 'Insufficient Wallet Balance')
+        return false
+      }
+      if (!pin) {
+        toastr.error("Enter your pin");
+        return false;
+      }
+
+      
+
+      return {
+        pin,
+        email,
+        full_name,
+        service_id,
+        amount,
+        currency
+      }
+    }
+
+    const recharge = () => {
+    const submitButton = document.querySelector('button.submit-btn')
+
+      const purchase_data = validatedData()
+      if (!purchase_data) {
+        return
+      }
+    //   disableBuyButton
+      submitButton.textContent = 'please wait';
+      submitButton.disable = true;
+      submitButton.classList.add('disabled')
+      // send to server for purchase
+      axios.post("/api/v1/trades/buy-payoneer", purchase_data)
+        .then(res => {
+          const { data } = res
+          walletBalance = data.balance || walletBalance - purchase_data.amount
+          balanceElement.textContent = `N${walletBalance}`
+
+          submitButton.disabled = false
+          submitButton.textContent = 'Buy';
+          submitButton.classList.remove('disabled')
+          toastr.success('Your transaction is being processed')
+        })
+        .catch(error => {
+          let message = "Try again letter"
+          if (error.response) {
+            const { data, status } = error.response
+            message = data?.message || message
+          }
+
+          submitButton.disabled = false
+          submitButton.textContent = 'Buy';
+          submitButton.classList.remove('disabled')
+          toastr.info(message, 'Purchase failed')
+        })
+    }
+
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault()
+      recharge()
+    })
+
+    // Sell Trades processing
+    const validatedTrade = () => {
+    // sell details
+    const sellemail = document.querySelector("#sell-email").value;
+    const sellfull_name = document.querySelector("#sell-name").value;
+    const sellamount = Number(document.querySelector("#sell-amount").value);
+    const sellpin = document.querySelector("#sell-pin").value;
+    const sellcurrency = document.querySelector("#sell-currency").value;
+    const sellservice_id = document.querySelector("#sell-service").value;
+    const sellsubmitButton = document.querySelector('button.sell-submit-btn')
+
+      // validate data
+      if (!service_id) {
+        toastr.error('Pls select Trade Type')
+        return false
+      }
+      if (!amount) {
+        toastr.error('Pls input amount')
+        return false
+      }
+      if (!full_name || !email) {
+        toastr.error('Pls kindly provide your paypal details', 'Invalid Paypal Details')
+        return false
+      }
+      if (walletBalance < amount) {
+        toastr.error('Kindly fund your wallet', 'Insufficient Wallet Balance')
+        return false
+      }
+      if (!pin) {
+        toastr.error("Enter your pin");
+        return false;
+      }
+
+      
+
+      return {
+        pin:sellpin,
+        email:sellemail,
+        full_name:sellfull_name,
+        service_id:sellservice_id,
+        amount:sellamount,
+        currency:sellcurrency
+      }
+    }
+
+    const tradePaypal = () => {
+    const sellsubmitButton = document.querySelector('.sell-submit-btn')
+
+      const purchase_data = validatedTrade()
+      if (!purchase_data) {
+        return
+      }
+    //   disableBuyButton
+      sellsubmitButton.textContent = 'Please wait';
+      sellsubmitButton.disable = true;
+      sellsubmitButton.classList.add('disabled')
+      // send to server for purchase
+      axios.post("/api/v1/trades/sell-payoneer", purchase_data)
+        .then(res => {
+          const { data } = res
+          walletBalance = data.balance || walletBalance - purchase_data.amount
+          balanceElement.textContent = `N${walletBalance}`
+
+          sellsubmitButton.disabled = false
+          sellsubmitButton.textContent = 'Sell';
+          sellsubmitButton.classList.remove('disabled')
+          toastr.success('Your transaction is being processed')
+        })
+        .catch(error => {
+          let message = "Try again letter"
+          if (error.response) {
+            const { data, status } = error.response
+            message = data?.message || message
+          }
+
+          sellsubmitButton.disabled = false
+          sellsubmitButton.textContent = 'Sell';
+          sellsubmitButton.classList.remove('disabled')
+          toastr.info(message, 'Purchase failed')
+        })
+    }
+
+    sellform.addEventListener('submit', (event) => {
+      event.preventDefault()
+      tradePaypal()
+    })
+
+  </script>
+</body>
+
+</html>

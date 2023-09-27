@@ -74,7 +74,6 @@
           axios
             .post("/wallet/verify-payment", reqBody)
             .then((response) => {
-              // window.open("/dashboard")
               location.href = '/wallet'
             })
             .catch((error) => {

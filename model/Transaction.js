@@ -23,8 +23,11 @@ const TransactionSchema = new Schema(
     },
     service: {
       type: String,
-      enum: ["airtime", "data", "exam", "electricity", "tv", "wallet"],
+      enum: ["airtime", "data", "exam", "electricity", "tv", "wallet", "paypal", "payoneer", "crypto", "giftcard"],
       required: [true, "service type not indicated"],
+    },
+    trade_type:{
+      type:String
     },
     type: {
       type: String,
@@ -33,7 +36,7 @@ const TransactionSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "completed", "failed"],
+      enum: ["pending", "completed", "failed", "review"],
       default: "pending",
       required: true,
     },

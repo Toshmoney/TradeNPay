@@ -42,6 +42,10 @@ const billpayment = (req, res) => {
   res.status(200).render("dashboard/billpayment");
 };
 
+const trades = (req, res) => {
+  res.status(200).render("dashboard/trades");
+};
+
 const billPayer = async (req, res) => {
   const data = await dashboardData(req.user);
   const urlParams = req.params;
@@ -54,6 +58,28 @@ const billPayer = async (req, res) => {
   }
   if (service === "exam") {
     return res.status(200).render("dashboard/exam", data);
+  }
+  return res.status(404).json({
+    message: "page you are looking for does not exist",
+  });
+};
+
+// Customized Trade url
+const tradeService = async (req, res) => {
+  const data = await dashboardData(req.user);
+  const urlParams = req.params;
+  const service = urlParams.service;
+  if (service === "paypal") {
+    return res.status(200).render("dashboard/paypal", data);
+  }
+  if (service === "payoneer") {
+    return res.status(200).render("dashboard/payoneer", data);
+  }
+  if (service === "giftcard") {
+    return res.status(200).render("dashboard/giftcard", data);
+  }
+  if (service === "crypto") {
+    return res.status(200).render("dashboard/crypto", data);
   }
   return res.status(404).json({
     message: "page you are looking for does not exist",
@@ -122,4 +148,6 @@ module.exports = {
   billPayer,
   privacyPolicy,
   businessBal,
+  tradeService,
+  trades
 };

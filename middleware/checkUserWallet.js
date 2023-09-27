@@ -3,6 +3,7 @@ const Wallet = require("../model/Wallet")
 const verifyWallet = async (req, res, next) => {
     const user = req.user
     const { amount } = req.body
+    let val = Number(amount)
     if (!user) {
         return res.status(401).json({
             message: 'user not recognised',
@@ -16,7 +17,7 @@ const verifyWallet = async (req, res, next) => {
             error: 'wallet'
         })
     }
-    if (userWallet.balance < Number(amount)) {
+    if (userWallet.balance < Number(val)) {
         return res.status(400).json({
             message: 'Insufficient wallet balance',
             error: 'balance'

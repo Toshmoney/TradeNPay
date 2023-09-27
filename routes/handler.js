@@ -18,6 +18,8 @@ const {
   privacyPolicy,
   businessBal,
   updateProfile,
+  tradeService,
+  trades,
 } = require("../controller/controller");
 
 const {
@@ -52,6 +54,7 @@ const fundWalletVerify = require("../controller/fundWallet");
 
 const { newPin, updatePin } = require("../controller/transactionPin");
 const { checkUserPin } = require("../middleware/checkUserPin");
+// const { buyPaypal } = require("../controller/paypalController");
 
 router.route("/api/v1/packages").post(fetchPackages);
 router.route("/").get(homePage);
@@ -80,9 +83,14 @@ router.route("/dashboard").post(dashboard);
 router.route("/airtime").get([isLoggedIn, checkUserPin], airtime);
 router.route("/data").get([isLoggedIn, checkUserPin], dataplan);
 router.route("/billpayment").get([isLoggedIn, checkUserPin], billpayment);
+router.route("/trades").get([isLoggedIn, checkUserPin], trades);
 router
   .route("/billpayment/:service")
   .get([isLoggedIn, checkUserPin], billPayer);
+
+  router
+  .route("/trades/:service")
+  .get([isLoggedIn, checkUserPin], tradeService);
 router.route("/wallet").get(isLoggedIn, wallet);
 router.route("/wallet/fund").get(isLoggedIn, fundWallet);
 
@@ -92,6 +100,10 @@ router.route("/profile").get(isLoggedIn, profile);
 router.route("/privacy-policy").get(isLoggedIn, privacyPolicy);
 router.route("/verify_now").get(isLoggedIn, verifyNow);
 router.route("/wallet/verify-payment").post(isLoggedIn, fundWalletVerify);
+
+// Trades only
+
+// router.route("/trades/paypal").post(isLoggedIn, buyPaypal)
 
 // Admin only
 router.route("/admin").get([isLoggedIn, isAdmin], adminDashboard);
