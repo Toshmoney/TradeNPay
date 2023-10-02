@@ -1,7 +1,7 @@
 const DataPlan = require("../model/DataPlan");
 const User = require("../model/User.db");
 const { dashboardData } = require("../utils/dashboardData");
-const { formatDate, data_provider } = require("../utils");
+const { formatDate, data_provider, trade_type } = require("../utils");
 const { subvtu_balance } = require("../utils/subvtu");
 const Transaction = require("../model/Transaction");
 const Wallet = require("../model/Wallet");
@@ -86,10 +86,10 @@ const adminDataReset = async (req, res) => {
 
 const adminTradeReset = async (req, res) => {
   const { service_id } = req.params;
-  const data_plan = await DataPlan.findOne({ plan_id: plan_id });
+  const trade_plan = await TradePlan.findOne({ plan_id: plan_id });
   res.status(200).render("resets/data", {
-    data_plan: data_plan || {},
-    networks: data_provider,
+    trade_plan: trade_plan || {},
+    trade_type: trade_type,
   });
 };
 

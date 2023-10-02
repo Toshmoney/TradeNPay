@@ -67,16 +67,22 @@ const billPayer = async (req, res) => {
 // Customized Trade url
 const tradeService = async (req, res) => {
   const data = await dashboardData(req.user);
+  const errorMg = req.flash("error").join(" ");
+  const infoMg = req.flash("info").join(" ");
+  const messages = {
+    error: errorMg,
+    info: infoMg,
+  };
   const urlParams = req.params;
   const service = urlParams.service;
   if (service === "paypal") {
-    return res.status(200).render("dashboard/paypal", data);
+    return res.status(200).render("dashboard/paypal", data, messages);
   }
   if (service === "payoneer") {
-    return res.status(200).render("dashboard/payoneer", data);
+    return res.status(200).render("dashboard/payoneer", data, messages);
   }
   if (service === "giftcard") {
-    return res.status(200).render("dashboard/giftcard", data);
+    return res.status(200).render("dashboard/giftcard", {data, messages});
   }
   if (service === "crypto") {
     return res.status(200).render("dashboard/crypto", data);

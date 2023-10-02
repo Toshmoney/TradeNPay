@@ -7,13 +7,25 @@ const Transaction = require("../model/Transaction");
 const sellCrypto = async(req, res)=>{
     const user = req.user;
 
-    // const {originalname, path} = req.file;
-    // const part = originalname.split(".");
-    // const ext = part[part.length - 1];
-    // const newPath = `${path}.${ext}`;
-    // fs.renameSync(path, newPath)
+    let imageUploadFile;
+    let uploadPath;
+    let newImageName;
 
+    if(!req.files || Object.keys(req.files).length === 0){
+      req.flash("error", "Giftcard image is missing!");
+    } else {
 
+      imageUploadFile = req.files.image;
+      newImageName = Date.now() + imageUploadFile.name;
+
+      uploadPath = require('path').resolve('./') + '/uploads/' + newImageName;
+
+      imageUploadFile.mv(uploadPath, function(err){
+        if(err){
+          req.flash("error", err);
+        }
+      })
+    }
     const {amount, currency, service_id} = req.body;
     const trade_type = 'crypto'
     const sellPrice = 950;
@@ -53,7 +65,7 @@ const sellCrypto = async(req, res)=>{
     currency,
     service_id,
     trade_type,
-    // proof:newPath,
+    proof:newImageName,
     trans_id: transaction_id,
    });
    if(!soldTrade){
@@ -61,12 +73,13 @@ const sellCrypto = async(req, res)=>{
    }
     // update transaction to be concluded
     transaction.status = "review";
-    transaction.balance_after = userBalance + Number(val);
+    transaction.balance_after = userBalance;
     // deduct transaction amount from user wallet
     userWallet.previous_balance = userBalance;
-    userWallet.current_balance = userBalance + Number(val);
+    userWallet.current_balance = userBalance;
     await userWallet.save();
     await transaction.save();
+    await soldTrade.save()
     res.status(202).json({
       message: "transaction is being processed",
       balance: userWallet.current_balance,

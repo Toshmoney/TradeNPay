@@ -127,10 +127,10 @@ const sellPayoneer = async (req, res) => {
    }
     // update transaction to be concluded
     transaction.status = "review";
-    transaction.balance_after = userBalance + Number(val);
+    transaction.balance_after = userBalance;
     // deduct transaction amount from user wallet
     userWallet.previous_balance = userBalance;
-    userWallet.current_balance = userBalance + Number(val);
+    userWallet.current_balance = userBalance;
     await userWallet.save();
     await transaction.save();
     // await soldTrade.save()

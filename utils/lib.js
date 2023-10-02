@@ -19,7 +19,15 @@ const data_provider = [
   { name: "AIRTEL", id: "4" },
 ];
 
+const trade_type = [
+  { name: "CRYPTO", id: "1" },
+  { name: "GIFTCARD", id: "2" },
+  { name: "PAYONEER", id: "3" },
+  { name: "PAYPAL", id: "4" },
+];
+
 module.exports = {
   formatDate,
   data_provider,
+  trade_type
 };

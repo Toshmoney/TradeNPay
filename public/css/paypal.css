@@ -41,3 +41,15 @@
     border: 1px solid #ccc;
     border-top: none;
   }
+
+  .file-upload{
+    display: none;
+  }
+
+  .file-upload-label{
+    padding: 12px;
+    background-color: blue;
+    cursor: pointer;
+    color: #ccc;
+    margin: 12px;
+  }
