@@ -109,7 +109,10 @@ const adminElectricityReset = async (req, res) => {
 };
 
 const approveTrades = async(req, res)=>{
-  const trades = await Trades.find()
+  const _id = req.params['id']
+  const trades = await Trades.findByIdAndUpdate({_id}, req.body, {
+    new:true, runValidators:true
+  })
 }
 
 module.exports = {
