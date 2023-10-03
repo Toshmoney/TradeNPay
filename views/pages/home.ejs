@@ -181,9 +181,14 @@
             </div>
         </div>
     </section>
-    <div class="ars flex items-center justify-center p-10">
-        <h1>2023 Copyright Alphabills Ng Ltd | All Rights Reserved</h1>
+    <div class="ars flex items-center justify-center pb-3">
+        <h1>&copy; <span id="year"></span> Alphabills Technologies | All Rights Reserved</h1>
     </div>
+
+    <div class="ars flex items-center justify-center pb-3">
+        <h1>Powered by <a href="https://toshconsultinc.com">Toshconsult Technologies Inc.</a></h1>
+    </div>
+
 
     <script>
         function myfunction() {
@@ -192,6 +197,8 @@
             mobileMenu.classList.toggle('show-menu');
             rounded.classList.toggle("clear-radius")
         }
+
+        document.querySelector("#year").innerHTML = new Date().getFullYear()
     </script>
     
 </body>
