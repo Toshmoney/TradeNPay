@@ -32,6 +32,8 @@ const {
   adminCableReset,
   adminExamReset,
   adminElectricityReset,
+  allTrades,
+  approveTrades,
 } = require("../controller/admin");
 
 const { fetchPackages } = require("../controller/packageController");
@@ -108,6 +110,8 @@ router.route("/wallet/verify-payment").post(isLoggedIn, fundWalletVerify);
 // Admin only
 router.route("/admin").get([isLoggedIn, isAdmin], adminDashboard);
 router.route("/business-balance").get([isLoggedIn, isAdmin], businessBal);
+router.route("/all-trades").get(allTrades);
+router.route("/trades/:id").patch(approveTrades);
 router.route("/all-users").get([isLoggedIn, isAdmin], allUsers);
 router.route("/admin-setting").get([isLoggedIn, isAdmin], adminSettings);
 router.route("/transactions").get([isLoggedIn, isAdmin], adminTrans);

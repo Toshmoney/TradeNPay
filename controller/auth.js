@@ -82,10 +82,10 @@ const confirmReset = async (req, res, next) => {
       return res.redirect("/confirmation");
     }
     req.flash(
-      "success",
+      "info",
       `An email has been sent to  ${existingEmail.email} with further instructions.`
     );
-    res.redirect("/confirmation");
+    res.redirect("/forgot-password");
   });
 };
 
@@ -122,7 +122,7 @@ const updatePassword = async (req, res) => {
       user.resetExpires = undefined;
 
       user.save();
-      req.flash("success", "Password has been reset successfully.");
+      req.flash("info", "Password has been reset successfully.");
       res.redirect("/login");
     });
   } else {

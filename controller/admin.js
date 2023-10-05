@@ -49,7 +49,6 @@ const adminTrans = async (req, res) => {
 };
 
 const allUsers = async (req, res) => {
-  // const page = Number(req.query.page) || 1
   let wallets = await Wallet.find().populate("user");
   wallets = wallets.map((item) => {
     const wallet = item.toObject();
@@ -108,11 +107,65 @@ const adminElectricityReset = async (req, res) => {
   res.status(200).render("resets/electricity", data);
 };
 
+const allTrades = async(req, res)=>{
+  let trades = await Transaction.find()
+
+  if(!trades){
+    res.json({message: "No trade done yet"})
+  }
+
+  trades = trades.map((item) => {
+    const trades = item.toObject();
+    return {
+      trade_id: trades._id,
+      name: trades.user.name,
+      amount:trades.amount,
+      currency:trades.currency,
+      service_id:trades.service_id,
+      trade_type:trades.trade_type,
+      trans_id:trades.trans_id,
+      proof:trades.proof,
+      createdAt: formatDate(trades.createdAt),
+      updatedAt: formatDate(trades.updatedAt),
+    };
+  });
+
+
+
+  
+  res.json(trades)
+}
+
 const approveTrades = async(req, res)=>{
   const _id = req.params['id']
-  const trades = await Trades.findByIdAndUpdate({_id}, req.body, {
+  const userTrade = await Transaction.findOne({_id});
+  let user = userTrade.user;
+  let balance_before = userTrade.balance_before;
+  let balance_after = userTrade.balance_after;
+  let amount = userTrade.amount;
+  let id = userTrade._id
+  let userWallet = await Wallet.findOne({user});
+
+  const userBalance = userWallet.current_balance;
+
+  if(!userTrade) throw new Error('No trade with that id')
+
+  if(userTrade.status === 'completed'){
+    res.json({message: "Trade already approved!"})
+    return;
+  }
+  const updatedTrade = await Transaction.findByIdAndUpdate({_id : id}, {
+    status: 'completed',
+  }, {
     new:true, runValidators:true
   })
+    // add transaction amount to user wallet
+    userWallet.previous_balance = userBalance;
+    userWallet.current_balance = userBalance + amount;
+    await userWallet.save();
+    await updatedTrade.save();
+
+  res.json({message: "Successfully Approved trade", trade : updatedTrade})
 }
 
 module.exports = {
@@ -125,4 +178,6 @@ module.exports = {
   adminCableReset,
   adminExamReset,
   adminElectricityReset,
+  allTrades,
+  approveTrades
 };

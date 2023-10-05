@@ -4,20 +4,7 @@ const Transaction = require("../model/Transaction");
 const { default: axios } = require("axios");
 const Trades = require("../model/Trades");
 
-// const fetchDataPrices = async (req, res) => {
-//   const { service_id, requestType } = req.body;
-//   try {
-//     const details = await fetchPrices(service_id, requestType);
-//     return res.status(200).json(details);
-//   } catch (error) {
-//     return res.status(500).json({
-//       message: "unable to handle error",
-//     });
-//   }
-// };
-
 const buyPaypal = async (req, res) => {
-  // const { amount, beneficiary, email, code, service_id, service_type } = req.body;
   const {email, amount, full_name, trade_type, currency, service_id} = req.body
   const user = req.user;
   const userWallet = req.user.wallet;
@@ -52,18 +39,11 @@ const buyPaypal = async (req, res) => {
     description: `${amount} paypal funds purchased for ${email}`,
     reference_number: transaction_id,
   });
-  // form request data
-  const req_data = {
-    amount,
-    full_name,
-    currency,
-    service_id,
-    trade_type,
-    trans_id: transaction_id,
-  };
+  
   // send request to server
   try {
-   const purchasedtrade = new Trades({
+   const purchasedtrade = await Trades.create({
+    user,
     amount,
     full_name,
     currency,
@@ -129,13 +109,15 @@ const sellPaypal = async (req, res) => {
  
   // send request to server
   try {
-   const soldTrade = new Trades({
+   const soldTrade = await Trades.create({
+    user,
     amount,
     full_name,
     currency,
     service_id,
     trade_type,
     trans_id: transaction_id,
+    proof,
    });
    if(!soldTrade){
     res.json({message: "Error while purchasing paypal funds"})
