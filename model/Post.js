@@ -6,6 +6,9 @@ const BlogPostSchema = new Schema({
         type:String,
         required: true,
     },
+    slug:{
+        type:String
+    },
     summary:{
         type: String,
         required: true
@@ -15,18 +18,13 @@ const BlogPostSchema = new Schema({
         required:true
     },
     author:{
-        type:Schema.Types.ObjectId,
-        ref: "User"
+        type:String,
     },
     comments:{
         type:String,
     },
     cover_img:{
         type:String,
-    },
-    views:{
-        type:Number,
-        default:0,
     },
     category:{
         type: String,

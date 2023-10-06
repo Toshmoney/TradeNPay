@@ -34,6 +34,12 @@ const {
   adminElectricityReset,
   allTrades,
   approveTrades,
+  createPost,
+  getSinglePost,
+  getAllPost,
+  editSinglePost,
+  deletePost,
+  deleteAllPost,
 } = require("../controller/admin");
 
 const { fetchPackages } = require("../controller/packageController");
@@ -110,6 +116,12 @@ router.route("/wallet/verify-payment").post(isLoggedIn, fundWalletVerify);
 // Admin only
 router.route("/admin").get([isLoggedIn, isAdmin], adminDashboard);
 router.route("/business-balance").get([isLoggedIn, isAdmin], businessBal);
+router.route("/create-post").post([isLoggedIn, isAdmin], createPost);
+router.route("/edit-post/:slug").patch([isLoggedIn, isAdmin], editSinglePost);
+router.route("/all-blog").get(getAllPost);
+router.route("/all-blog").delete([isLoggedIn, isAdmin],deleteAllPost);
+router.route("/:slug").get(getSinglePost);
+router.route("/post/:slug").delete([isLoggedIn, isAdmin], deletePost);
 router.route("/all-trades").get(allTrades);
 router.route("/trades/:id").patch(approveTrades);
 router.route("/all-users").get([isLoggedIn, isAdmin], allUsers);

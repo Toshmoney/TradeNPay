@@ -1,4 +1,5 @@
 const DataPlan = require("../model/DataPlan");
+const slugify = require('slugify');
 const User = require("../model/User.db");
 const { dashboardData } = require("../utils/dashboardData");
 const { formatDate, data_provider, trade_type } = require("../utils");
@@ -6,6 +7,7 @@ const { subvtu_balance } = require("../utils/subvtu");
 const Transaction = require("../model/Transaction");
 const Wallet = require("../model/Wallet");
 const Trades = require("../model/Trades");
+const Posts = require("../model/Post");
 
 const adminDashboard = async (req, res) => {
   const subvtu_bal = await subvtu_balance();
@@ -129,10 +131,6 @@ const allTrades = async(req, res)=>{
       updatedAt: formatDate(trades.updatedAt),
     };
   });
-
-
-
-  
   res.json(trades)
 }
 
@@ -168,6 +166,148 @@ const approveTrades = async(req, res)=>{
   res.json({message: "Successfully Approved trade", trade : updatedTrade})
 }
 
+// Create new blog post
+const createPost = async(req, res)=>{
+
+  const user = req.user;
+
+    let imageUploadFile;
+    let uploadPath;
+    let newImageName;
+
+    if(!req.files || Object.keys(req.files).length === 0){
+      req.flash("error", "Post image is missing!");
+    } else {
+
+      imageUploadFile = req.files.image;
+      newImageName = Date.now() + imageUploadFile.name;
+
+      uploadPath = require('path').resolve('./public/') + '/post/' + newImageName;
+
+      imageUploadFile.mv(uploadPath, function(err){
+        if(err){
+          req.flash("error", err);
+        }
+      })
+
+    }
+
+    const {title, summary, content} = req.body;
+    const slug = slugify(title, { lower: true, replacement: '-' });
+    try {
+        const createdPost = await Posts.create({
+            title,
+            content,
+            cover_img : newImageName,
+            summary,
+            author : "admin",
+            slug
+        });
+        if(!createdPost) throw new Error("There was an error creating new blog post")
+        res.json(createdPost)
+
+        } catch (error) {
+           res.json(error) 
+        }
+
+}
+
+const getSinglePost = async(req, res)=>{
+  const slug = req.params['slug']
+  try {
+  let foundPost = await Posts.findOne({slug})
+  if(!foundPost){
+      res.status(404).json({message: "Post doesn't not exist or has been removed!"})
+  }
+
+
+  foundPost = {
+    _id: foundPost._id,
+    title: foundPost.title,
+    summary:foundPost.summary,
+    content:foundPost.content,
+    cover_img:foundPost.cover_img,
+    author:foundPost.author,
+    createdAt: formatDate(foundPost.createdAt),
+    updatedAt: formatDate(foundPost.updatedAt),
+  };
+
+  res.status(200).json(foundPost)
+
+  } catch (error) {
+      console.log(error);
+  }
+};
+
+// ============== Get All Posts ================
+
+const getAllPost = async(req, res)=>{
+  try {
+  const foundPost = await Posts.find()
+  .sort({createdAt: -1})
+  .limit(20)
+  
+  if(foundPost.length === 0){
+    res.json({message : "No blog post published yet!"})
+  }
+
+  res.status(200).json(foundPost)
+  } catch (error) {
+      console.log(error);
+  }
+};
+
+// ============== Edit Single Post ================
+
+const editSinglePost = async(req, res)=>{
+  let newImageName = null
+  let uploadPath;
+  let imageUploadFile;
+  if(req.file){
+  
+      imageUploadFile = req.files.image;
+      newImageName = Date.now() + imageUploadFile.name;
+
+      uploadPath = require('path').resolve('./') + '/public/uploads/' + newImageName;
+
+      imageUploadFile.mv(uploadPath, function(err){
+        if(err){
+          req.flash("error", err);
+        }
+      })
+  }
+
+  
+  const {content, title, summary} = req.body;
+  const slug = req.params['slug']
+  // const id = req.params['id']
+  const postDoc = await Posts.findOneAndUpdate({slug},{
+      title,
+      content,
+      summary,
+      slug,
+      cover_img: newImageName ? newImageName : postDoc.cover_img
+  },{new:true, runValidators:true}
+  
+  
+)
+  
+  }
+
+  const deletePost = async(req, res)=>{
+    const slug = req.params['slug']
+    const deletedPost = await Posts.findOneAndDelete({slug})
+    if(!deletedPost) throw new Error('Blog does not exist!')
+
+    res.json({message: "Blog post deleted successfully!"})
+  }
+
+  const deleteAllPost = async(req, res)=>{
+    const deletedPosts = await Posts.deleteMany();
+    if(!deletedPosts)throw new Error("Blog post is currently empty!");
+    res.json({message: "All posts deleted successfully!"})
+  }
+
 module.exports = {
   adminDashboard,
   adminTrans,
@@ -179,5 +319,11 @@ module.exports = {
   adminExamReset,
   adminElectricityReset,
   allTrades,
-  approveTrades
+  approveTrades,
+  createPost,
+  getSinglePost,
+  getAllPost,
+  editSinglePost,
+  deletePost,
+  deleteAllPost
 };
