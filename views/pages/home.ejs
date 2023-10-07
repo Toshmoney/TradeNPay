@@ -24,10 +24,17 @@
                         <a class="mr-6" href="https://chat.whatsapp.com/GktoSxKHEShJS8j2kuUnZb">Support</a>
                     </li>
             </div>
+            <% if(user.name) {%>
+                <div class="buttons lg:block md:hidden">
+                    <button class=" px-4 p-1 bg-black text-white rounded-md"><a href="/dashboard">Dashboard</a></button>
+                </div>
+                <% } else {%>
             <div class="buttons lg:block md:hidden">
                 <button class=" px-4 p-1 border border-black rounded-md"><a href="/login">Sign in</a></button>
-                    <button class=" px-4 p-1 bg-black text-white rounded-md"><a href="/sign-up">Register</a></button>
+                <button class=" px-4 p-1 bg-black text-white rounded-md"><a href="/sign-up">Register</a></button>
             </div>
+
+            <% } %>
            <div class="lg:hidden md:block">
             <button onclick="myfunction()">
               <img class="toggle-btn" src="image/Group 44 (1).png" alt="">
@@ -39,10 +46,16 @@
                 <a class="mr-6" href="">About Us</a>
                 <a class="mr-6" href="">Bills</a>
                 <a class="mr-6" href="">Support</a>
-                <div class="button-mobile">
-                    <button class=" px-4 p-1 border border-black rounded-md"><a href="/login">Sign in</a></button>
-                    <button class=" px-4 p-1 bg-black text-white rounded-md"><a href="/sign-up">Register</a></button>
-                </div>
+                <% if(user.name){ -%>
+                    <div class="button-mobile">
+                    <button class=" w-full px-4 p-1 border border-black rounded-md"><a href="/dashboard">Dashboard</a></button>
+                    </div>
+                    <% }else{ %>
+                    <div class="button-mobile">
+                        <button class=" px-4 p-1 border border-black rounded-md"><a href="/login">Sign in</a></button>
+                        <button class=" px-4 p-1 bg-black text-white rounded-md"><a href="/sign-up">Register</a></button>
+                    </div>
+                <% } %>
             </li>
         </div>
         <div class="hero-page flex md::flex-col lg:flex-row items-center justify-center text-white w-[100%] ml-5">

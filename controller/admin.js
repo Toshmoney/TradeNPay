@@ -8,6 +8,9 @@ const Transaction = require("../model/Transaction");
 const Wallet = require("../model/Wallet");
 const Trades = require("../model/Trades");
 const Posts = require("../model/Post");
+require("dotenv").config();
+
+const base_url = process.env.BASE_URL
 
 const adminDashboard = async (req, res) => {
   const subvtu_bal = await subvtu_balance();
@@ -220,13 +223,14 @@ const getSinglePost = async(req, res)=>{
       res.status(404).json({message: "Post doesn't not exist or has been removed!"})
   }
 
+  const customimg = `${base_url}/post`
 
   foundPost = {
     _id: foundPost._id,
     title: foundPost.title,
     summary:foundPost.summary,
     content:foundPost.content,
-    cover_img:foundPost.cover_img,
+    cover_img:`${customimg}/${foundPost.cover_img}`,
     author:foundPost.author,
     createdAt: formatDate(foundPost.createdAt),
     updatedAt: formatDate(foundPost.updatedAt),

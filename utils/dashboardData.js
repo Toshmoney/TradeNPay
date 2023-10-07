@@ -46,8 +46,9 @@ const fetchUserTransactions = async (userId, limit = 20) => {
 };
 
 const dashboardData = async (user, is_admin = false, limit = 20) => {
+  let userid = user?._id
   const userWallet = await Wallet.findOne({
-    user: user._id,
+    user: userid,
   });
   let trxns = [];
   if (is_admin) {

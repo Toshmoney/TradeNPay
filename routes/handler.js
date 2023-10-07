@@ -13,7 +13,6 @@ const {
   setting,
   profile,
   verifyNow,
-  test,
   billPayer,
   privacyPolicy,
   businessBal,
@@ -62,11 +61,11 @@ const fundWalletVerify = require("../controller/fundWallet");
 
 const { newPin, updatePin } = require("../controller/transactionPin");
 const { checkUserPin } = require("../middleware/checkUserPin");
+const { verifybank } = require("../controller/withdrawFunds");
 // const { buyPaypal } = require("../controller/paypalController");
 
 router.route("/api/v1/packages").post(fetchPackages);
 router.route("/").get(homePage);
-router.route("/test").get(test);
 router.route("/login").get(logInPage);
 router.route("/login").post((req, res, next) => {
   const redirectUrl = req.session.requestedUrl || "/dashboard";
@@ -100,6 +99,7 @@ router
   .route("/trades/:service")
   .get([isLoggedIn, checkUserPin], tradeService);
 router.route("/wallet").get(isLoggedIn, wallet);
+router.route("/withdraw").get(verifybank)
 router.route("/wallet/fund").get(isLoggedIn, fundWallet);
 
 router.route("/wallet/receive").get(isLoggedIn, receiveWallet);

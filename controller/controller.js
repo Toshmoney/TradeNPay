@@ -9,10 +9,8 @@ const { StatusCodes } = require("http-status-codes");
 
 
 const homePage = async (req, res) => {
-  res.status(200).render("pages/home");
-};
-const test = async (req, res) => {
-  res.status(200).json({ msg: "testing new data" });
+  const data = await dashboardData(req.user);
+  res.status(200).render("pages/home", data);
 };
 
 const dashboard = async (req, res) => {
@@ -150,7 +148,6 @@ module.exports = {
   setting,
   verifyNow,
   profile,
-  test,
   billPayer,
   privacyPolicy,
   businessBal,
