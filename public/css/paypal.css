@@ -47,7 +47,7 @@
   }
 
   .file-upload-label{
-    padding: 12px;
+    padding: 5px;
     background-color: blue;
     cursor: pointer;
     color: #ccc;
@@ -56,10 +56,10 @@
 
   .selling, .available{
     color: green;
-    font-size: 25px;
+    font-size: 22px;
   }
 
   .buying, .not-available{
     color: red;
-    font-size: 25px;
+    font-size: 22px;
   }
