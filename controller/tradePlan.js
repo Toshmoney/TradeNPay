@@ -21,7 +21,7 @@ const getTradePlans = async (req, res) => {
   const { service_id } = req.query;
   const queryObject = {};
   if (service_id) {
-    queryObject.trade_id = trade_id;
+    queryObject.service_id = service_id;
   }
   const trade_plans = await TradePlan.find(queryObject);
   res.status(StatusCodes.OK).json({
@@ -36,7 +36,7 @@ const getSingleTradePlan = async (req, res) => {
   const trade_plan = await TradePlan.findOne({ service_id: service_id });
   if (!trade_plan) {
     throw new CustomAPIError(
-      `Trade with plan id: ${trade_id} does not exist`,
+      `Trade with plan id: ${service_id} does not exist`,
       404
     );
   }

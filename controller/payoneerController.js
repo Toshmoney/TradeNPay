@@ -42,7 +42,7 @@ const buyPayoneer = async (req, res) => {
     status: "pending",
     service: "payoneer",
     type: "debit",
-    description: `$${amount} payoneer funds purchased for ${email}`,
+    description: `NGN${amount} payoneer funds purchased for ${email}`,
     reference_number: transaction_id,
   });
  
