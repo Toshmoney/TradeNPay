@@ -124,19 +124,14 @@
                         <br>
                 <div class="form-group">
                     <div class="form-field">
-                        <label class="bold" for="full_name">PAYPAL NAME</label>
-                        <input type="text" name="full_name" id="sell-name" placeholder="Paypal Name">
+                        <label class="bold" for="trans_id">PAYPAL TRANS ID</label>
+                        <input type="text" name="trans_id" id="trans_id" placeholder="Paypal Trans ID">
                     </div>
 
                     <div class="form-field">
-                        <label class="bold" for="email">PAYPAL EMAIL</label>
-                        <input type="email" name="email" id="sell-email" placeholder="Paypal email">
+                      <label for="file" class="bole file-upload-label">UPLOAD PROOF OF PAYMENT</label>
+                      <input type="file" class="file-upload" name="image" id="file" accept="image/*" required>
                     </div>
-                </div>
-
-                <div class="form-field">
-                  <label for="file" class="bole file-upload-label">UPLOAD PROOF OF PAYMENT</label>
-                  <input type="file" class="file-upload" name="image" id="file" accept="image/*" required>
                 </div>
 
                 <div class="form-group">
@@ -347,8 +342,7 @@
     // Sell Trades processing
     const validatedTrade = () => {
     // sell details
-    const sellemail = document.querySelector("#sell-email").value;
-    const sellfull_name = document.querySelector("#sell-name").value;
+    const trans_id = document.querySelector("#trans_id").value;
     const sellamount = Number(document.querySelector("#sell-amount").value);
     const sellpin = document.querySelector("#sell-pin").value;
     const sellcurrency = document.querySelector("#sell-currency").value;
@@ -364,8 +358,8 @@
         toastr.error('Pls input amount')
         return false
       }
-      if (!full_name || !email) {
-        toastr.error('Pls kindly provide your paypal details', 'Invalid Paypal Details')
+      if (!trans_id) {
+        toastr.error('Pls kindly provide paypal trans ID', 'Invalid Paypal Details')
         return false
       }
       if (walletBalance < amount) {
@@ -381,8 +375,7 @@
 
       return {
         pin:sellpin,
-        email:sellemail,
-        full_name:sellfull_name,
+        trans_id,
         service_id:sellservice_id,
         amount:sellamount,
         currency:sellcurrency

@@ -42,17 +42,13 @@
     border-top: none;
   }
 
-  .file-upload{
-    display: none;
-  }
-
-  .file-upload-label{
+  /* .file-upload-label{
     padding: 5px;
     background-color: blue;
     cursor: pointer;
     color: #ccc;
     margin: 12px;
-  }
+  } */
 
   .selling, .available{
     color: green;

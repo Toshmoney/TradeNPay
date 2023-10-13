@@ -106,7 +106,7 @@ const sellPaypal = async (req, res) => {
     }
 
 
-  const {full_name, currency, service_id} = req.body
+  const {trans_id, currency, service_id} = req.body
   let amount = req.body.amount
   const trade = await fetch(`http://localhost:4000/api/v1/trade_plan/${service_id}`).then(res => res.json())
   let details = await trade.data
@@ -145,11 +145,10 @@ const sellPaypal = async (req, res) => {
    const soldTrade = await Trades.create({
     user,
     amount,
-    full_name,
+    trans_id,
     currency,
     service_id,
     trade_type,
-    trans_id: transaction_id,
     proof: newImageName,
    });
    if(!soldTrade){
