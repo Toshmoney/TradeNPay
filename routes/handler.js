@@ -120,7 +120,7 @@ router.route("/create-post").post([isLoggedIn, isAdmin], createPost);
 router.route("/edit-post/:slug").patch([isLoggedIn, isAdmin], editSinglePost);
 router.route("/all-blog").get(getAllPost);
 router.route("/all-blog").delete([isLoggedIn, isAdmin],deleteAllPost);
-router.route("/:slug").get(getSinglePost);
+router.route("/blog/:slug").get(getSinglePost);
 router.route("/post/:slug").delete([isLoggedIn, isAdmin], deletePost);
 router.route("/trade/all").get([isLoggedIn, isAdmin],allTrades);
 router.route("/trades/:id").patch([isLoggedIn, isAdmin], approveTrades);
