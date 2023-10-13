@@ -22,6 +22,7 @@ const payoneerRoutes = require("./routes/payoneerRoute");
 const giftcardRoutes = require("./routes/giftcardRoute")
 const cryptoRoutes = require("./routes/crypto")
 const dataPlanRoutes = require("./routes/dataPlanRoute");
+const tradeRoutes = require("./routes/tradeRoute");
 const tvRoutes = require("./routes/tvRouter");
 const transactionRoutes = require("./routes/transaction");
 
@@ -57,11 +58,12 @@ passport.deserializeUser(User.deserializeUser());
 // ********** Routes **************
 app.use("/", router);
 app.use("/api/v1/data_plan", dataPlanRoutes);
+app.use("/api/v1/trade_plan", tradeRoutes);
 app.use("/api/v1/airtime", airtimeRoutes);
-app.use("/api/v1/trades", paypalRoutes);
-app.use("/api/v1/trades", payoneerRoutes);
-app.use("/api/v1/trades", giftcardRoutes);
-app.use("/api/v1/trades", cryptoRoutes);
+app.use("/trades", paypalRoutes);
+app.use("/trades", payoneerRoutes);
+app.use("/trades", giftcardRoutes);
+app.use("/trades", cryptoRoutes);
 app.use("/api/v1/tv", tvRoutes);
 app.use("/api/v1/power", powerRoutes);
 app.use("/api/v1/exam", examRoutes);

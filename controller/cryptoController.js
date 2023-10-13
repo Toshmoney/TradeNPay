@@ -2,7 +2,7 @@ const fs = require("fs");
 const { generateTransId } = require("../utils");
 const Trades = require("../model/Trades");
 const Transaction = require("../model/Transaction");
-
+const TradePlan = require("../model/TradePlan");
 
 const sellCrypto = async(req, res)=>{
     const user = req.user;
@@ -12,7 +12,7 @@ const sellCrypto = async(req, res)=>{
     let newImageName;
 
     if(!req.files || Object.keys(req.files).length === 0){
-      req.flash("error", "Giftcard image is missing!");
+      req.flash("error", "Payment screenshot is missing!");
     } else {
 
       imageUploadFile = req.files.image;
@@ -27,11 +27,17 @@ const sellCrypto = async(req, res)=>{
       })
     }
     const {amount, currency, service_id} = req.body;
-    const trade_type = 'crypto'
-    const sellPrice = 950;
+    const trade = await fetch(`http://localhost:4000/api/v1/trade_plan/${service_id}`).then(res => res.json())
+    let details = await trade.data
+    const trade_type = details.trade_type
+    const sellPrice = details.dollar_sell_price;
     const userWallet = req.user.wallet;
     const userBalance = userWallet.current_balance;
-    const val = Number(amount);
+    const val = Number(amount * sellPrice);
+
+    if(amount < 50){
+      req.flash("error", "Minimum trade for crypto is $50")
+    }
 
     // create a unique transaction_id
     let transaction_id;
@@ -51,9 +57,9 @@ const sellCrypto = async(req, res)=>{
     balance_before: userBalance,
     balance_after: userBalance,
     status: "pending",
-    service: "giftcard",
+    service: "crypto",
     type: "credit",
-    description: `${amount} giftcard ${service_id} funds sold!`,
+    description: `${val} crypto ${service_id} funds sold!`,
     reference_number: transaction_id,
   });
  
@@ -69,7 +75,7 @@ const sellCrypto = async(req, res)=>{
     trans_id: transaction_id,
    });
    if(!soldTrade){
-    res.json({message: "Error while selling giftcard funds"})
+    res.json({message: "Error while selling crypto funds"})
    }
     // update transaction to be concluded
     transaction.status = "review";
@@ -88,7 +94,7 @@ const sellCrypto = async(req, res)=>{
   } catch (error) {
     transaction.status = "failed"
     return res.status(422).json({
-      message: "failed transaction",
+      message: error,
       success: false,
     });
   }

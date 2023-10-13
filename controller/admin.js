@@ -8,6 +8,7 @@ const Transaction = require("../model/Transaction");
 const Wallet = require("../model/Wallet");
 const Trades = require("../model/Trades");
 const Posts = require("../model/Post");
+const TradePlan = require("../model/TradePlan");
 require("dotenv").config();
 
 const base_url = process.env.BASE_URL
@@ -38,7 +39,6 @@ const adminDashboard = async (req, res) => {
 };
 
 const adminTrans = async (req, res) => {
-  // const data = await dashboardData(req.user);
   let transactions = await Transaction.find()
     .sort("-createdAt")
     .populate("user", "name email _id");
@@ -90,7 +90,7 @@ const adminDataReset = async (req, res) => {
 
 const adminTradeReset = async (req, res) => {
   const { service_id } = req.params;
-  const trade_plan = await TradePlan.findOne({ plan_id: plan_id });
+  const trade_plan = await TradePlan.findOne({ service_id: service_id });
   res.status(200).render("resets/data", {
     trade_plan: trade_plan || {},
     trade_type: trade_type,
@@ -280,11 +280,8 @@ const editSinglePost = async(req, res)=>{
         }
       })
   }
-
-  
   const {content, title, summary} = req.body;
   const slug = req.params['slug']
-  // const id = req.params['id']
   const postDoc = await Posts.findOneAndUpdate({slug},{
       title,
       content,
@@ -293,8 +290,7 @@ const editSinglePost = async(req, res)=>{
       cover_img: newImageName ? newImageName : postDoc.cover_img
   },{new:true, runValidators:true}
   
-  
-)
+  )
   
   }
 
@@ -329,5 +325,6 @@ module.exports = {
   getAllPost,
   editSinglePost,
   deletePost,
-  deleteAllPost
+  deleteAllPost,
+  adminTradeReset
 };

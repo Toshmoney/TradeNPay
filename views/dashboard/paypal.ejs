@@ -31,12 +31,13 @@
                 <button class="tablinks" onclick="openTrade(event, 'Sell')">Sell</button>
             </div>
         <div id="Buy" class="tabcontent">
-            <h2>Buying Price: NGN 945 per $</h2>
+          <h2 class="buy-available"></h2>
+          <h2>Buying Price: NGN <span class="buying"></span> per $</h2> <br>
             <form class="buy-now" action="">
                 <div class="form-group">
                     <div class="choose form-field">
                         <label class="bold" for="service_id">SELECT TRADE TYPE</label>
-                        <select class="service_id" name="service_id" id="service_id" value="Select Option">
+                        <select class="service_id" name="service_id" id="service_id" value="Select Option" onchange="fetch_buying_price()">
                             <!-- <option value="">Select Option</option> -->
                             <option value="FNF">FRIEND AND FAMILY</option>
                             <option value="GNS">GOODS AND SERVICES</option>
@@ -48,10 +49,10 @@
                         <select class="currency" name="currency" id="currency" value="Select Option">
                             <!-- <option value="">Select Option</option> -->
                             <option value="USD">USD</option>
-                            <option value="EUR">EUR</option>
+                            <!-- <option value="EUR">EUR</option>
                             <option value="GBP">GBP</option>
                             <option value="CAD">CAD</option>
-                            <option value="AUD">AUD</option>
+                            <option value="AUD">AUD</option> -->
                         </select>
                     </div>
                 </div>
@@ -63,14 +64,22 @@
 
                     <div class="form-field">
                         <label class="bold" for="email">PAYPAL EMAIL</label>
-                        <input type="email" name="email" id="email" placeholder="Paypal email">
+                        <input type="email" name="email" id="email" placeholder="Enter Paypal email">
                     </div>
+                </div>
+
+                <br>
+
+                <div class="form-field">
+                  <label for="file" class="bole file-upload-label">UPLOAD PROOF OF PAYMENT</label>
+                  <input type="file" class="file-upload" name="image" id="file" accept="image/*" required>
                 </div>
 
                 <div class="form-group">
                     <div class="form-field">
                         <label class="bold" for="amount">AMOUNT</label>
                         <input type="number" name="amount" id="amount" placeholder="Amount here">
+                        <p class="font-bold text-xs">You are paying: <span id="total-amount"></span> </p>
                     </div>
                     <div class="form-field">
                         <label class="bold" for="pin">PIN</label>
@@ -80,7 +89,7 @@
               <div class="page-end">
                 <p class="flex gap-6 bold wallet-balance">
                   Total Bal.<span>
-                    <%= balance %>
+                    <%= data.balance %>
                   </span>
                 </p>
                 <div class="ctas">
@@ -92,30 +101,34 @@
         </div>
 
         <div id="Sell" class="tabcontent">
-            <h2>Selling Price: NGN 945 per $</h2>
+          <h2 class="sell-available"></h2>
+          <h2>Selling Price: NGN <span class="selling"></span> per $</h2> <br>
             <form action="" class="sell-form">
                 <div class="form-group">
                     <div class="choose form-field">
                         <label class="bold" for="service_id">SELECT TRADE TYPE</label>
-                        <select class="service_id" name="service_id" id="sell-service" value="Select Option">
+                        <select class="service_id" name="service_id" id="sell-service" value="Select Option" onchange="fetch_selling_price()">
                             <!-- <option value="">Select Option</option> -->
-                            <option value="1 FNF">FRIEND AND FAMILY</option>
-                            <option value="2 GNS">GOODS AND SERVICES</option>
+                            <option value="FNF">FRIEND AND FAMILY</option>
+                            <option value="GNS">GOODS AND SERVICES</option>
                         </select>
                     </div>
 
                     <div class="choose form-field">
                         <label class="bold" for="network">SELECT CURRENCY</label>
                         <select class="service_id" name="service_id" id="sell-currency" value="Select Option">
-                            <!-- <option value="">Select Option</option> -->
-                            <option value="1 USD">USD</option>
-                            <option value="2 EUR">EUR</option>
-                            <option value="3 GBP">GBP</option>
-                            <option value="4 CAD">CAD</option>
-                            <option value="5 AUD">AUD</option>
+                            <option value="USD">USD</option>
+                            <!-- <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="CAD">CAD</option>
+                            <option value="AUD">AUD</option> -->
                         </select>
                     </div>
                 </div>
+
+                <br>
+                        <h2>Kindly send your funds to: <span class="selling-mail"></span></h2>
+                        <br>
                 <div class="form-group">
                     <div class="form-field">
                         <label class="bold" for="full_name">PAYPAL NAME</label>
@@ -128,10 +141,16 @@
                     </div>
                 </div>
 
+                <div class="form-field">
+                  <label for="file" class="bole file-upload-label">UPLOAD PROOF OF PAYMENT</label>
+                  <input type="file" class="file-upload" name="image" id="file" accept="image/*" required>
+                </div>
+
                 <div class="form-group">
                     <div class="form-field">
                         <label class="bold" for="amount">AMOUNT</label>
                         <input type="number" name="amount" id="sell-amount" placeholder="Amount here">
+                        <p class="font-bold text-xs">You are getting: <span id="total-amount-selling"></span> </p>
                     </div>
                     <div class="form-field">
                         <label class="bold" for="pin">PIN</label>
@@ -141,7 +160,7 @@
               <div class="page-end">
                 <p class="flex gap-6 bold wallet-balance">
                   Total Bal.<span>
-                    <%= balance %>
+                    <%= data.balance %>
                   </span>
                 </p>
                 <div class="ctas">
@@ -188,6 +207,60 @@
 
     const form = document.querySelector('form')
     const sellform = document.querySelector('.sell-form')
+
+    const service_id = document.querySelector("#service_id").value;
+    const sellservice_id = document.querySelector("#sell-service").value;
+
+    async function fetch_selling_price(){
+      const sellingMail = document.querySelector(".selling-mail")
+      const tradeprice = await fetch(`/api/v1/trade_plan/${service_id}`)
+      .then(res => res.json())
+      console.log(tradeprice.data);
+      let amt = tradeprice.data.dollar_sell_price;
+      let isAvail = tradeprice.data.is_available;
+      const avail = document.querySelector(".buy-available")
+      if(isAvail){
+        avail.textContent='Paypal service is available';
+        sellingMail.textContent = tradeprice.data.selling_mail;
+      }else{
+        avail.textContent='Paypal services not available';
+        avail.classList.toggle("not-available")
+      }
+      const buying = document.querySelector(".selling");
+      buying.textContent = amt;
+      const totalField = document.querySelector("#total-amount-selling")
+      const amountField = document.querySelector("#sell-amount")
+      amountField.addEventListener("input", () => {
+        const amount = amountField.value
+      totalField.textContent = Math.round(amt * Number(amount))
+    })
+    }
+
+    async function fetch_buying_price(){
+      const tradeprice = await fetch(`/api/v1/trade_plan/${service_id}`)
+      .then(res => res.json())
+      console.log(tradeprice.data);
+      let amt = tradeprice.data.dollar_buy_price;
+      let isAvail = tradeprice.data.is_available;
+      const avail = document.querySelector(".sell-available")
+      if(isAvail){
+        avail.textContent='Paypal service is available';
+      }else{
+        avail.textContent='Paypal service is currently not available';
+        avail.classList.toggle("not-available")
+      }
+      const buying = document.querySelector(".buying");
+      buying.textContent = amt;
+      const totalField = document.querySelector("#total-amount")
+      const amountField = document.querySelector("#amount")
+      amountField.addEventListener("input", () => {
+        const amount = amountField.value
+      totalField.textContent = Math.round(amt * Number(amount))
+    })
+    }
+
+    fetch_selling_price()
+    fetch_buying_price()
     
     const validatedData = () => {
     const email = document.querySelector("#email").value;
@@ -218,7 +291,6 @@
         toastr.error("Enter your pin");
         return false;
       }
-
       
 
       return {
@@ -243,7 +315,7 @@
       submitButton.disable = true;
       submitButton.classList.add('disabled')
       // send to server for purchase
-      axios.post("/api/v1/trades/buy-paypal", purchase_data)
+      axios.post("/trades/buy-paypal", purchase_data)
         .then(res => {
           const { data } = res
           walletBalance = data.balance || walletBalance - purchase_data.amount
@@ -251,8 +323,13 @@
 
           submitButton.disabled = false
           submitButton.textContent = 'Buy';
-          submitButton.classList.remove('disabled')
-          toastr.success('Your transaction is being processed')
+          submitButton.classList.remove('disabled');
+          document.querySelector("#amount").value = ''
+          document.querySelector("#pin").value = ''
+          document.querySelector("#email").value = ''
+          document.querySelector("#full_name").value = ''
+          toastr.success('Your transaction is being processed');
+          location.href = '/dashboard'
         })
         .catch(error => {
           let message = "Try again letter"
@@ -331,7 +408,7 @@
       sellsubmitButton.disable = true;
       sellsubmitButton.classList.add('disabled')
       // send to server for purchase
-      axios.post("/api/v1/trades/sell-paypal", purchase_data)
+      axios.post("/trades/sell-paypal", purchase_data)
         .then(res => {
           const { data } = res
           walletBalance = data.balance || walletBalance - purchase_data.amount
@@ -341,6 +418,7 @@
           sellsubmitButton.textContent = 'Sell';
           sellsubmitButton.classList.remove('disabled')
           toastr.success('Your transaction is being processed')
+          location.href = '/dashboard'
         })
         .catch(error => {
           let message = "Try again letter"

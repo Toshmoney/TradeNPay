@@ -9,16 +9,15 @@ const {
   billpayment,
   wallet,
   fundWallet,
-  receiveWallet,
   setting,
   profile,
   verifyNow,
   billPayer,
   privacyPolicy,
   businessBal,
-  updateProfile,
   tradeService,
   trades,
+  walletWithdraw
 } = require("../controller/controller");
 
 const {
@@ -39,6 +38,7 @@ const {
   editSinglePost,
   deletePost,
   deleteAllPost,
+  adminTradeReset,
 } = require("../controller/admin");
 
 const { fetchPackages } = require("../controller/packageController");
@@ -60,8 +60,8 @@ const {
 const fundWalletVerify = require("../controller/fundWallet");
 
 const { newPin, updatePin } = require("../controller/transactionPin");
-const { checkUserPin } = require("../middleware/checkUserPin");
-const { verifybank } = require("../controller/withdrawFunds");
+const { checkUserPin, verifyUserPin } = require("../middleware/checkUserPin");
+const { withdrawalRequest } = require("../controller/withdrawFunds");
 // const { buyPaypal } = require("../controller/paypalController");
 
 router.route("/api/v1/packages").post(fetchPackages);
@@ -99,10 +99,10 @@ router
   .route("/trades/:service")
   .get([isLoggedIn, checkUserPin], tradeService);
 router.route("/wallet").get(isLoggedIn, wallet);
-router.route("/withdraw").get(verifybank)
+router.route("/wallet/withdraw").post([isLoggedIn, checkUserPin], withdrawalRequest)
 router.route("/wallet/fund").get(isLoggedIn, fundWallet);
-
-router.route("/wallet/receive").get(isLoggedIn, receiveWallet);
+// withdrawal page that authenticate user bank
+router.route("/wallet/withdraw").get(isLoggedIn, walletWithdraw);
 router.route("/setting").get(isLoggedIn, setting);
 router.route("/profile").get(isLoggedIn, profile);
 router.route("/privacy-policy").get(isLoggedIn, privacyPolicy);
@@ -122,14 +122,17 @@ router.route("/all-blog").get(getAllPost);
 router.route("/all-blog").delete([isLoggedIn, isAdmin],deleteAllPost);
 router.route("/:slug").get(getSinglePost);
 router.route("/post/:slug").delete([isLoggedIn, isAdmin], deletePost);
-router.route("/all-trades").get(allTrades);
-router.route("/trades/:id").patch(approveTrades);
+router.route("/trade/all").get([isLoggedIn, isAdmin],allTrades);
+router.route("/trades/:id").patch([isLoggedIn, isAdmin], approveTrades);
 router.route("/all-users").get([isLoggedIn, isAdmin], allUsers);
 router.route("/admin-setting").get([isLoggedIn, isAdmin], adminSettings);
 router.route("/transactions").get([isLoggedIn, isAdmin], adminTrans);
 router
   .route("/data-plans/:plan_id/change")
   .get([isLoggedIn, isAdmin], adminDataReset);
+router
+  .route("/trades/:service_id/change")
+  .get([isLoggedIn, isAdmin], adminTradeReset);
 router.route("/tv-reset").get([isLoggedIn, isAdmin], adminCableReset);
 router.route("/exam-reset").get([isLoggedIn, isAdmin], adminExamReset);
 router

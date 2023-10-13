@@ -29,11 +29,12 @@
           </div>
           <div class="bill-payer">
             <div class="tab">
-                <button class="tablinks" onclick="openTrade(event, 'Buy')">Buy</button>
-                <button class="tablinks" onclick="openTrade(event, 'Sell')">Sell</button>
+                <button class="tablinks" onclick="openTrade(event, 'Buy')">Sell</button>
+                <button class="tablinks" onclick="openTrade(event, 'Sell')">Buy</button>
             </div>
         <div id="Buy" class="tabcontent">
-            <h2>Buying Price: NGN 945 per $</h2> <br>
+          <h2 class="available"></h2>
+            <h2>Selling Price: NGN <span class="selling"></span> per $</h2> <br>
             <% if (messages.error) { %>
               <div class="alert alert-danger" role="alert">
                 <%= messages.error %>
@@ -44,11 +45,11 @@
                 <%= messages.info %>
               </div>
           <% } %>
-            <form class="buy-now" action="/api/v1/trades/sell-giftcard" method="post" enctype="multipart/form-data">
+            <form class="buy-now" action="/trades/sell-giftcard" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <div class="choose form-field">
                         <label class="bold" for="service_id">SELECT GIFT CARDS TYPE</label>
-                        <select class="service_id" name="service_id" id="service_id" value="Select Option">
+                        <select class="service_id" name="service_id" id="service_id" value="Select Option" required>
                             <!-- <option value="">Select Option</option> -->
                             <option value="EBAY">EBAY</option>
                             <option value="ONEVANILLA">ONE VANILLA</option>
@@ -58,7 +59,7 @@
 
                     <div class="choose form-field">
                         <label class="bold" for="currency">SELECT CURRENCY</label>
-                        <select class="currency" name="currency" id="currency" value="Select Option">
+                        <select class="currency" name="currency" id="currency" value="Select Option" required>
                             <!-- <option value="">Select Option</option> -->
                             <option value="USD">USD</option>
                             <option value="EUR">EUR</option>
@@ -69,18 +70,29 @@
                     </div>
                 </div>
                 <div class="form-field">
+                  <br>
                   <label for="file" class="bole file-upload-label">UPLOAD GIFT CARD</label>
-                  <input type="file" class="file-upload" name="image" id="file" accept="image/*">
+                  <input type="file" class="file-upload" name="image" id="file" accept="image/*" required>
+                  <br>
                 </div>
 
                 <div class="form-group">
                     <div class="form-field">
                         <label class="bold" for="amount">AMOUNT</label>
-                        <input type="number" name="amount" id="amount" placeholder="Amount here">
+                        <select class="amount" name="amount" id="amount" required>
+                          <option value=20>$20</option>
+                          <option value=50>$50</option>
+                          <option value=100>$100</option>
+                          <option value=150>$150</option>
+                          <option value=200>$200</option>
+                          <option value=500>$500</option>
+                          <option value=1000>$1000</option>
+                      </select>
+                      <p class="font-bold text-xs">You are getting: <span id="total-amount"></span> </p>
                     </div>
                     <div class="form-field">
                         <label class="bold" for="pin">PIN</label>
-                        <input type="password" name="pin" id="pin" placeholder="****" />
+                        <input type="password" name="pin" id="pin" placeholder="****" required />
                     </div>
                 </div>
               <div class="page-end">
@@ -91,7 +103,7 @@
                 </p>
                 <div class="ctas">
                   <button type="button" class="cta share">share</button></a>
-                  <button type="submit" class="cta submit submit-btn">Buy</button>
+                  <button type="submit" class="cta submit submit-btn">Sell</button>
                 </div>
               </div>
             </form>
@@ -112,83 +124,42 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
 
-    // const toastOptions = {
-    //   "closeButton": true,
-    //   "debug": false,
-    //   "newestOnTop": true,
-    //   "progressBar": true,
-    //   "positionClass": "toast-top-right",
-    //   "preventDuplicates": false,
-    //   "onclick": null,
-    //   "showDuration": "300",
-    //   "hideDuration": "1000",
-    //   "timeOut": "4000",
-    //   "extendedTimeOut": "1000",
-    //   "showEasing": "swing",
-    //   "hideEasing": "linear",
-    //   "showMethod": "fadeIn",
-    //   "hideMethod": "fadeOut"
-    // }
-    // toastr.options = { ...toastOptions }
-    // let walletBalance = 0;
-    // const balanceElement = document.querySelector('.wallet-balance > span')
-    // walletBalance = Number(balanceElement.textContent)
-    // balanceElement.textContent = `N${walletBalance}`
+    async function fetchapi(){
+      const tradeprice = await fetch('/api/v1/trade_plan/STEAMWALLET')
+      .then(res => res.json())
+      console.log(tradeprice.data);
+      let amt = tradeprice.data.dollar_sell_price;
+      let isAvail = tradeprice.data.is_available;
+      const avail = document.querySelector(".available")
+      if(isAvail){
+        avail.textContent='Giftcard service is available';
+      }else{
+        avail.textContent='Giftcard services not available';
+        avail.classList.toggle("not-available")
+      }
+      const buying = document.querySelector(".selling");
+      buying.textContent = amt;
+      const totalField = document.querySelector("#total-amount")
+      const amountField = document.querySelector("#amount")
+      amountField.addEventListener("change", () => {
+        const amount = amountField.value
+      totalField.textContent = Math.round(amt * Number(amount))
+    })
+    }
 
-    // const form = document.querySelector('form')
-    // const sellform = document.querySelector('.sell-form')
+    fetchapi()
     
-    // const validatedData = () => {
-    // const fileInput = document.getElementById('file');
-    // const amount = Number(document.querySelector("#amount").value);
-    // const pin = document.querySelector("#pin").value;
-    // const currency = document.querySelector("#currency").value;
-    // const service_id = document.querySelector("#service_id").value;
-    // const submitButton = document.querySelector('button.submit-btn')
 
-    // // const formData = new FormData();
-    // // formData.append('file', fileInput.files[0]);
-    // // formData.append('amount', amount);
-    // // formData.append('pin', pin);
-    // // formData.append('currency', currency);
-    // // formData.append('service_id', service_id);
-
-    // // formData.append('file', fileInput.files[0]);
-    //   // validate data
-    //   if (!service_id) {
-    //     toastr.error('Pls select Trade Type')
-    //     return false
-    //   }
-    //   if (!amount) {
-    //     toastr.error('Pls input amount')
-    //     return false
-    //   }
-    
-    //   if (walletBalance < amount) {
-    //     toastr.error('Kindly fund your wallet', 'Insufficient Wallet Balance')
-    //     return false
-    //   }
-    //   if (!pin) {
-    //     toastr.error("Enter your pin");
-    //     return false;
-    //   }
-
-      
-
-    //   return {
-    //     pin,
-    //     amount,
-    //     currency,
-    //     service_id
-    //   }
-    // }
-
-  
-
-
-    form.addEventListener('submit', (event) => {
+    const btn = document.querySelector(".submit-btn")
+    const msg = "<%= messages %>"
+    btn.addEventListener('click', (event) => {
       event.preventDefault()
       // validatedData()
+      // const btn = document.querySelector(".submit-btn");
+      btn.textContent = "Please wait .."
+      if(msg){
+        btn.textContent = 'Sell'
+      }
     })
   </script>
 </body>

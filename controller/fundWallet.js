@@ -78,7 +78,7 @@ const fundWallet = async (req, res) => {
     });
   }
 
-  const amount_paid = amount / 100;
+  const amount_paid = Number(amount / 100);
   wallet.previous_balance = userBalance;
   wallet.current_balance = userBalance + amount_paid;
   transaction.status = "completed";

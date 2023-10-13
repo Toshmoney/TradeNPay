@@ -30,11 +30,17 @@ const sellGiftcard = async(req, res)=>{
 
 
     const {amount, currency, service_id} = req.body;
-    const trade_type = 'giftcard'
-    const sellPrice = 950;
+    const trade = await fetch(`http://localhost:4000/api/v1/trade_plan/${service_id}`).then(res => res.json())
+    let details = await trade.data
+    const trade_type = details.trade_type
+    const sellPrice = details.dollar_sell_price;
     const userWallet = req.user.wallet;
     const userBalance = userWallet.current_balance;
-    const val = Number(amount);
+    const val = Number(amount * sellPrice);
+
+    if(amount < 20){
+      req.flash("error", "Minimum amount you can sell is $20");
+    }
 
     // create a unique transaction_id
     let transaction_id;
@@ -56,7 +62,7 @@ const sellGiftcard = async(req, res)=>{
     status: "pending",
     service: "giftcard",
     type: "credit",
-    description: `${amount} giftcard ${service_id} funds sold!`,
+    description: `$${amount} giftcard ${service_id} funds sold!`,
     reference_number: transaction_id,
   });
  
@@ -73,7 +79,7 @@ const sellGiftcard = async(req, res)=>{
    });
    if(!soldTrade){
     req.flash("error", "Error while selling giftcard funds");
-    res.redirect("/giftcard")
+    res.redirect("/trades/giftcard")
    }
     // update transaction to be concluded
     transaction.status = "review";
@@ -91,7 +97,7 @@ const sellGiftcard = async(req, res)=>{
     // });
     
     req.flash("info", "transaction is being processed");
-    // res.redirect("/giftcard")
+    res.redirect("/trades/giftcard")
 
   } catch (error) {
     transaction.status = "failed"
@@ -102,7 +108,7 @@ const sellGiftcard = async(req, res)=>{
 
     req.flash("error", "Failed Transaction!");
 
-    res.redirect("/giftcard")
+    res.redirect("/trades/giftcard")
 
   }
     

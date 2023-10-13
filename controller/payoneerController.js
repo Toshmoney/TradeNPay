@@ -5,14 +5,19 @@ const Trades = require("../model/Trades");
 
 const buyPayoneer = async (req, res) => {
   // const { amount, beneficiary, email, code, service_id, service_type } = req.body;
-  const {email, amount, full_name, currency, service_id} = req.body
+  const {email, full_name, currency, service_id} = req.body;
+  let amount = req.body.amount
+  const trade = await fetch(`http://localhost:4000/api/v1/trade_plan/${service_id}`).then(res => res.json())
+  let details = await trade.data
+  const trade_type = details.trade_type
+  const buyPrice = details.dollar_buy_price;
+
   const user = req.user;
   const userWallet = req.user.wallet;
   const userBalance = userWallet.current_balance;
-  let val = Number(amount);
-  const trade_type = 'payoneer'
+  amount = Number(amount * buyPrice);
 
-  if (userBalance < Number(val)){
+  if (userBalance < Number(amount)){
     // req.flash('error', 'Insufficient funds!')
     // return  res.redirect('/trades/paypal')
     res.json({"error": "Insufficient Funds in user wallet!"})
@@ -31,13 +36,13 @@ const buyPayoneer = async (req, res) => {
   // create transaction with pending status
   const transaction = new Transaction({
     user: user._id,
-    amount: val,
+    amount: amount,
     balance_before: userBalance,
     balance_after: userBalance,
     status: "pending",
     service: "payoneer",
     type: "debit",
-    description: `${amount} payoneer funds purchased for ${email}`,
+    description: `$${amount} payoneer funds purchased for ${email}`,
     reference_number: transaction_id,
   });
  
@@ -80,12 +85,16 @@ const buyPayoneer = async (req, res) => {
 };
 
 const sellPayoneer = async (req, res) => {
-  const {amount, full_name, currency, service_id} = req.body;
-  const trade_type = 'payoneer'
+  const {full_name, currency, service_id} = req.body;
+  let amount = req.body.amount;
+  const trade = await fetch(`http://localhost:4000/api/v1/trade_plan/${service_id}`).then(res => res.json())
+  let details = await trade.data
+  const trade_type = details.trade_type
+  const sellPrice = details.dollar_sell_price;
   const user = req.user;
   const userWallet = req.user.wallet;
   const userBalance = userWallet.current_balance;
-  let val = Number(amount);
+  amount = Number(amount * sellPrice);
   // create a unique transaction_id
   let transaction_id;
   while (true) {
@@ -100,13 +109,13 @@ const sellPayoneer = async (req, res) => {
   // create transaction with pending status
   const transaction = new Transaction({
     user: user._id,
-    amount: val,
+    amount: amount,
     balance_before: userBalance,
     balance_after: userBalance,
     status: "pending",
     service: "payoneer",
     type: "credit",
-    description: `${amount} payoneer ${service_id} funds sold!`,
+    description: `NGN${amount} payoneer funds sold!`,
     reference_number: transaction_id,
   });
  

@@ -2,13 +2,13 @@ const { Schema, model } = require("mongoose");
 
 const TradePlanSchema = new Schema(
   {
-    trade_id: {
+    service_id: {
       type: String,
       required: [true, "Trade id field  is missing"],
     },
-    account: {
+    currency: {
       type: String,
-      required: [true, "Admin account field  is missing"],
+      required: [true, "Trade currency field  is missing"],
     },
     dollar_sell_price:{
       type:Number
@@ -28,22 +28,19 @@ const TradePlanSchema = new Schema(
     pounds_buy_price:{ 
       type:Number
     },
-    trade_name: {
-      type: String,
-      required: [true, "Trade name field  is missing"],
-      uppercase: true,
-    },
     trade_type: {
       type: String,
       required: [true, "Trade type field  is missing"],
     },
-    trade_category: {
-        type: String,
-        required: [true, "Trade type field  is missing"],
-      },
     is_available: {
       type: Boolean,
       default: true,
+    },
+    buing_mail:{
+      type:String
+    },
+    selling_mail:{
+      type:String
     },
   },
   { timestamps: true }

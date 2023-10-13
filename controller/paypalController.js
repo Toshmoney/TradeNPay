@@ -5,13 +5,18 @@ const { default: axios } = require("axios");
 const Trades = require("../model/Trades");
 
 const buyPaypal = async (req, res) => {
-  const {email, amount, full_name, trade_type, currency, service_id} = req.body
+  const {email, full_name, currency, service_id} = req.body;
+  let amount = req.body.amount;
+  const trade = await fetch(`http://localhost:4000/api/v1/trade_plan/${service_id}`).then(res => res.json())
+  let details = await trade.data
+  const trade_type = details.trade_type
+  const buyPrice = details.dollar_buy_price;
   const user = req.user;
   const userWallet = req.user.wallet;
   const userBalance = userWallet.current_balance;
-  let val = Number(amount);
+  amount = Number(amount * buyPrice);
 
-  if (userBalance < Number(val)){
+  if (userBalance < Number(amount)){
     // req.flash('error', 'Insufficient funds!')
     // return  res.redirect('/trades/paypal')
     res.json({"error": "Insufficient Funds in user wallet!"})
@@ -30,13 +35,13 @@ const buyPaypal = async (req, res) => {
   // create transaction with pending status
   const transaction = new Transaction({
     user: user._id,
-    amount: val,
+    amount: amount,
     balance_before: userBalance,
     balance_after: userBalance,
     status: "pending",
     service: "paypal",
     type: "debit",
-    description: `${amount} paypal funds purchased for ${email}`,
+    description: `NGN${amount} worth of paypal funds purchased`,
     reference_number: transaction_id,
   });
   
@@ -55,7 +60,7 @@ const buyPaypal = async (req, res) => {
     res.json({message: "Error while purchasing paypal funds"})
    }
     // update transaction to be concluded
-    transaction.status = "review";
+    transaction.status = "completed";
     transaction.balance_after = userBalance - Number(amount);
     // deduct transaction amount from user wallet
     userWallet.previous_balance = userBalance;
@@ -78,11 +83,39 @@ const buyPaypal = async (req, res) => {
 };
 
 const sellPaypal = async (req, res) => {
-  const {email, amount, full_name, trade_type, currency, service_id} = req.body
+
+  let imageUploadFile;
+    let uploadPath;
+    let newImageName;
+
+    if(!req.files || Object.keys(req.files).length === 0){
+      req.flash("error", "Screenshot image is missing!");
+    } else {
+
+      imageUploadFile = req.files.image;
+      newImageName = Date.now() + imageUploadFile.name;
+
+      uploadPath = require('path').resolve('./') + '/uploads/' + newImageName;
+
+      imageUploadFile.mv(uploadPath, function(err){
+        if(err){
+          req.flash("error", err);
+        }
+      })
+
+    }
+
+
+  const {full_name, currency, service_id} = req.body
+  let amount = req.body.amount
+  const trade = await fetch(`http://localhost:4000/api/v1/trade_plan/${service_id}`).then(res => res.json())
+  let details = await trade.data
+  const trade_type = details.trade_type
+  const sellPrice = details.dollar_sell_price;
   const user = req.user;
   const userWallet = req.user.wallet;
   const userBalance = userWallet.current_balance;
-  let val = Number(amount);
+  amount = Number(amount * sellPrice);
   // create a unique transaction_id
   let transaction_id;
   while (true) {
@@ -97,13 +130,13 @@ const sellPaypal = async (req, res) => {
   // create transaction with pending status
   const transaction = new Transaction({
     user: user._id,
-    amount: val,
+    amount: amount,
     balance_before: userBalance,
     balance_after: userBalance,
     status: "pending",
     service: "paypal",
     type: "credit",
-    description: `${amount} paypal ${service_id} funds sold!`,
+    description: `NGN${amount} worth of paypal ${service_id} funds sold!`,
     reference_number: transaction_id,
   });
  
@@ -117,7 +150,7 @@ const sellPaypal = async (req, res) => {
     service_id,
     trade_type,
     trans_id: transaction_id,
-    proof,
+    proof: newImageName,
    });
    if(!soldTrade){
     res.json({message: "Error while purchasing paypal funds"})

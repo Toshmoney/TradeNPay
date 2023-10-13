@@ -53,3 +53,13 @@
     color: #ccc;
     margin: 12px;
   }
+
+  .selling, .available{
+    color: green;
+    font-size: 25px;
+  }
+
+  .buying, .not-available{
+    color: red;
+    font-size: 25px;
+  }

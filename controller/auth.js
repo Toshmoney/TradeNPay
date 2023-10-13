@@ -78,7 +78,7 @@ const confirmReset = async (req, res, next) => {
   transporter.sendMail(mailOptions, (err) => {
     if (err) {
       console.log(err);
-      req.flash("error", "Error sending email.");
+      req.flash("error", "Error while sending reset link.");
       return res.redirect("/confirmation");
     }
     req.flash(
@@ -169,6 +169,13 @@ const newUser = async (req, res, next) => {
       req.flash("error", "email already taken");
       return res.redirect("/sign-up");
     }
+
+    // Check if phone number already exist
+    const existingPhone = await User.findOne({phoneNumber});
+    if(existingPhone){
+      req.flash("error", "there is an account with this number")
+    }
+    
     User.register(user, password, function (err) {
       if (err) {
         console.log("error:", err);

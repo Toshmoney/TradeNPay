@@ -29,59 +29,74 @@
           </div>
           <div class="bill-payer">
             <div class="tab">
-                <button class="tablinks" onclick="openTrade(event, 'Buy')">Buy</button>
-                <button class="tablinks" onclick="openTrade(event, 'Sell')">Sell</button>
+                <button class="tablinks" onclick="openTrade(event, 'Buy')">Sell</button>
+                <button class="tablinks" onclick="openTrade(event, 'Sell')">Buy</button>
             </div>
         <div id="Buy" class="tabcontent">
-            <h2>Buying Price: NGN 945 per $</h2>
-            <form class="buy-now" action="">
+          <h2 class="available"></h2>
+          <h2>Selling Price: NGN <span class="selling"></span> per $</h2> <br>
+            <% if (messages.error) { %>
+              <div class="alert alert-danger" role="alert">
+                <%= messages.error %>
+              </div>
+          <% } %>
+          <% if (messages.info) { %>
+              <div class="alert alert-info" role="alert">
+                <%= messages.info %>
+              </div>
+          <% } %>
+            <form class="buy-now" action="/trades/sell-crypto" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <div class="choose form-field">
                         <label class="bold" for="service_id">SELECT TRADE TYPE</label>
-                        <select class="service_id" name="service_id" id="service_id" value="Select Option">
+                        <select class="service_id" name="service_id" id="service_id" value="Select Option" onchange="fetchapi()" required>
                             <!-- <option value="">Select Option</option> -->
-                            <option value="EBAY">BCH</option>
-                            <option value="ONEVANILLA">BTC</option>
+                            <option value="BCH">BCH</option>
+                            <option value="BTC">BTC</option>
                             <!-- <option value="STEAMWALLET">STEAM WALLET</option> -->
                         </select>
+                        <br>
+                        <h2>Kindly send your crypto to: <span class="selling-mail"></span></h2>
+                        <br>
                     </div>
 
                     <div class="choose form-field">
                         <label class="bold" for="currency">SELECT CURRENCY</label>
-                        <select class="currency" name="currency" id="currency" value="Select Option">
+                        <select class="currency" name="currency" id="currency" value="Select Option" required>
                             <!-- <option value="">Select Option</option> -->
                             <option value="USD">USD</option>
-                            <option value="EUR">EUR</option>
+                            <!-- <option value="EUR">EUR</option>
                             <option value="GBP">GBP</option>
                             <option value="CAD">CAD</option>
-                            <option value="AUD">AUD</option>
+                            <option value="AUD">AUD</option> -->
                         </select>
                     </div>
                 </div>
                 <div class="form-field">
-                  <label for="file" class="bole">UPLOAD PROOF OF PAYMENT</label>
-                  <input type="file" name="file" id="file">
+                  <label for="file" class="bole file-upload-label">UPLOAD PROOF OF PAYMENT</label>
+                  <input type="file" class="file-upload" name="image" id="file" accept="image/*" required>
                 </div>
 
                 <div class="form-group">
                     <div class="form-field">
                         <label class="bold" for="amount">AMOUNT</label>
-                        <input type="number" name="amount" id="amount" placeholder="Amount here">
+                        <input type="number" name="amount" id="amount" placeholder="Amount here" required>
+                        <p class="font-bold text-xs">You are getting: <span id="total-amount"></span> </p>
                     </div>
                     <div class="form-field">
                         <label class="bold" for="pin">PIN</label>
-                        <input type="password" name="pin" id="pin" placeholder="****" />
+                        <input type="password" name="pin" id="pin" placeholder="****" required/>
                     </div>
                 </div>
               <div class="page-end">
                 <p class="flex gap-6 bold wallet-balance">
                   Total Bal.<span>
-                    <%= balance %>
+                    <%= data.balance %>
                   </span>
                 </p>
                 <div class="ctas">
                   <button type="button" class="cta share">share</button></a>
-                  <button type="submit" class="cta submit submit-btn">Buy</button>
+                  <button type="submit" class="cta submit submit-btn">Sell</button>
                 </div>
               </div>
             </form>
@@ -102,113 +117,42 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
 
-    const toastOptions = {
-      "closeButton": true,
-      "debug": false,
-      "newestOnTop": true,
-      "progressBar": true,
-      "positionClass": "toast-top-right",
-      "preventDuplicates": false,
-      "onclick": null,
-      "showDuration": "300",
-      "hideDuration": "1000",
-      "timeOut": "4000",
-      "extendedTimeOut": "1000",
-      "showEasing": "swing",
-      "hideEasing": "linear",
-      "showMethod": "fadeIn",
-      "hideMethod": "fadeOut"
-    }
-    toastr.options = { ...toastOptions }
-    let walletBalance = 0;
-    const balanceElement = document.querySelector('.wallet-balance > span')
-    walletBalance = Number(balanceElement.textContent)
-    balanceElement.textContent = `N${walletBalance}`
-
-    const form = document.querySelector('form')
-    const sellform = document.querySelector('.sell-form')
-    
-    const validatedData = () => {
-    // const formData = new FormData();
-    // const fileInput = document.getElementById('file');
-    const amount = Number(document.querySelector("#amount").value);
-    const pin = document.querySelector("#pin").value;
-    const currency = document.querySelector("#currency").value;
-    const service_id = document.querySelector("#service_id").value;
-    const submitButton = document.querySelector('button.submit-btn')
-
-    // const formData = new FormData();
-    // formData.append('file', fileInput.files[0]);
-    // formData.append('amount', amount);
-    // formData.append('pin', pin);
-    // formData.append('currency', currency);
-    // formData.append('service_id', service_id);
-
-    // formData.append('file', fileInput.files[0]);
-      // validate data
-      if (!service_id) {
-        toastr.error('Pls select Trade Type')
-        return false
+    async function fetchapi(){
+      const service_id = document.querySelector("#service_id").value
+      const sellingMail = document.querySelector(".selling-mail")
+      const tradeprice = await fetch(`/api/v1/trade_plan/${service_id}`)
+      .then(res => res.json())
+      console.log(tradeprice.data);
+      let amt = tradeprice.data.dollar_sell_price;
+      let isAvail = tradeprice.data.is_available;
+      const avail = document.querySelector(".available")
+      if(isAvail){
+        avail.textContent='Cryptocurrency service is available';
+        sellingMail.textContent = tradeprice.data.selling_mail;
+      }else{
+        avail.textContent='Cryptocurrency services is currently not available';
+        avail.classList.toggle("not-available")
       }
-      if (!amount) {
-        toastr.error('Pls input amount')
-        return false
-      }
-    //   if (!full_name || !email) {
-    //     toastr.error('Pls kindly provide your paypal details', 'Invalid Paypal Details')
-    //     return false
-    //   }
-      if (walletBalance < amount) {
-        toastr.error('Kindly fund your wallet', 'Insufficient Wallet Balance')
-        return false
-      }
-      if (!pin) {
-        toastr.error("Enter your pin");
-        return false;
-      }
+      const buying = document.querySelector(".selling");
+      buying.textContent = amt;
+      const totalField = document.querySelector("#total-amount")
+      const amountField = document.querySelector("#amount")
+      console.log(tradeprice);
+      amountField.addEventListener("input", () => {
+        const amount = amountField.value
+      totalField.textContent = Math.round(amt * Number(amount))
+    })
     }
 
-    const recharge = () => {
-    const submitButton = document.querySelector('button.submit-btn')
-
-      const purchase_data = validatedData()
-      if (!purchase_data) {
-        return
-      }
-    //   disableBuyButton
-      submitButton.textContent = 'please wait';
-      submitButton.disable = true;
-      submitButton.classList.add('disabled')
-      // send to server for purchase
-      axios.post("/api/v1/trades/sell-crypto", purchase_data)
-        .then(res => {
-          const { data } = res
-          walletBalance = data.balance || walletBalance - purchase_data.amount
-          balanceElement.textContent = `N${walletBalance}`
-
-          submitButton.disabled = false
-          submitButton.textContent = 'Buy';
-          submitButton.classList.remove('disabled')
-          toastr.success('Your transaction is being processed')
-        })
-        .catch(error => {
-          let message = "Try again letter"
-          if (error.response) {
-            const { data, status } = error.response
-            message = data?.message || message
-          }
-
-          submitButton.disabled = false
-          submitButton.textContent = 'Buy';
-          submitButton.classList.remove('disabled')
-          toastr.info(message, 'Purchase failed')
-        })
-    }
-
-
+    fetchapi()
+    const msg = "<%= messages %>"
     form.addEventListener('submit', (event) => {
       event.preventDefault()
-      recharge()
+      const btn = document.querySelector(".submit-btn");
+      btn.textContent = "Please wait .."
+      if(msg){
+        btn.textContent = 'Sell'
+      }
     })
   </script>
 </body>

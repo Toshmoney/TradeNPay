@@ -5,14 +5,15 @@ const Wallet = require("../model/Wallet");
 const Transaction = require("../model/Transaction");
 
 const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY
-const verifybank = async(req, res)=>{
-    let {accountNmber, bankCode, amount, email} = req.body
+
+const withdrawalRequest = async(req, res)=>{
+    let {accountNmber, bankCode, amount} = req.body
     const user = req.user;
     let account_number = '';
     let account_name = '';
     let bank_code = '';
     let message = ''
-    const minimumWithdrawal = 10000;
+    const minimumWithdrawal = Number(10000);
     let val = Number(amount);
 
 
@@ -27,21 +28,19 @@ const verifybank = async(req, res)=>{
     const userBalance = wallet.current_balance;
 
     if (!amount || !accountNmber) {
-        return res.status(400).json({
-          message: "account number or amount is missing",
-          success: false,
-        });
-      }
 
+        req.flash("error", "amount is missing");
+        return res.redirect("/wallet/withdraw");
+        
+      }
     if(val < minimumWithdrawal){
-        return res.status(400).json({
-            message: "Minimum withdrawal amount is 10,000 naira!",
-            success: false,
-          });
+        req.flash("error", "Minimum withdrawal amount is 10,000 naira");
+        return res.redirect("/wallet/withdraw");
     }
 
 if (userBalance < Number(val)){
-    res.json({"error": "Insufficient Funds in user wallet!"})
+    req.flash("error", "Insufficient Funds in user wallet!");
+    return res.redirect("/wallet/withdraw");
     }else{
 
     // create unique transaction id
@@ -68,7 +67,6 @@ if (userBalance < Number(val)){
         reference_number: transaction_id,
     });
 
-    // let trans_id = "";
 
 // Endpoint to verify users account number
     const verifybankUrl = `https://api.paystack.co/bank/resolve?account_number=${accountNmber}&bank_code=${bankCode}`;
@@ -84,10 +82,9 @@ if (userBalance < Number(val)){
         transaction.status = "failed";
         transaction.description = "paystack withdrawal bank verification failed";
         await transaction.save();
-        return res.status(422).json({
-            message: response.message,
-            success: false
-        })
+        req.flash("error", response?.message);
+        return res.redirect("/wallet/withdraw");
+        
       }
 
         bank_code = response.data.bank_code;
@@ -115,10 +112,10 @@ if (userBalance < Number(val)){
         .then(res => res.json())
 
         if(trasnferDetails.status === false){
-            return res.status(422).json({
-                message:"Failed",
-                success: false
-            })
+
+            req.flash("error", "Failed");
+            return res.redirect("/wallet/withdraw");
+            
         }
 
         const recipient_code = trasnferDetails.data.recipient_code;
@@ -142,10 +139,8 @@ if (userBalance < Number(val)){
         .then(res => res.json())
 
         if(processTransfer.status === false){
-            res.status(422).json({
-                message:"Transfer could not be completed, please try again later",
-                success: false
-            })
+            req.flash("error", "Transfer could not be completed, please try again later");
+            return res.redirect("/wallet/withdraw");
         }
 
         // res.json(processTransfer)
@@ -157,17 +152,14 @@ if (userBalance < Number(val)){
         transaction.balance_after = userBalance - Number(amount_paid);
         await wallet.save();
         await transaction.save();
-        res.status(200).json({
-          message: "Verification successful",
-          status: true,
-          data: {
-            balance: wallet.current_balance,
-            transaction: formatTransaction(transaction),
-          },
-        });
+
+        req.flash("info", "Withdraw in progress ..");
+        return res.redirect("/wallet");
 
 }
 
 };
 
-module.exports = {verifybank};
+module.exports = {
+    withdrawalRequest
+};
