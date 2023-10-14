@@ -39,6 +39,7 @@ const {
   deletePost,
   deleteAllPost,
   adminTradeReset,
+  adminTradePlans,
 } = require("../controller/admin");
 
 const { fetchPackages } = require("../controller/packageController");
@@ -123,7 +124,7 @@ router.route("/all-blog").delete([isLoggedIn, isAdmin],deleteAllPost);
 router.route("/blog/:slug").get(getSinglePost);
 router.route("/post/:slug").delete([isLoggedIn, isAdmin], deletePost);
 router.route("/trade/all").get([isLoggedIn, isAdmin],allTrades);
-router.route("/trades/:id").patch([isLoggedIn, isAdmin], approveTrades);
+router.route("/trades/approve/:id").post([isLoggedIn, isAdmin], approveTrades);
 router.route("/all-users").get([isLoggedIn, isAdmin], allUsers);
 router.route("/admin-setting").get([isLoggedIn, isAdmin], adminSettings);
 router.route("/transactions").get([isLoggedIn, isAdmin], adminTrans);
@@ -139,6 +140,7 @@ router
   .route("/electricity-reset")
   .get([isLoggedIn, isAdmin], adminElectricityReset);
 router.route("/admin/data-plans").get([isLoggedIn, isAdmin], adminDataPlans);
+router.route("/admin/trade-plans").get([isLoggedIn, isAdmin], adminTradePlans);
 
 // transaction pain
 router.route("/new-pin").get([isLoggedIn], newPin).post([isLoggedIn], newPin);

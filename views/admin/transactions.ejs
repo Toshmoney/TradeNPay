@@ -17,6 +17,16 @@
        <!-- mobile dashboard end -->
         <main>
             <%- include('../partials/mobileHeader') %>
+            <% if (messages.error) { %>
+                <div class="alert alert-danger" role="alert">
+                  <%= messages.error %>
+                </div>
+            <% } %>
+            <% if (messages.info) { %>
+                <div class="alert alert-info" role="alert">
+                  <%= messages.info %>
+                </div>
+            <% } %>
             <div class="dashboard-main-top">
                     <h1>ALL Transactions</h1>
                     <div class="input-bar">

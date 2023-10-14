@@ -9,11 +9,18 @@ const Wallet = require("../model/Wallet");
 const Trades = require("../model/Trades");
 const Posts = require("../model/Post");
 const TradePlan = require("../model/TradePlan");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const base_url = process.env.BASE_URL
 
 const adminDashboard = async (req, res) => {
+  const errorMg = req.flash("error").join(" ");
+  const infoMg = req.flash("info").join(" ");
+  const messages = {
+    error: errorMg,
+    info: infoMg,
+  };
   const subvtu_bal = await subvtu_balance();
   const business_bal = subvtu_bal?.user?.Account_Balance;
   const targetDate = new Date();
@@ -34,11 +41,19 @@ const adminDashboard = async (req, res) => {
     total_user: totalUser,
     daily,
     purchase,
+    messages,
     business_balance: business_bal,
   });
 };
 
 const adminTrans = async (req, res) => {
+  const errorMg = req.flash("error").join(" ");
+  const infoMg = req.flash("info").join(" ");
+  const messages = {
+    error: errorMg,
+    info: infoMg,
+  };
+
   let transactions = await Transaction.find()
     .sort("-createdAt")
     .populate("user", "name email _id");
@@ -50,7 +65,7 @@ const adminTrans = async (req, res) => {
       updatedAt: formatDate(transaction.updatedAt),
     };
   });
-  res.status(200).render("admin/transactions", { transactions });
+  res.status(200).render("admin/transactions", { transactions, messages });
 };
 
 const allUsers = async (req, res) => {
@@ -86,6 +101,11 @@ const adminDataReset = async (req, res) => {
     data_plan: data_plan || {},
     networks: data_provider,
   });
+};
+
+const adminTradePlans = async (req, res) => {
+  const tradeplans = await DataPlan.find().sort("-trade_type");
+  res.status(200).render("admin/tradeplans", { tradeplans });
 };
 
 const adminTradeReset = async (req, res) => {
@@ -152,21 +172,49 @@ const approveTrades = async(req, res)=>{
   if(!userTrade) throw new Error('No trade with that id')
 
   if(userTrade.status === 'completed'){
-    res.json({message: "Trade already approved!"})
+    req.flash("error", "Trade already approved!")
     return;
   }
-  const updatedTrade = await Transaction.findByIdAndUpdate({_id : id}, {
-    status: 'completed',
-  }, {
-    new:true, runValidators:true
-  })
+
+  userTrade.status = "completed"
+
+  const person = await User.findById({_id:user});
+  const email = person.email;
+  const name = person.name;
+
+  // Use Nodemailer to send notification email to the user
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL_USERNAME,
+    to: email,
+    subject: "New Trade Approval Notification!",
+    text: `Dear ${name}, your new trade has been approved and NGN${amount} has been added to your wallet!`,
+  };
+
+  transporter.sendMail(mailOptions, (err) => {
+      if (err) {
+        console.log(err);
+        req.flash("error", "Error while sending Notification to user");
+        return res.redirect("/admin");
+      }
+    });
+  
+  
     // add transaction amount to user wallet
     userWallet.previous_balance = userBalance;
     userWallet.current_balance = userBalance + amount;
     await userWallet.save();
-    await updatedTrade.save();
+    await userTrade.save();
 
-  res.json({message: "Successfully Approved trade", trade : updatedTrade})
+  req.flash("info", "Successfully Approved trade, user will now get credited!")
+  return res.redirect("/admin")
 }
 
 // Create new blog post
@@ -326,5 +374,6 @@ module.exports = {
   editSinglePost,
   deletePost,
   deleteAllPost,
-  adminTradeReset
+  adminTradeReset,
+  adminTradePlans
 };

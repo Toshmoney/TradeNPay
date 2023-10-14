@@ -53,7 +53,7 @@
                             <!-- <option value="">Select Option</option> -->
                             <option value="BCH">BCH</option>
                             <option value="BTC">BTC</option>
-                            <option value="ERC">ERC</option>
+                            <option value="USDT">USDT</option>
                             <option value="ETH">ETH</option>
                             <option value="LTC">LTC</option>
                             <!-- <option value="STEAMWALLET">STEAM WALLET</option> -->
@@ -75,9 +75,17 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-field">
-                  <label for="file" class="bole file-upload-label">UPLOAD PROOF OF PAYMENT</label>
-                  <input type="file" class="file-upload" name="image" id="file" accept="image/*" required>
+                <div class="form-group">
+
+                  <div class="form-field">
+                    <label for="file" class="bole file-upload-label">UPLOAD PROOF OF PAYMENT</label>
+                    <input type="file" class="file-upload" name="image" id="file" accept="image/*" required>
+                  </div>
+
+                  <div class="form-field">
+                    <label for="trans_id" class="bole">TXN ID / HASH ID</label>
+                    <input type="text" class="trans_id" name="trans_id" id="trans_id"  required>
+                  </div>
                 </div>
 
                 <div class="form-group">
@@ -98,7 +106,6 @@
                   </span>
                 </p>
                 <div class="ctas">
-                  <button type="button" class="cta share">share</button></a>
                   <button type="submit" class="cta submit submit-btn">Sell</button>
                 </div>
               </div>
@@ -148,15 +155,26 @@
     }
 
     fetchapi()
-    const msg = "<%= messages %>"
-    form.addEventListener('submit', (event) => {
-      event.preventDefault()
-      const btn = document.querySelector(".submit-btn");
-      btn.textContent = "Please wait .."
-      if(msg){
-        btn.textContent = 'Sell'
-      }
-    })
+    // const msg = "<%= messages %>";
+    // form.addEventListener('click', (event) => {
+    //   event.preventDefault()
+    //   const btn = document.querySelector(".submit-btn");
+    //   btn.textContent = "Please wait .."
+    //   if(msg){
+    //     btn.textContent = 'Sell'
+    //   }
+    // })
+
+    // const msg = "<%= messages %>";
+
+    // const btn = document.querySelector(".cta");
+    // btn.addEventListener("click", ()=>{
+    //   btn.textContent = 'please wait ..';
+    // const msg = "<%= messages %>";
+    //   if(msg?.error || msg?.info){
+    //   btn.textContent = 'Withdraw'
+    // }
+    // })
   </script>
 </body>
 

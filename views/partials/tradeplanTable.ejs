@@ -1,0 +1,73 @@
+<div class="history-table">
+    <% if (tradeplans.length> 0) { %>
+      <div class="flex flex-col">
+        <div class="overflow-x-auto">
+          <div class="inline-block min-w-full">
+            <div class="overflow-hidden">
+              <table class="min-w-full text-left text-sm font-light">
+                <thead class="font-medium dark:border-neutral-500 dark:bg-neutral-600">
+                  <tr>
+                    <th scope="col" class="whitespace-nowrap px-6 py-4">Service ID</th>
+                    <th scope="col" class="px-6 py-4">Currency</th>
+                    <th scope="col" class="px-6 py-4">Type</th>
+                    <th scope="col" class="px-6 py-4">Buy Amount</th>
+                    <th scope="col" class="px-6 py-4">Sell Amount</th>
+                    <th scope="col" class="px-6 py-4">Buy Acc</th>
+                    <th scope="col" class="px-6 py-4">Sell Acc</th>
+                    <th scope="col" class="px-6 py-4">Availability</th>
+                    <th scope="col" class="px-6 py-4">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% tradeplans.forEach(function(tradeplans) { %>
+                    <tr data-id="<%= tradeplans._id %>" data-plan_id="<%= tradeplans.plan_id %>"
+                      class="data-plan bg-white dark:border-neutral-500 dark:bg-neutral-600 dark:text-white">
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <%= tradeplans.service_id %>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <%= tradeplans.currency %>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <%= tradeplans.trade_type %>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <input class="price-field bg-white dark:border-neutral-500 dark:bg-neutral-600 dark:text-white"
+                          value="<%= tradeplans.dollar_buy_price %>" type="text">
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <input class="price-field bg-white dark:border-neutral-500 dark:bg-neutral-600 dark:text-white"
+                          value="<%= tradeplans.dollar_sell_price %>" type="text">
+                      </td>
+
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <input class="price-field bg-white dark:border-neutral-500 dark:bg-neutral-600 dark:text-white"
+                          value="<%= tradeplans.buying_mail %>" type="text">
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <input class="price-field bg-white dark:border-neutral-500 dark:bg-neutral-600 dark:text-white"
+                          value="<%= tradeplans.selling_mail %>" type="text">
+                      </td>
+
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <input class="price-field bg-white dark:border-neutral-500 dark:bg-neutral-600 dark:text-white"
+                          value="<%= tradeplans.is_available %>" type="text">
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="flex gap-2 items-center">
+                          <button type="button" class="price-button bg-blue-500 text-white px-4 py-2">Update</button>
+                          <a href="/data-plans/<%= tradeplans.service %>/change">View</a>
+                        </div>
+                      </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% } else { %>
+        <p>No Trade Set Yet</p>
+        <% } %>
+  </div>

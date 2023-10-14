@@ -69,7 +69,7 @@ app.use("/api/v1/power", powerRoutes);
 app.use("/api/v1/exam", examRoutes);
 app.use("/api/v1/transactions", transactionRoutes);
 
-app.use(notFoundMiddleWare);
+// app.use(notFoundMiddleWare);
 app.use(errorHandler);
 
 const start = async () => {

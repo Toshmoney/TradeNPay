@@ -2,6 +2,8 @@ const { generateTransId } = require("../utils");
 const Transaction = require("../model/Transaction");
 const { default: axios } = require("axios");
 const Trades = require("../model/Trades");
+const nodemailer = require("nodemailer");
+
 
 const buyPayoneer = async (req, res) => {
   // const { amount, beneficiary, email, code, service_id, service_type } = req.body;
@@ -134,6 +136,31 @@ const sellPayoneer = async (req, res) => {
    if(!soldTrade){
     res.json({message: "Error while purchasing payoneer funds"})
    }
+
+   // Use Nodemailer to notify admin via email
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL_USERNAME,
+    to: 'info@paytonaira.com',
+    subject: "New Trade awaiting Approval",
+    text: `Dear admin, a new trade of NGN${amount} was done and is waiting for your approval!`,
+  };
+
+  transporter.sendMail(mailOptions, (err) => {
+      if (err) {
+        console.log(err);
+        req.flash("error", "Error while sending Notification to user");
+        return res.redirect("/admin");
+      }
+    });
+    
     // update transaction to be concluded
     transaction.status = "review";
     transaction.balance_after = userBalance;

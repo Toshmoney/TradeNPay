@@ -2,6 +2,8 @@ const fs = require("fs");
 const { generateTransId } = require("../utils");
 const Trades = require("../model/Trades");
 const Transaction = require("../model/Transaction");
+const nodemailer = require("nodemailer");
+
 
 
 const sellGiftcard = async(req, res)=>{
@@ -81,6 +83,31 @@ const sellGiftcard = async(req, res)=>{
     req.flash("error", "Error while selling giftcard funds");
     res.redirect("/trades/giftcard")
    }
+
+    // Use Nodemailer to notify admin via email
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL_USERNAME,
+    to: 'info@paytonaira.com',
+    subject: "New Trade awaiting Approval",
+    text: `Dear admin, a new trade of NGN${amount} was done and is waiting for your approval!`,
+  };
+
+  transporter.sendMail(mailOptions, (err) => {
+      if (err) {
+        console.log(err);
+        req.flash("error", "Error while sending Notification to user");
+        return res.redirect("/admin");
+      }
+    });
+
     // update transaction to be concluded
     transaction.status = "review";
     transaction.balance_after = userBalance;
@@ -89,7 +116,6 @@ const sellGiftcard = async(req, res)=>{
     userWallet.current_balance = userBalance;
     await userWallet.save();
     await transaction.save();
-    await soldTrade.save()
     // res.status(202).json({
     //   message: "transaction is being processed",
     //   balance: userWallet.current_balance,
