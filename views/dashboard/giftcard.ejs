@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AlphaBills | Trade Payoneer</title>
+  <title>AlphaBills | Trade Giftcard</title>
   <link rel="stylesheet" href="/css/toastr.css">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/general.css">
@@ -23,7 +23,7 @@
         <%- include('../partials/mobileHeader') %>
           <div class="dashboard-main-top">
             <div>
-              <h1>TRADE PAYONEER</h1>
+              <h1>TRADE GIFTCARD</h1>
               <p>Select Buy or Sell</p>
             </div>
           </div>
@@ -49,11 +49,11 @@
                 <div class="form-group">
                     <div class="choose form-field">
                         <label class="bold" for="service_id">SELECT GIFT CARDS TYPE</label>
-                        <select class="service_id" name="service_id" id="service_id" value="Select Option" required>
+                        <select class="service_id" name="service_id" id="service_id" value="Select Option" onchange="fetchapi()" required>
                             <!-- <option value="">Select Option</option> -->
                             <option value="EBAY">EBAY</option>
                             <option value="ONEVANILLA">ONE VANILLA</option>
-                            <option value="STEAMWALLET">STEAM WALLET</option>
+                            <option value="STEAMUSD">STEAM WALLET</option>
                         </select>
                     </div>
 
@@ -80,6 +80,7 @@
                     <div class="form-field">
                         <label class="bold" for="amount">AMOUNT</label>
                         <select class="amount" name="amount" id="amount" required>
+                          <option >Select amount</option>
                           <option value=20>$20</option>
                           <option value=50>$50</option>
                           <option value=100>$100</option>
@@ -102,7 +103,6 @@
                   </span>
                 </p>
                 <div class="ctas">
-                  <button type="button" class="cta share">share</button></a>
                   <button type="submit" class="cta submit submit-btn">Sell</button>
                 </div>
               </div>
@@ -125,7 +125,9 @@
   <script>
 
     async function fetchapi(){
-      const tradeprice = await fetch('/api/v1/trade_plan/STEAMWALLET')
+      const service_id = document.querySelector("#service_id").value
+
+      const tradeprice = await fetch(`/api/v1/trade_plan/${service_id}`)
       .then(res => res.json())
       console.log(tradeprice.data);
       let amt = tradeprice.data.dollar_sell_price;
@@ -150,17 +152,17 @@
     fetchapi()
     
 
-    const btn = document.querySelector(".submit-btn")
-    const msg = "<%= messages %>"
-    btn.addEventListener('click', (event) => {
-      event.preventDefault()
-      // validatedData()
-      // const btn = document.querySelector(".submit-btn");
-      btn.textContent = "Please wait .."
-      if(msg){
-        btn.textContent = 'Sell'
-      }
-    })
+    // const btn = document.querySelector(".submit-btn")
+    // const msg = "<%= messages %>"
+    // btn.addEventListener('click', (event) => {
+    //   event.preventDefault()
+    //   // validatedData()
+    //   // const btn = document.querySelector(".submit-btn");
+    //   btn.textContent = "Please wait .."
+    //   if(msg){
+    //     btn.textContent = 'Sell'
+    //   }
+    // })
   </script>
 </body>
 
