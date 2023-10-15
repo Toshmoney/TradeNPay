@@ -87,7 +87,7 @@
     const inp = document.getElementById("accountNumber");
     inp.addEventListener("input", async(e)=>{
     const beneficiary = document.getElementById("beneficiary")
-    const PAYSTACK_SECRET_KEY = "<%= secrete %>"
+    const PAYSTACK_SECRET_KEY = "<%= process.env.PAYSTACK_SECRET_KEY %>"
     const accountNmber = e.target.value;
     const bankCode = document.getElementById("bankCode").value;
     const verifybankUrl = `https://api.paystack.co/bank/resolve?account_number=${accountNmber}&bank_code=${bankCode}`;
@@ -101,7 +101,6 @@
 
       beneficiary.textContent = response?.data?.account_name;
 
-    console.log(response.data.account_name)
     
     })
 
