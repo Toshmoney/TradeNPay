@@ -3,6 +3,8 @@ const User = require("../model/User.db");
 const Wallet = require("../model/Wallet");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
+const ejs = require('ejs');
+const fs = require('fs');
 
 const BASE_URL = process.env.BASE_URL;
 
@@ -181,6 +183,46 @@ const newUser = async (req, res, next) => {
         console.log("error:", err);
         return next(err);
       }
+
+          // Create a Nodemailer transporter
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    // Load the EJS template and CSS file
+    const emailTemplate = ejs.compile(fs.readFileSync('views/pages/welcome.ejs', 'utf8'));
+    // const cssStyles = fs.readFileSync('public/css/email.css', 'utf8');
+
+    // Define the email content
+    const emailContent = emailTemplate({ name: name });
+
+    // Create the email data
+    const mailOptions = {
+      from: 'paytonaira@gmail.com',
+      to: email,
+      subject: 'Welcome to paytonaira.com',
+      html: emailContent
+      // attachments: [
+      //   {
+      //     filename: 'email.css',
+      //     content: cssStyles,
+      //   },
+      // ],
+    };
+
+    // Send the email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log('Email sent:', info.response);
+      }
+    });
+
       const userWallet = new Wallet({
         user: user._id,
       });
@@ -190,7 +232,7 @@ const newUser = async (req, res, next) => {
         .catch((error) => {
           next(error);
         });
-      res.redirect("/dashboard");
+      res.redirect("/login");
     });
   } catch (error) {
     res.redirect("/sign-up");
