@@ -7,6 +7,7 @@ const DataPlan = require("../model/DataPlan");
 const User = require('../model/User.db');
 const { CustomAPIError } = require("../handleError");
 const { StatusCodes } = require("http-status-codes");
+const { default: axios } = require("axios");
 
 
 const homePage = async (req, res) => {
@@ -107,14 +108,12 @@ const walletWithdraw = async(req, res) => {
 
   const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY
 
-    const banks = await fetch('https://api.paystack.co/bank', {
-        method:"GET",
+    const banks = await axios.get('https://api.paystack.co/bank', {
         headers:{
             "Authorization":`Bearer ${PAYSTACK_SECRET_KEY}`
         }
     })
-    .then(res => res.json())
-    .then(data => data.data)
+    .then(data => data.data.data)
     .catch(err =>{
         console.log(err);
     })

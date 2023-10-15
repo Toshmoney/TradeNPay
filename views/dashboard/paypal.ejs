@@ -37,8 +37,7 @@
                 <div class="form-group">
                     <div class="choose form-field">
                         <label class="bold" for="service_id">SELECT TRADE TYPE</label>
-                        <select class="service_id" name="service_id" id="service_id">
-                            <!-- <option value="">Select Option</option> -->
+                        <select class="service_id" name="service_id" id="service_id" onchange="fetch_buying_price()">
                             <option value="GNS">GOODS AND SERVICES</option>
                             <option value="FNF">FRIEND AND FAMILY</option>
                         </select>
@@ -49,10 +48,6 @@
                         <select class="currency" name="currency" id="currency" value="Select Option">
                             <!-- <option value="">Select Option</option> -->
                             <option value="USD">USD</option>
-                            <!-- <option value="EUR">EUR</option>
-                            <option value="GBP">GBP</option>
-                            <option value="CAD">CAD</option>
-                            <option value="AUD">AUD</option> -->
                         </select>
                     </div>
                 </div>
@@ -110,21 +105,17 @@
                         <label class="bold" for="network">SELECT CURRENCY</label>
                         <select class="service_id" name="service_id" id="sell-currency" value="Select Option">
                             <option value="USD">USD</option>
-                            <!-- <option value="EUR">EUR</option>
-                            <option value="GBP">GBP</option>
-                            <option value="CAD">CAD</option>
-                            <option value="AUD">AUD</option> -->
                         </select>
                     </div>
                 </div>
 
-                <br>
+                        <br>
                         <h2>Kindly send your funds to: <span class="selling-mail"></span></h2>
                         <br>
                 <div class="form-group">
                     <div class="form-field">
                         <label class="bold" for="full_name">TNX ID</label>
-                        <input type="text" name="full_name" id="sell-name" placeholder="Paypal TNX ID">
+                        <input type="text" name="trans_id" id="trans_id" placeholder="Paypal TNX ID">
                     </div>
 
                     <div class="form-field">
@@ -199,10 +190,10 @@
     const form = document.querySelector('form')
     const sellform = document.querySelector('.sell-form')
 
-    const service_id = document.querySelector("#service_id").value;
-    const sellservice_id = document.querySelector("#sell-service").value;
-
     async function fetch_selling_price(){
+      const sellservice_id = document.querySelector("#sell-service").value;
+      // console.log(sellservice_id);
+
       const sellingMail = document.querySelector(".selling-mail")
       const tradeprice = await fetch(`/api/v1/trade_plan/${sellservice_id}`)
       .then(res => res.json())
@@ -228,7 +219,8 @@
     }
 
     async function fetch_buying_price(){
-      console.log(sellservice_id);
+    const service_id = document.querySelector("#service_id").value;
+      // console.log(service_id);
       const tradeprice = await fetch(`/api/v1/trade_plan/${service_id}`)
       .then(res => res.json())
       console.log(tradeprice.data);
@@ -347,7 +339,7 @@
     const validatedTrade = () => {
     // sell details
     const sellemail = document.querySelector("#sell-email").value;
-    const sellfull_name = document.querySelector("#sell-name").value;
+    const trans_id = document.querySelector("#trans_id").value;
     const sellamount = Number(document.querySelector("#sell-amount").value);
     const sellpin = document.querySelector("#sell-pin").value;
     const sellcurrency = document.querySelector("#sell-currency").value;
@@ -363,7 +355,7 @@
         toastr.error('Pls input amount')
         return false
       }
-      if (!full_name || !email) {
+      if (!trans_id || !email) {
         toastr.error('Pls kindly provide your paypal details', 'Invalid Paypal Details')
         return false
       }
@@ -381,7 +373,7 @@
       return {
         pin:sellpin,
         email:sellemail,
-        full_name:sellfull_name,
+        trans_id,
         service_id:sellservice_id,
         amount:sellamount,
         currency:sellcurrency
