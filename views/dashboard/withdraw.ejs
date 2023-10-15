@@ -52,7 +52,7 @@
                 <label for="accountNumber">Account Number</label>
                 <input class="border border-blue-300" name="accountNmber" type="text" id="accountNumber" required />
               </div>
-            <!-- <p class="font-bold text-xs">Your funds will be sent to : <span id="total-amount"></span> </p> -->
+            <p class="font-bold text-xs">Your funds will be sent to : <span id="beneficiary"></span> </p>
           </div>
           <div class="">
             <label for="amount">Amount</label>
@@ -86,7 +86,8 @@
 
     const inp = document.getElementById("accountNumber");
     inp.addEventListener("input", async(e)=>{
-    const PAYSTACK_SECRET_KEY = "<=% secrete %>"
+    const beneficiary = document.getElementById("beneficiary")
+    const PAYSTACK_SECRET_KEY = "<%= secrete %>"
     const accountNmber = e.target.value;
     const bankCode = document.getElementById("bankCode").value;
     const verifybankUrl = `https://api.paystack.co/bank/resolve?account_number=${accountNmber}&bank_code=${bankCode}`;
@@ -98,24 +99,12 @@
       })
       .then(info => info.json())
 
-    console.log(response)
+      beneficiary.textContent = response?.data?.account_name;
+
+    console.log(response.data.account_name)
     
     })
 
-    // fetch banks from the server
-    let bank;
-    const fetchBanks = async()=>{
-      await fetch('/banks/get-bank-details')
-      .then(res => res.json())
-      .then(banks => bank = banks)
-      .catch(err =>{
-        console.log(err);
-      })
-
-      bank.forEach(b => {console.log(b.code)})
-    }
-
-    fetchBanks();
   </script>
 </body>
 
