@@ -103,8 +103,22 @@ const fundWallet = (req, res) => {
   });
 };
 
-const walletWithdraw = (req, res) => {
-// const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY
+const walletWithdraw = async(req, res) => {
+
+  const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY
+
+    const banks = await fetch('https://api.paystack.co/bank', {
+        method:"GET",
+        headers:{
+            "Authorization":`Bearer ${PAYSTACK_SECRET_KEY}`
+        }
+    })
+    .then(res => res.json())
+    .then(data => data.data)
+    .catch(err =>{
+        console.log(err);
+    })
+
   const errorMg = req.flash("error").join(" ");
   const infoMg = req.flash("info").join(" ");
   const messages = {
@@ -112,7 +126,7 @@ const walletWithdraw = (req, res) => {
     info: infoMg,
   };
 
-  res.status(200).render("dashboard/withdraw", {msg : messages, secrete: secrete});
+  res.status(200).render("dashboard/withdraw", {msg : messages, secrete: secrete, banks});
 };
 
 

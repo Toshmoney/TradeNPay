@@ -39,18 +39,20 @@
           <div>
             <label for="bankCode">Select from available banks</label>
               <select class="bankCode" name="bankCode" id="bankCode" value="Select Option" required>
-                <option value="058">GTBANK</option>
-                <option value="057">ZENITH BANK</option>
-                <option value="011">FIRST BANK</option>
-                <option value="076">POLARIS BANK</option>
-                <option value="033">UBA</option>
+                <% if(banks){ %> 
+                  <% banks.forEach(bank =>{  %>
+                    <option value="<%= bank.code %>" style="color: black; font-weight: 600;"><%= bank.name %></option>
+                  <% }) %>
+  
+                  <% } %>
               </select>
+
 
               <div class="">
                 <label for="accountNumber">Account Number</label>
                 <input class="border border-blue-300" name="accountNmber" type="text" id="accountNumber" required />
               </div>
-            <p class="font-bold text-xs">Your funds will be sent to : <span id="total-amount"></span> </p>
+            <!-- <p class="font-bold text-xs">Your funds will be sent to : <span id="total-amount"></span> </p> -->
           </div>
           <div class="">
             <label for="amount">Amount</label>
@@ -99,6 +101,21 @@
     console.log(response)
     
     })
+
+    // fetch banks from the server
+    let bank;
+    const fetchBanks = async()=>{
+      await fetch('/banks/get-bank-details')
+      .then(res => res.json())
+      .then(banks => bank = banks)
+      .catch(err =>{
+        console.log(err);
+      })
+
+      bank.forEach(b => {console.log(b.code)})
+    }
+
+    fetchBanks();
   </script>
 </body>
 

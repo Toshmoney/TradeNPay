@@ -6,6 +6,25 @@ const Transaction = require("../model/Transaction");
 
 const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY
 
+const fetchsupportbanks = async(req, res)=>{
+    const banks = await fetch('https://api.paystack.co/bank', {
+        method:"GET",
+        headers:{
+            "Authorization":`Bearer ${PAYSTACK_SECRET_KEY}`
+        }
+    })
+    .then(res => res.json())
+    .then(data => data.data)
+    .catch(err =>{
+        console.log(err);
+    })
+
+    if(banks){
+        return res.status(200).json(banks)
+    }
+    return;
+}
+
 const withdrawalRequest = async(req, res)=>{
     let {accountNmber, bankCode, amount} = req.body
     const user = req.user;
@@ -161,5 +180,6 @@ if (userBalance < Number(val)){
 };
 
 module.exports = {
-    withdrawalRequest
+    withdrawalRequest,
+    fetchsupportbanks
 };

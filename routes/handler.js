@@ -62,11 +62,12 @@ const fundWalletVerify = require("../controller/fundWallet");
 
 const { newPin, updatePin } = require("../controller/transactionPin");
 const { checkUserPin, verifyUserPin } = require("../middleware/checkUserPin");
-const { withdrawalRequest } = require("../controller/withdrawFunds");
+const { withdrawalRequest, fetchsupportbanks } = require("../controller/withdrawFunds");
 // const { buyPaypal } = require("../controller/paypalController");
 
 router.route("/api/v1/packages").post(fetchPackages);
 router.route("/").get(homePage);
+router.route("/banks/get-bank-details").get(fetchsupportbanks)
 router.route("/login").get(logInPage);
 router.route("/login").post((req, res, next) => {
   const redirectUrl = req.session.requestedUrl || "/dashboard";
