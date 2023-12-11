@@ -14,7 +14,6 @@ const recharge = async (req, res) => {
     });
   }
 
-  // check if user has enough in their wallet
   const userWallet = req.user.wallet;
   const userBalance = userWallet.current_balance;
 

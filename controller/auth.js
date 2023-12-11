@@ -73,7 +73,7 @@ const confirmReset = async (req, res, next) => {
   const mailOptions = {
     from: process.env.EMAIL_USERNAME,
     to: email,
-    subject: "Password Reset From Alphabills",
+    subject: "Password Reset From PayToNaira",
     text: `Click the following link to reset your password: ${resetLink} \n Ignore if you didn't request for password reset`,
   };
 
@@ -159,6 +159,10 @@ const newUser = async (req, res, next) => {
       req.flash("error", "passwords do not match");
       return res.redirect("/sign-up");
     }
+    if(!phoneNumber){
+      req.flash("error", "Phone number is required")
+      return res.redirect("/sign-up")
+    }
     const user = new User({
       name,
       email,
@@ -184,44 +188,44 @@ const newUser = async (req, res, next) => {
         return next(err);
       }
 
-          // Create a Nodemailer transporter
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USERNAME,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-    });
+      // Create a Nodemailer transporter
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL_USERNAME,
+          pass: process.env.EMAIL_PASSWORD,
+        },
+      });
 
-    // Load the EJS template and CSS file
-    const emailTemplate = ejs.compile(fs.readFileSync('views/pages/welcome.ejs', 'utf8'));
-    // const cssStyles = fs.readFileSync('public/css/email.css', 'utf8');
+      // Load the EJS template and CSS file
+      const emailTemplate = ejs.compile(fs.readFileSync('views/pages/welcome.ejs', 'utf8'));
+      // const cssStyles = fs.readFileSync('public/css/email.css', 'utf8');
 
-    // Define the email content
-    const emailContent = emailTemplate({ name: name });
+      // Define the email content
+      const emailContent = emailTemplate({ name: name });
 
-    // Create the email data
-    const mailOptions = {
-      from: 'paytonaira@gmail.com',
-      to: email,
-      subject: 'Welcome to paytonaira.com',
-      html: emailContent
-      // attachments: [
-      //   {
-      //     filename: 'email.css',
-      //     content: cssStyles,
-      //   },
-      // ],
-    };
+      // Create the email data
+      const mailOptions = {
+        from: 'paytonaira@gmail.com',
+        to: email,
+        subject: 'Welcome to paytonaira.com',
+        html: emailContent
+        // attachments: [
+        //   {
+        //     filename: 'email.css',
+        //     content: cssStyles,
+        //   },
+        // ],
+      };
 
-    // Send the email
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error(error);
-      } else {
-        console.log('Email sent:', info.response);
-      }
-    });
+      // Send the email
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error(error);
+        } else {
+          console.log('Email sent:', info.response);
+        }
+      });
 
       const userWallet = new Wallet({
         user: user._id,

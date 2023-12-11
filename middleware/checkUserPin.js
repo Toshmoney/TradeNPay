@@ -22,7 +22,7 @@ const checkUserPin = async (req, res, next) => {
   req.session.requestedUrl = req.originalUrl;
   if (!userPin) {
     req.flash("info", "set your transaction pin to continue");
-    return res.redirect("/new-pin");
+    return res.redirect("/new/pin");
   }
   next();
 };

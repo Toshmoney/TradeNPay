@@ -29,11 +29,6 @@
                                         </td>
                                         <td class="whitespace-nowrap px-6 py-4">
                                             <%= transaction.status %>
-                                            <% if (transaction.status === 'review'){ %>
-                                                <form action="/trades/approve/<%= transaction._id %>" method="post">
-                                                    <button style="background-color: burlywood; padding: 5px; color: white; border-radius: 5px;" type="submit">Approve Trade</button>
-                                                </form>
-                                                <% } %>
                                         </td>
                                         <td class="whitespace-nowrap px-6 py-4">
                                             <%= transaction.updatedAt %>

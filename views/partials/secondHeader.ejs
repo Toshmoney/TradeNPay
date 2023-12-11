@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/tailstyle.css">
+    <link rel="stylesheet" href="css/newtail.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<div class="heropage bg-navy-blue">
+    <header>
+        <nav id="nav">
+           <a href="/"> <img src="./imgs/Frame 4.png" alt=""></a>
+            <ul class="nav__link">
+                <li class="Active"><a href="/about-us">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/support">Support & FAQ</a></li>
+                <button  onclick="location.href = '/login';" class="btn1">Sign In</button>
+                <button onclick="location.href = '/sign-up';" class="btn2">Start trading</button>
+            </ul>
+            <div class="toggle-btn cursor-pointer" onclick="myfunction();">
+                <i class="fa fa-bars"></i>
+            </div>
+        </nav>
+        <ul class="mobilenav__link">
+            <li><a href="/about-us">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/support">Support & FAQ</a></li>
+            <button onclick="location.href = '/login';" class="btn1">Sign In</button>
+            <button onclick="location.href = '/sign-up';" class="btn2">Start trading</button>
+        </ul>
+    </header>
+    <script>
+        function myfunction() {
+        var toggle = document.querySelector('.mobilenav__link')
+        toggle.classList.toggle('display')
+        }
+    </script>

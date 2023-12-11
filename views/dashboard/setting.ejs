@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AlphaBills | Account Settings</title>
+  <title>Pay To Naira | Account Settings</title>
   <link rel="stylesheet" href="css/aside.css">
   <link rel="stylesheet" href="css/account.css">
 </head>
@@ -15,9 +15,8 @@
     <%- include('../partials/aside') %>
       <!-- mobile dashboard end -->
       <main>
-        <%- include('../partials/mobileHeader') %>
           <div class="dashboard-main-top">
-            <h1>SETTINGS</h1>
+            <h1 style="padding: 20px;">SETTINGS</h1>
           </div>
           <div class="main-setting">
             <div class="first-div">
@@ -25,11 +24,11 @@
               <div class="inner-1">
                 <div class="acct-statement">
                   <img src="images/Group 69.png" alt="">
-                  <a href="/new-pin">Set new transaction pin</a>
+                  <a href="/new/pin">Set new transaction pin</a>
                 </div>
                 <div class="disactive">
                   <img src="images/Group 70.png" alt="">
-                  <a href="/update-pin">Change your transaction pin</a>
+                  <a href="/update/pin">Change your transaction pin</a>
                 </div>
               </div>
               <div class="social-media">
@@ -53,10 +52,6 @@
             <div class="second">
               <h1>ABOUT</h1>
               <div class="inner-1">
-                <a href="https://wa.me/2348103856846" class="acct-statement">
-                  <img src="images/Group 75.png" alt="">
-                  <h4>Get A Reseller Website</h4>
-                </a>
                 <a href="https://chat.whatsapp.com/GktoSxKHEShJS8j2kuUnZb" class="acct-statement">
                   <img src="images/Group 76.png" alt="">
                   <h4>Lodge Complaints</h4>
@@ -74,6 +69,8 @@
           </div>
       </main>
   </section>
+  <%- include('../partials/footer') %>
+
 
   <script src="js/dashboard.js"></script>
 </body>

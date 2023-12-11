@@ -1,0 +1,106 @@
+*{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+
+
+main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.alltext{
+ margin: 5%; 
+display: flex;
+flex-direction: column;
+justify-content: center;
+gap: 60px;
+  width: 42vw; 
+   }
+.head{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+.first h2, .second h2, .third h2, .fourth h2, .fifth h2, .sixth h2, .seventh h2, .eighth h2, .seventh h2, .ninth h2, .tenth h2{
+    font-family: sans-serif;
+    font-weight: lighter;
+}
+.head h1{
+    font-family: sans-serif;
+    font-weight: lighter;
+}
+.head h3{
+    color: #00000080;
+    font-family: sans-serif;
+    font-weight: lighter;
+}
+.first h3, .second h3, .third h3, .fourth h3, .fifth h3, .sixth h3, .seventh h3, .eighth h3, .seventh h3, .ninth h3, .tenth h3{
+    font-family:sans-serif;
+    color: #00000080;
+    font-weight: lighter;
+}
+.first,.second, .third, .fourth, .fifth , .sixth, .seventh , .eighth, .seventh, .ninth, .tenth{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    font-weight: lighter;
+
+}
+@media screen and (max-width: 950px) {
+    main{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .alltext{
+     margin: 5%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+      width: 90vw; 
+       }
+    .head{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+    }
+    .first h2, .second h2, .third h2, .fourth h2, .fifth h2, .sixth h2, .seventh h2, .eighth h2, .seventh h2, .ninth h2, .tenth h2{
+        font-family: sans-serif;
+        font-weight: lighter;
+        font-size: 20px;
+    }
+    .head h1{
+        font-family: sans-serif;
+        font-weight: lighter;
+        font-size: 24px;
+    }
+    .head h3{
+        color: #00000080;
+        font-family: sans-serif;
+        font-weight: lighter;
+        font-size: 18px;
+    }
+    .first h3, .second h3, .third h3, .fourth h3, .fifth h3, .sixth h3, .seventh h3, .eighth h3, .seventh h3, .ninth h3, .tenth h3{
+        font-family:sans-serif;
+        color: #00000080;
+        font-weight: lighter;
+    }
+    .first,.second, .third, .fourth, .fifth , .sixth, .seventh , .eighth, .seventh, .ninth, .tenth{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+        font-weight: lighter;
+        font-size: 14px;
+    }
+}

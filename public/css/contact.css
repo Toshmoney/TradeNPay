@@ -1,0 +1,176 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    font-weight: lighter;
+}
+
+input{
+    border-color: black;
+    border-radius: 20px;
+}
+
+.contact{
+    background-color: white;
+    /* height: 100vh; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;    
+    align-items: center;
+}
+html{
+    overflow-x: hidden;
+}
+.introduction{
+    width: 80%;
+    display: flex;
+    /* background-color: blue; */
+    align-items: center;
+    margin-top: 55px;
+    justify-content: space-between;
+}
+.financial{
+    width: 30%;
+    /* height: 50%; */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;       
+}
+.financial p{
+    color: gray;
+    font: bolder;
+}
+.topImage img{
+    width: 70%;
+}
+.arrow{
+    margin-top: 50px;
+}
+.whatT{
+    width: 20%;
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    margin-top: 50px;
+}
+.whatT h1{
+    font: bolder;
+}
+.whatT p{
+    color: gray;
+    font-size: 13px;
+}
+.form{
+    width: 40%; 
+    margin: 50px 0;
+    box-shadow: 0 0 0.5em gray;
+    padding-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.top{
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.fullname, .email{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.fullname input{
+    border-color: lightgray;
+    padding: 10px 25px;
+    border-style: solid;
+}
+.email input{
+    border-color: lightgray;
+    border-style: solid;
+    padding: 10px 15px;
+}
+.numb{
+    width: 90%;
+    margin-top: 20px;
+}
+.number{    
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */ 
+    margin-top: px;
+    gap: 5px;    
+}
+.number input{
+    border-color: lightgray;
+    border-style: solid;
+    padding: 10px 0px;
+}
+.subj{
+    width: 90%;
+    margin-top: 20px;
+}
+.subject{    
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin-top: px;
+    gap: 5px;    
+}
+.subject input{
+    border-color: lightgray;
+    padding: 10px 0px;
+    border-style: solid;
+}
+.messa{
+    border-color: lightgray;
+    margin-top: 20px;
+    width: 90%;
+}
+textarea{    
+    display: flex;
+    width: 100%;
+    flex-direction: column;    
+    border-color: lightgray;
+    border-style: solid;
+    gap: 5px;    
+}
+button.bott{
+    display: flex;
+    background-color: #045089;
+    color: white;
+    margin-top: 20px;    
+    border: 0;
+    padding: 10px 20px;
+    margin-left: -65%;
+}
+@media screen and (max-width:950px) {
+    .introduction{
+        flex-direction: column;
+        gap: 40px;
+    }.financial{
+        width: 100%;
+        gap: 5px;
+    }
+    .whatT{
+        width: 90%;
+    }
+    html, body{
+        overflow-x: hidden;
+    }
+    .form{
+        width: 90%;
+    }
+    .top{
+        flex-direction: column;
+        gap: 5px;
+    }
+    button.bott{
+        margin-left: -100px;
+    }
+
+    
+}

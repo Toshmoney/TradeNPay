@@ -1,3 +1,4 @@
+require("dotenv").config()
 const fs = require("fs");
 const { generateTransId } = require("../utils");
 const Trades = require("../model/Trades");
@@ -6,6 +7,7 @@ const TradePlan = require("../model/TradePlan");
 const TransactionPin = require("../model/TransactionPin");
 const nodemailer = require("nodemailer");
 
+const baseurl = process.env.BASE_URL
 
 const sellCrypto = async(req, res)=>{
     const user = req.user;
@@ -31,7 +33,7 @@ const sellCrypto = async(req, res)=>{
     }
     const {pin, currency, service_id} = req.body;
     let amount = req.body.amount
-    const trade = await fetch(`http://localhost:4000/api/v1/trade_plan/${service_id}`).then(res => res.json())
+    const trade = await fetch(`${baseurl}/api/v1/trade_plan/${service_id}`).then(res => res.json())
     let details = await trade.data
     const trade_type = details.trade_type
     const sellPrice = details.dollar_sell_price;
@@ -130,7 +132,7 @@ const sellCrypto = async(req, res)=>{
     await userWallet.save();
     await transaction.save();
     req.flash("info", "transaction is being processed")
-    res.redirect("/dashboard")
+    res.redirect("/trades/crypto")
     // res.status(202).json({
     //   message: "transaction is being processed",
     //   balance: userWallet.current_balance,

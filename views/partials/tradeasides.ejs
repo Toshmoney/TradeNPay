@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/aside.css">
+
+</head>
+<body>
+    <nav class="dashboard-nav">
+        <div class="nav-logo">
+            <div class="logo-img">
+                <img src="/img/logo-img.png" alt="">
+            </div>
+            <h3>PAYTONAIRA</h3>
+        </div>
+        <div class="nav-pages">
+            <a href="/dashboard"><p>Dashboard</p></a>
+            <a href="/wallet"><p>Wallet</p></a>
+            <a href="/trades/paypal"><p>PayPal</p></a>
+            <a href="/trades/payoneer"><p>Payoneer</p></a>
+            <a href="/trades/crypto"><p>Crypto</p></a>
+            <a href="/trades/giftcard"><p>Giftcard</p></a>
+            <a href="/setting"><p>Settings</p></a>
+        </div>
+        <div class="nav-other-sect">
+            <div class="nav-not-img">
+                <img src="img/question.png" alt="">
+                <img src="img/notification.png" alt="">
+            </div>
+            <button onclick="window.location.href='/profile'" class="nav-btn">
+                <img src="img/user.png" alt="">
+                <p><%= data.user.name %></p>
+
+            </button>
+        </div>
+    </nav>
+    <nav class="mobile-nav">
+        <div class="mobile-page">
+            <div class="mobile-logo">
+                <img src="img/logo-img.png" alt="">
+                <p>PAYTONAIRA</p>
+            </div>
+            <div class="mobile-menu">
+                <a href="/dashboard"><p>Dashboard</p></a>
+                <a href="/wallet"><p>Wallet</p></a>
+                <a href="/trades/paypal"><p>PayPal</p></a>
+                <a href="/trades/payoneer"><p>Payoneer</p></a>
+                <a href="/trades/crypto"><p>Crypto</p></a>
+                <a href="/trades/giftcard"><p>Giftcard</p></a>
+                <a href="/setting"><p>Settings</p></a>
+            </div>
+            <div class="mobile-bottom-container">
+                <div class="mobile-buttom">
+                    <img src="/img/question.png" alt="">
+                    <p>FAQ</p>
+                </div>
+                <button onclick="window.location.href='/profile'" class="nav-btn">
+                    <img src="img/user.png" alt="">
+                    <p><%= data.user.name %></p>
+                </button>
+            </div>
+        </div>
+        <button class="menu" onclick="aside()">☰</button>
+       
+    </nav>
+    
+
+    <script src="/js/navbar.js"></script>
+</body>
+</html>

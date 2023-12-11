@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alpha Bills | Sign In Page</title>
-    <link rel="stylesheet" href="css/general.css">
-    <link rel="stylesheet" href="css/SignIn.css">
+    <title>sign in</title>
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/SignIn.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
@@ -21,37 +20,29 @@
               <%= messages.info %>
             </div>
         <% } %>
-        <div class="sign-in">
-            <div class="image">
-                <img src="images/signin-img.png" alt="">
+        <main>
+            <div><img class="logo" src="/img/Frame 4@2x.png" alt=""></div>
+
+            <div class="second-main">
+                <form action="/login" method="post" onsubmit="return handleSubmit()">
+                    <h3>Sign in</h3>
+                    <p>Welcome to back! Kindly login to your account</p>
+                    <div class="third-main">
+                        <label for="email">Email address</label> <br>
+                        <input type="email" id="email" name="email" placeholder="e.g example@gmail.com" > <br>
+                    </div>
+                    <div class="fourth-main">
+                        <label for="new">password</label><br>
+                        <input type="password" name="password" id="password" placeholder="e.g 12345678"> 
+                    </div>
+                    <div class="flex">
+                    <a class="a-tag" href="/sign-up">Create Account</a>
+                    <a class="a-tag" href="/forgot-password">Forgot password?</a>
+                </div>
+                    <button type="submit">Sign in</button>
+                </form>
             </div>
-            <div class="form-area">
-                <div>
-                    <a href="/"><img src="images/small-logo.png" alt=""></a>
-                </div>
-                <h1>Sign in</h1>
-                <div class="main-form">
-                    <form action="/login" method="post" onsubmit="return handleSubmit()">
-                        <div>
-                            <input type="email" name="email" id="email" placeholder="Your Email" >
-                        </div>
-                        <div>
-                            <input type="password" name="password" id="password" placeholder="Password">
-                            <div>
-                                <p id="toggle-password" class="text"><span><i class="ri-eye-line"></i></span>  </p>
-                            </div>
-                        </div>
-                        <div class="forget-pwd">
-                            <span><a href="/forgot-password">Forget Password?</a></span>
-                        </div>
-                        <button type="submit" class="submit">Sign In</button>
-                    </form>                    
-                </div>
-                <div class="link-to-signup">
-                    <span>Don't have an account? <a href="/sign-up">Sign Up</a></span>
-                </div>
-            </div>
-        </div>
+        </main>
     </section>
 
     <script src="js/Register.js"></script>

@@ -26,7 +26,7 @@ const tradeRoutes = require("./routes/tradeRoute");
 const tvRoutes = require("./routes/tvRouter");
 const transactionRoutes = require("./routes/transaction");
 
-const port = 4000;
+const port = 4001;
 const app = express();
 
 // ************** Middleware ****************

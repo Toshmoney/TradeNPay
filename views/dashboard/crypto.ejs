@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AlphaBills | Trade Payoneer</title>
+  <title>Pay To Naira | Trade Crypto</title>
   <link rel="stylesheet" href="/css/toastr.css">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/general.css">
@@ -17,11 +17,20 @@
 
 <body>
   <section class="dashboard-container">
-    <%- include('../partials/aside') %>
+    <%- include('../partials/tradeasides') %>
 
       <main>
-        <%- include('../partials/mobileHeader') %>
           <div class="dashboard-main-top">
+            <% if (messages.error) { %>
+              <div class="alert alert-danger" role="alert">
+                <%= messages.error %>
+              </div>
+          <% } %>
+          <% if (messages.info) { %>
+              <div class="alert alert-info" role="alert">
+                <%= messages.info %>
+              </div>
+          <% } %>
             <div>
               <h1>TRADE CRYPTOCURRENCY</h1>
               <p>Select Buy or Sell</p>
@@ -35,16 +44,6 @@
         <div id="Buy" class="tabcontent">
           <h2 class="available"></h2>
           <h2>Selling Price: NGN <span class="selling"></span> per $</h2> <br>
-            <% if (messages.error) { %>
-              <div class="alert alert-danger" role="alert">
-                <%= messages.error %>
-              </div>
-          <% } %>
-          <% if (messages.info) { %>
-              <div class="alert alert-info" role="alert">
-                <%= messages.info %>
-              </div>
-          <% } %>
             <form class="buy-now" action="/trades/sell-crypto" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <div class="choose form-field">

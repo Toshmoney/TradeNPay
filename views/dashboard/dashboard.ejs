@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlphaBills User Dashboard</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/general.css">
+    <title>Pay To Naira | Dashboard</title>
     <link rel="stylesheet" href="css/aside.css">
     <link rel="stylesheet" href="css/Maindashboard.css">
     
@@ -14,72 +12,109 @@
 <body>
     <section class="dashboard-container">
         <%- include('../partials/aside') %>
-        <main>
-            <%- include('../partials/mobileHeader') %>
-           <div class="dashboard-main-top">
-                <h1>Dashboard</h1>
-           </div>
-
-            <div class="dash-items">
-                <div class="blue-background">
-                    <div class="welcome-msg">
-                        <h1>WELCOME BACK, <%= user.name %></h1>
+        
+    <div class="dashboard-wall">
+        <div class="container">
+            <section class="header">
+                <h1>Hey <%= user.name %>, <br> Welcome to Pay To Naira</h1>
+                <p>There are many possiblities 
+                    you can achieve with us. 
+                    Let's show you how buy and 
+                    sell is easy.</p>
+            </section>
+            <section class="what-we-offer">
+                <div class="sect-border">
+                    <div class="crypto-img">
+                        <img src="/img/crypto-icon.png" alt="">
                     </div>
-                    <div class="verify-btn">
-                        <a href="/wallet/fund"><button>Fund Wallet</button></a>
+                    <div class="buy-or-sell">
+                        <h3>Buy or Sell cryptocurrency</h3>
+                        <p>There are many possiblities
+                             you can achieve with us. 
+                             Let show you how buy and 
+                             sell is easy.</p>
+                    </div>
+                    <div class="icon-button">
+                        <a href="/trades/crypto"><img src="/img/next.png" alt=""></a>
                     </div>
                 </div>
-            </div>
-
-            <div class="airtime-area">
-                <div class="main-airtime">
-                    <a href="/airtime">
-                        <div class="icon-box">
-                            <img src="images/tabler-icon-access-point.png" alt="">
-                        </div>
-                        <div>
-                            <h3>Buy Airtime</h3>
-                            <p>purchase airtime bundle</p>
-                        </div>
-                    </a>
+                <div class="sect-border">
+                    <div class="crypto-img">
+                        <img src="/img/crypto-icon.png" alt="">
+                    </div>
+                    <div class="buy-or-sell">
+                        <h3>Buy or Sell PayPal, Payoneer Funds</h3>
+                        <p>There are many possiblities
+                             you can achieve with us. 
+                             Let show you how buy and 
+                             sell is easy.</p>
+                    </div>
+                    <div class="icon-button">
+                        <a href="/trades/paypal"> <img src="/img/next.png" alt=""> </a>
+                    </div>
                 </div>
-                <div class="main-airtime">
-                    <a href="/data">
-                        <div class="icon-box">
-                            <img src="images/tabler-icon-id.png" alt="">
-                        </div>
-                        <div>
-                            <h3>Top up</h3>
-                            <p>purchase data bundle</p>
-                        </div>
-                    </a>
+                <div class="sect-border">
+                    <div class="crypto-img">
+                        <img src="/img/crypto-icon.png" alt="">
+                    </div>
+                    <div class="buy-or-sell">
+                        <h3>Trade your Giftcard</h3>
+                        <p>There are many possiblities
+                             you can achieve with us. 
+                             Let show you how buy and 
+                             sell is easy.</p>
+                    </div>
+                    <div class="icon-button">
+                        <a href="/trades/giftcard"><img src="/img/next.png" alt=""></a>
+                    </div>
                 </div>
-                <div class="main-airtime">
-                    <a href="/billpayment">
-                        <div class="icon-box">
-                            <img src="images/tabler-icon-battery-automotive.png" alt="">
-                        </div>
-                        <div>
-                            <h3>Pay a bills</h3>
-                            <p>purchase your TV Cable</p>
-                        </div>
-                    </a>
+                <a href="">
+                <div class="whatsapp">
+                    <i class="fa fa-whatsapp" style="font-size:30px;color:white"></i>
                 </div>
-                <div class="main-airtime">
-                    <a href="/wallet">
-                        <div class="icon-box">
-                            <img src="images/tabler-icon-wallet.png" alt="">
-                        </div>
-                        <div>
-                            <h3>Fund wallet</h3>
-                            <p>easy payment method</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <%- include('../partials/transactions', {transactions: transactions}) %>
-        </main>
+                </a>
+            </section>
+            
+            <section class="crypto-table">
+                <h1>Trading rates for today</h1>
+                <% if (tradePrice.length > 0){ %>
+                    <table>
+                        <tr class="crypto-header">
+                            <td>Service</td>
+                            <td>Buy Rate</td>
+                            <td>Sell Rate</td>
+                            <td>Currency</td>
+                            <td>Trade type</td>
+                            <td>Availability</td>
+                            <td>Action</td>
+                        </tr>
+                        <% tradePrice.forEach(function(data){ %>
+                            <tr class="crypto-line1">
+                                <td>
+                                    <p><%= data.trade_type %> </p>
+                                </td>
+                                <td><%= data.dollar_sell_price? "₦" + data.dollar_sell_price : " Nill" %></td>
+                                <td><%= data.dollar_buy_price? "₦" + data.dollar_buy_price : "Nill" %></td>
+                                <td ><%= data.currency %></td>
+                                <td ><%= data.service_id %></td>
+                                <td><%= data.is_available? "Yes": "No" %></td>
+                                <td>
+                                    <div style="display: flex; gap: 30px;">
+                                        <button onclick="window.location.href='/trades/crypto'">Buy</button>
+                                        <button onclick="window.location.href='/trades/paypal'">Sell</button>
+                                    </div>
+                                </td>
+                            </tr>
+                       <% }) %>
+                    </table>
+                <% }else{ %>
+                    <p>No Trade price set yet by admin Come back later!</p>
+                <% } %>
+            </section>
+            <script src="js/dashboard.js"></script>
+        </div>
+    </div>
     </section>
-    <script src="js/dashboard.js"></script>
+    <%- include('../partials/footer') %>
 </body>
 </html>

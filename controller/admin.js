@@ -73,12 +73,12 @@ const allUsers = async (req, res) => {
   wallets = wallets.map((item) => {
     const wallet = item.toObject();
     return {
-      user_id: wallet.user._id,
-      name: wallet.user.name,
-      email: wallet.user.email,
-      createdAt: formatDate(wallet.user.createdAt),
-      previous_balance: wallet.previous_balance,
-      current_balance: wallet.current_balance,
+      user_id: wallet.user?._id,
+      name: wallet.user?.name,
+      email: wallet.user?.email,
+      createdAt: formatDate(wallet.user?.createdAt),
+      previous_balance: wallet?.previous_balance,
+      current_balance: wallet?.current_balance,
     };
   });
   res.status(200).render("admin/allusers", { users: wallets });
@@ -375,5 +375,5 @@ module.exports = {
   deletePost,
   deleteAllPost,
   adminTradeReset,
-  adminTradePlans
+  adminTradePlans,
 };

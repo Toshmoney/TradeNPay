@@ -1,131 +1,198 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-*{
-    margin: 0;
+* {
     padding: 0;
+    margin: 0;
     box-sizing: border-box;
 }
-
-.sign-in{
-    width: 100%;
-    height: 100vh;
+.flex{
     display: flex;
-    padding: 40px;
-    align-items: center;
-    background-color: white;
-    justify-content: space-around;
+    gap: 120px;
 }
 
-.sign-in h1{
-    font-family: 'Raleway', sans-serif;
+.logo{
+    height: 50px;
 }
-
-.image{
-    width: 100%;
-}
-
-.image img{
-    height: 600px;
-}
-
-.form-area{
-    gap: 40px;
-    width: 100%;
+main {
     display: flex;
-    align-items: center;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5%;
 }
 
-.forget-pwd span{
-    display: flex;
-    align-items: flex-end;
-    color: #0235EA;
-    font-family: "Poppins", sans-serif;
+.second-main {
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, .5); */
+    width: 30%;
+    height: 70vh;
+    display: flexbox;
+    align-items: center;
+    justify-content: center;
+    padding: 3% 0 0 3%;
+    border: 2px;
+    border-radius: 7px;
+    font-family: sans-serif;
+    font-weight: lighter;
 }
 
-.forget-pwd{
-    width: 100%;
+
+h3 {
+    font-size: 25px;
+    font-weight: bold;
+    padding-bottom: 3%;
 }
 
-.forget-pwd a{
+p {
+    color: gray;
+    padding-bottom: 8%;
+}
+
+.third-main label {
+    font-weight: bold;
+    font-size: 14px;   
+}
+
+
+.fourth-main {
+    margin-top: 8%;
+}
+
+.fourth-main label {
+    font-weight: 600;
+    font-size: 14px;
+    
+}
+
+.third-main input {
+    margin-top: 2%;
+    padding: 3%;
+    width: 24vw;
+    border-color: rgba(230, 227, 227, 0.973);
+    border-style: solid;
+    border-radius: 5px;
+}
+
+
+button {
+    margin-top: 10%;
+    width: 24vw;
+    padding: 4%;
+    background-color: #045089;
+    color: white;
+    cursor: pointer;
+    text-transform: capitalize;
+    border: 2px;
+    border-radius: 5px;
+}
+
+
+.fourth-main input {
+    margin-top: 2%;
+    padding: 3%;
+    width: 24vw;
+    border-color: rgba(230, 227, 227, 0.973);
+    border-style: solid;
+    margin-bottom: 3%;
+}
+
+h4 {
+    color: #045089;
+    text-align: right;
+    padding: 2% 11% 0 0;
+}
+
+.a-tag{
+    color: #045089;
     text-decoration: none;
 }
 
-input{
-    width: 100%;
-    padding: 20px;
-    background: #F6F8FE;
-    border-radius: 14px;
-    border: none;
-    outline-color: #0235EA;
-}
 
-form{
-    gap: 30px;
-    width: 100%;
+@media screen and (max-width: 950px) {
+
+    
+main {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5%;
 }
 
-.main-form{
-    width: 70%;
+.second-main {
+    width: 90%;
+    height: 70vh;
+    display: flexbox;
+    align-items: center;
+    justify-content: center;
+    padding: 5% 0 0 5%;
+    border: 2px;
+    border-radius: 7px;
+    font-family: sans-serif;
+    font-weight: lighter;
 }
 
-a{
-    color: #0235EA;
+
+h3 {
+    font-size: 25px;
+    font-weight: bold;
+    padding-bottom: 3%;
 }
 
-.link-to-signup span{
-    font-family: 'Poppins', sans-serif;
-    text-transform: capitalize;
+p {
+    color: gray;
+    padding-bottom: 8%;
+    font-size: 14px;
 }
 
-.submit{
-    width: 100%;
-    border: none;
+.third-main label {
+    font-weight: bold;
+    font-size: 12px;   
+}
+
+
+.fourth-main {
+    margin-top: 8%;
+}
+
+.fourth-main label {
+    font-weight: 600;
+    font-size: 12px;
+    
+}
+
+.third-main input {
+    margin-top: 2%;
+    padding: 3%;
+    width: 90%;
+    border-color: rgba(230, 227, 227, 0.973);
+    border-style: solid;
+    border-radius: 5px;
+}
+
+
+button {
+    margin-top: 10%;
+    width: 90%;
+    padding: 4%;
+    background-color: #045089;
     color: white;
-    background: #0235EA;
-    border-radius: 14px;
-    padding: 20px;
-    cursor: pointer;
-    transition: ease-in-out .5s;
-}
-.submit:hover{
-    opacity: 0.6;
-    transition: ease-in-out .5s;
+    text-transform: capitalize;
+    border: 2px;
+    border-radius: 5px;
 }
 
-form p{
-    position: absolute;
-    left: 87%;
-    top: 55%;
-    color: black;
-    cursor: pointer;
+
+.fourth-main input {
+    margin-top: 2%;
+    padding: 3%;
+    width: 90%;
+    border-color: rgba(230, 227, 227, 0.973);
+    border-style: solid;
+    margin-bottom: 3%;
 }
 
-.text{
-    color: black;
-    position: absolute;
+h4 {
+    color: #045089;
+    text-align: right;
+    padding: 2% 11% 0 0;
 }
-
-@media screen and (max-width:950px) {
-    .image img{
-        display: none;
-    }
-    .main-form{
-        width: 100%;
-    }
-    .image{
-        display: none;
-    }
-    form p{
-        width: 50%;
-        left: 55%;
-        top: 55%;
-        display: none;
-    }
-}
-
-.mt-5{
-    margin-top: 20px;
+    
 }

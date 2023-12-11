@@ -1,94 +1,198 @@
-.blue-background {
-    background: radial-gradient(24.1% 77.04% at 53.05% 34.1%, #0235EA 0%, rgba(33, 73, 217, 0.714882) 50.26%, rgba(29, 72, 226, 0.6) 100%);
-    border-radius: 14px;
+*{
+    padding: 0px;
+    margin: 0px;
+    font-family:sans-serif;
+    font-weight: lighter;
+}
+body{
+    background-color: whitesmoke;
+
+}
+
+.dis{
+    background-color: gray !important;
+}
+
+.dashboard-main{
+    overflow: hidden;
+    background-color: red;
+}
+
+.dashboard-wall{
     width: 100%;
-    /* height: 20vh; */
+    background-color: whitesmoke;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
     align-items: center;
-    padding: 50px 20px;
 }
-
-.welcome-msg {
-    color: white;
-    font-family: 'Raleway', sans-serif;
-    padding: 20px;
+.container{
+    width: 70%;
+    background-color: whitesmoke;
+    margin-top: 50px;
 }
-
-.welcome-msg p {
-    margin-top: 10px;
-}
-
-.verify-btn {
+.header{
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 5px;
+    align-items:normal;
 }
-
-.verify-btn button {
-    padding: 10px 30px;
-    background-color: transparent;
-    border: 2px solid #FFFFFF;
-    border-radius: 10px;
-    color: #FFFFFF;
-    cursor: pointer;
+.header h1{
+    font-size: 25px;
+    font-weight: bold;
 }
-
-.main-airtime {
-    background: #FFFFFF;
-    border: 1px solid #E0E6FC;
-    border-radius: 14px;
+.header p{
+    width: 47%;
+    color:#00000080 ;
+    font-size: 14px;
+}
+.what-we-offer{
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px 20px;
-    gap: 20px;
+    justify-content: space-between;
+    margin-top: 50px;
 }
-
-.main-airtime a {
-    text-decoration: none;
-    color: black;
+.sect-border{
+    width: 30%;
+    height: 270px;
+    background-color: white;
+    border-radius: 10px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 20px;
+    overflow: hidden;
 }
-
-.main-airtime p {
+.crypto-img{
+    width: 85%;
+    margin-top: 20px;
+}
+.crypto-img img{
+    width: 30px;
+}
+.buy-or-sell{
+    width: 85%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.buy-or-sell h3{
+    width: 70%;
+    font-weight: bold;
+    font-size: 15px;
+}
+.buy-or-sell p{
+    color: #00000080;
     font-size: 12px;
-    text-transform: capitalize;
+    font-weight: bold;
 }
-.icon-box {
-    background-color: #F6F8FE;
-    width: 38px;
-    height: 38px;
+.icon-button{
+    width: 100%;
+    display: flex;
+    margin-top: 60px;
+    justify-content: right;
+}
+
+.icon-button img{
+   width: 50px;
+}
+.crypto-table{
+    width: 100%;
+    margin-top: 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.crypto-table h1{
+    font-size: 20px;
+    font-weight: bold;
+}
+.crypto-table table{
+    width: 100%;
+    border-collapse: collapse;
+
+}
+.crypto-header{
+    width: 100%;
+    height: 50px;
+    background-color: white;
+}
+.crypto-header td{
+    color: #00000080;
+    font-size: 13px;
+    font-weight: bold;
+}
+.crypto-line1{
+    height: 50px;
+   
+}
+.crypto-line1 td{
+    font-size: 10px;
+}
+.crypto-line1 td button{
+    padding: 8px 50px;
+    border-radius: 10px;
+    background-color: #045089;
+     border: none;
+     color: white;
+     cursor: pointer;
+}
+.crypto-line1 td button:hover{
+background-color: #1a72b6;
+}
+.line{
+    width: 100%;
+    background-color: red;
+    height: 1px;
+}
+.whatsapp{
+    background-color: #045089;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 50%;
-    display: grid;
-    place-items: center;
+    cursor: pointer;
 }
-.airtime-area {
-    display: grid;
-    grid-template-columns: repeat(1,1fr);
-    gap: 20px;
-    margin-block: 2.5rem;
+.whatsapp:hover{
+    height: 55px;
+    width: 55px;
+    transition: 0.5s ease-in-out;
 }
-
-@media screen and (min-width:576px) {
-    .airtime-area {
-        grid-template-columns: repeat(2, 1fr);
+@media screen and (max-width:950px) {
+    .container{
+        width: 90%;
     }
-}
-@media screen and (min-width:992px) {
-    .airtime-area {
-        grid-template-columns: repeat(3, 1fr);
+    .header h1{
+        font-size: 18px;
     }
-}
-@media screen and (min-width:1200px) {
-    .airtime-area {
-        grid-template-columns: repeat(4, 1fr);
+    .header p{
+        width: 85%;
     }
-}
-
-@media screen and (max-width:900px) {
-    .blue-background{
+    .what-we-offer{
         flex-direction: column;
+        gap: 20px;
     }
+    .sect-border{
+        width: 80%;
+    }
+    .crypto-table h1{
+        font-size: 17px;
+    }
+   
+    .crypto-header td{
+    font-size: 10px;
+    margin-left: 20px;
+    }
+    .crypto-line1 td{
+        font-size: 8px;
+    }
+    .crypto-line1 td button{
+    padding: 5px 20px;
+    font-size:8px ;
+    border-radius: 5px;
+        }
 }

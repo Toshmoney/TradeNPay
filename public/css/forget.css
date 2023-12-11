@@ -1,0 +1,126 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.footer1{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+.img1{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 30px;
+}
+.div1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px;
+}
+.footer2{
+    background-color: white;
+    box-shadow: 1px 1px 3px rgb(119, 117, 117) ;
+    width: 27%;
+    padding-right: 90px;
+    border-radius: 10px;
+}
+.all1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    height: 55vh;
+    padding-bottom: 70px;
+}
+.forget{
+    font-size: x-large;
+    font-weight: bold;
+}
+.t1{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.ti1{
+    color: gray;
+}
+.div2{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-right: 54px;
+    
+}
+.place{
+    border-radius: 9px;
+    height: 7vh;
+    padding: 12px;
+    border-style: solid;
+    border-color: rgba(230, 227, 227, 0.973);
+    width: 180%;
+}
+.btn1{
+    color: white;
+    background-color: #045089;
+    width: 180%;
+    height: 7vh;
+    border-radius: 9px;
+    border: none;
+}
+.footer3{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 30px;
+}
+
+.confirm-container{
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.return{
+    margin-top: 20px;
+}
+.all2{
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+}
+a{
+    color: blue;
+    text-decoration: none;
+}
+@media screen and (max-width: 960px){
+    .footer2{
+        background-color: white;
+        box-shadow: 1px 1px 3px ;
+        width: 90%;
+    }
+    .all1{
+        height: 50vh;
+    }
+
+    .confirm-container{
+        padding: 0 20px;
+    }
+    
+}

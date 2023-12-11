@@ -1,8 +1,10 @@
+require("dotenv").config()
 const fs = require("fs");
 const { generateTransId } = require("../utils");
 const Trades = require("../model/Trades");
 const Transaction = require("../model/Transaction");
 const nodemailer = require("nodemailer");
+const baseurl = process.env.BASE_URL
 
 
 
@@ -32,7 +34,7 @@ const sellGiftcard = async(req, res)=>{
 
 
     const {amount, currency, service_id} = req.body;
-    const trade = await fetch(`http://localhost:4000/api/v1/trade_plan/${service_id}`).then(res => res.json())
+    const trade = await fetch(`${baseurl}/api/v1/trade_plan/${service_id}`).then(res => res.json())
     let details = await trade.data
     const trade_type = details.trade_type
     const sellPrice = details.dollar_sell_price;

@@ -4,53 +4,81 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlphaBills | User Wallet</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/general.css">
-    <link rel="stylesheet" href="css/aside.css">
-    <link rel="stylesheet" href="css/wallet.css">
+    <title>Wallet | Pay To Naira</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/aside.css">
+    <link rel="stylesheet" href="/css/wallet.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
-    <section class="dashboard-container">
-        <%- include('../partials/aside') %>
-       <!-- mobile dashboard end -->
-        <main>
-            <%- include('../partials/mobileHeader') %>
-            <div class="dashboard-main-top">
-                    <h1>WALLET</h1>
-                    
-            </div>
-
-            <div class="main-page">
-                <div class="balance-box">
-                    <div class="flex gap-6 bal-toggle">
-                        <p class="font-medium">Available balance</p>
-                        <span id="toggle-balance" class="hide-balance"><i class="ri-eye-off-line"></i></span>
-                        <span id="toggle-balance" class="show-balance"><i class="ri-eye-line"></i></span>
+    <div><%- include('../partials/aside') %></div>
+    <div class="wallet">
+        <div class="wallet-container">
+            <section class="wallet-header">
+                <h1>Wallet</h1>
+                <p>Manage your wallet information</p>
+            </section>
+            <section class="wallet-balance-section">
+                <div class="wallet-balance">
+                    <div class="wallet-balance-header">
+                        <p>Naira Wallet (NGN)</p>
+                        <button onclick="switchBtn()" class="switch-btn"><img src="/img/wallet-icon.png" alt=""></button>
                     </div>
-                    <h3 data-balance="<%= balance %>" class="font-semibold text-3xl wallet-balance"><%= balance %></h3>
-                    <p class="font-medium">Estimated Of Total Wallet</p>
-                </div>
-
-                <div class="wallet-area">
-                    <div class="linear-gradient">
-                        <div class="domain">
-                            <p><%= user.name %></p>
-                            <span>Click on fund wallet button to fund your wallet</span>
-                        </div>
-
-                        <div class="btn-group">
-                            <a href="/wallet/withdraw"><button class="cta-btn btn text-white">Withdraw Funds</button></a>
-                            <a href="/wallet/fund"><button class="cta-btn btn-2">Fund Wallet</button></a>
+                    <div class="wallet-available-balance">
+                        <input class="bal" value="₦<%= balance %>.00" type="password" disabled>
+                        <div class="wallet-est">
+                            <p>EST. Bal.</p>
                         </div>
                     </div>
+                    <div class="line"></div>
+                    <div class="wallet-btn">
+                        <a href="/wallet/withdraw"><button class="withdraw">Withdraw</button></a>
+                        <a class="fund" href="/wallet/fund">Fund Wallet</a>
+                    </div>
                 </div>
+                <div class="wallet-balance">
+                    <div class="wallet-balance-header">
+                        <p>Crypto Wallet (USD)</p>
+                        <button onclick="switchDollarBtn()" class="switch-btn"><img src="img/wallet-icon.png" alt=""></button>
+                    </div>
+                    <div class="wallet-available-balance">
+                        <input type="text" value="$00.00" disabled class="dol-bal">
+                        <div class="wallet-est">
+                            <p>EST. Bal.</p>
+                        </div>
+                    </div>
+                    <div class="line"></div>
+                    <div class="wallet-btn">
+                        <button class="withdraw">Coming soon</button>
+                    </div>
+                </div>
+            </section>
+            </section>
+            <div style="padding-top: 50px;">
+                <%- include('../partials/transactions', {transactions: transactions}) %>
             </div>
-            <%- include('../partials/transactions', {transactions: transactions}) %>
-        </main>
-    </section>
-    <script src="js/dashboard.js"></script>
-    <script src="js/wallet.js"></script>
+        </div>
+        <script src="js/dashboard.js"></script>
+        <script>
+            const bal = document.querySelector(".bal");
+            function switchBtn(){
+                if(bal.type === "password"){
+                    bal.type = "text";
+                }else{
+                    bal.type = "password"
+                }
+            }
+
+            function switchDollarBtn(){
+                const dollar_bal = document.querySelector(".dol-bal");
+                if(dollar_bal.type === "text"){
+                    dollar_bal.type = "password"
+                }else{
+                    dollar_bal.type = "text"
+                }
+            }
+        </script>
+    </div>
+    <%- include('../partials/footer') %>
 </body>
 </html>

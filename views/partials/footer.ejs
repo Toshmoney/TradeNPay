@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+<body>
+    <footer>
+        <div class="footer-logo">
+            <img src="logo-img.png" alt="">
+            <p>PAYTONAIRA</p>
+        </div>
+        <div class="footer-menu">
+            <a href=""><p>About us</p></a>
+            <a href=""><p>Support</p></a>
+            <a href=""><p>Terms of services</p></a>
+            <a href=""><p>About us</p></a>
+            <a href=""><p>Privacy & Policy</p></a>
+        </div>
+        <div class="footer-copyright">
+            <p>© Copyright <span id="year"></span> Paytonaira.com | All Rights Reserved.</p>
+        </div>
+    </footer>
+<script>
+    const year = document.getElementById("year");
+    year.innerHTML = new Date().getFullYear()
+</script>

@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alpha Bills | Sign Up Page</title>
+    <title>Pay To Naira | Sign Up</title>
     <link rel="stylesheet" href="css/SignUp.css">
+    <!-- <link rel="stylesheet" href="/css/general.css"> -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="js/sign-up.js"></script>
 <body>
-    <section>
+    <section class="all-section">
         <% if (messages.error) { %>
             <div class="alert alert-danger" role="alert">
               <%= messages.error %>
@@ -21,44 +23,43 @@
               <%= messages.info %>
             </div>
         <% } %>
-        <div class="sign-in">
-            <div class="image">
-                <img src="images/signin-img.png" alt="">
+        <div class="everything">
+            <div class="image"><img onclick="window.location.href='/'" src="/img/Frame 4@2x.png" alt=""></div>
+            <div class="cat">
+            <div class="ca">
+                <h2>Create account</h2>
+                <h5>Welcome to PayToNaira! Kindly create an account</h5>
             </div>
-            <div class="form-area">
-                <div>
-                    <a href="/"><img src="images/small-logo.png" alt=""></a>
-                </div>
-                <h1>Create An Account</h1>
-                <div class="main-form">
-                    <form action="/sign-up" method="post" onsubmit="return validateInputs()">
-                        <p class="error">Please fill the empty space!</p>
-                        <div>
-                            <input type="text" name="name" id="name" placeholder="Full Name">
-                        </div>
-                        <div>
-                            <input type="email" name="email" id="email" placeholder="Your Email">
-                        </div>
-                        <div>
-                            <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="Phone Number">
-                        </div>
-                        <div>
-                            <input type="password" name="password" id="password" placeholder="Password">
-                        </div>
-                        <div>
-                            <p class="pass-err">You need to confirm your password</p>
-                            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
-                        </div>
-                        <div class="forget-pwd">
-                            <span>by clicking continue means you agree to our <a href="">privacy & policy</a> and <a href="">terms & conditions</a></span>
-                        </div>
-                        <button type="submit" class="submit">Create Account</button>
-                    </form>
-                </div>
-                <div class="link-to-signup">
-                    <span>Already have an account? <a href="/login">Sign In</a></span>
-                </div>
+            
+            <form action="/sign-up" method="post" onsubmit="return validateInputs()">
+                    <div class="formd">
+                    <div class="fn"> 
+                        <label for="Fullname">Full name</label><br>
+                        <input required type="text" name="name" id="name" class="ffn" placeholder="e.g John Doe">
+                    </div>
+                    <div class="email">
+                        <label for="EmailAddress">Email address</label><br>
+                        <input required type="text" name="email" class="em" id="email" placeholder="e.g johndoe@gmail.com">
+                    </div>
+                    <div class="email">
+                        <label for="EmailAddress">Phone Number</label><br>
+                        <input required type="text" name="phoneNumber" class="em" id="email" placeholder="e.g 08103546787">
+                    </div>
+                    <div class="pw">
+                        <label for="Password">Password</label><br>
+                        <input required type="password"  class="ppw" id="password" name="password" placeholder="e.g 123456">
+                    </div> 
+                    <div class="pw">
+                        <label for="Password">Confirm Password</label><br>
+                        <input required type="password"  class="ppw" id="password" name="confirmPassword" placeholder="e.g 123456">
+                    </div>   
+                    <h5>By clicking sign up means you agree to our <a href="/terms-condition"> terms of services</a></h5>
+                    <button class="btn">Sign up</button>
+             </div>
+            </form>
+
             </div>
+            <div class="lw"><h4>Already have an account? <a href="/login">Sign In</a></h4></div>
         </div>
     </section>
 </body>

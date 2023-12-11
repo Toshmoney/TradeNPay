@@ -11,8 +11,8 @@ const { default: axios } = require("axios");
 
 
 const homePage = async (req, res) => {
-  const name = req?.user?.name;
-  res.status(200).render("pages/home", {name});
+  const user = req?.user
+  res.status(200).render("pages/home", {user});
 };
 
 const dashboard = async (req, res) => {
@@ -132,21 +132,16 @@ const walletWithdraw = async(req, res) => {
 const verifyNow = (req, res) => {
   res.status(200).render("dashboard/verifynow");
 };
-const setting = (req, res) => {
-  res.status(200).render("dashboard/setting");
+const setting = async (req, res) => {
+  const data = await dashboardData(req.user);
+  const {user} = data
+  res.status(200).render("dashboard/setting", {user});
 };
 const profile = async (req, res) => {
   const data = await dashboardData(req.user);
-  const errorMg = req.flash("error").join(" ");
-  const infoMg = req.flash("info").join(" ");
-  const messages = {
-    error: errorMg,
-    info: infoMg,
-  };
-  res.status(200).render("dashboard/profile", { messages,
-    tel: req.user.phoneNumber,
-    name: req.user.name,
-    email: req.user.email, });
+  const {user} = data;
+  const {name, email, phoneNumber} = data?.user
+  res.status(200).render("dashboard/profile", { user, name, email, tel: phoneNumber});
 };
 
 
@@ -160,6 +155,32 @@ const businessBal = async (req, res) => {
   res.status(200).render("admin/businessbal", data);
 };
 
+
+
+const aboutPage = async (req, res) => {
+  const user = req?.user
+  res.status(200).render("pages/about-us", {user});
+};
+
+const blog = async (req, res) => {
+  const user = req?.user
+  res.status(200).render("pages/blog", {user});
+};
+
+const contact = async (req, res) => {
+  const user = req?.user
+  res.status(200).render("pages/contact", {user});
+};
+
+const support = async (req, res) => {
+  const user = req?.user
+  res.status(200).render("pages/support", {user});
+};
+
+const termsCondition = async (req, res) => {
+  const user = req?.user
+  res.status(200).render("pages/terms-condition", {user});
+};
 module.exports = {
   homePage,
   dashboard,
@@ -176,5 +197,11 @@ module.exports = {
   businessBal,
   tradeService,
   trades,
-  walletWithdraw
+  walletWithdraw,
+
+  aboutPage,
+  blog,
+  contact,
+  support,
+  termsCondition
 };

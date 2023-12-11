@@ -3,216 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Buy MTN, Airtel, 9mobile, Glo Data At Cheap Prices... 50% Off, 30% Off
- - AlphaBills">
-    <meta name="description" content="AlphaBills - Platform for quick purchase of Airtime, Internet Data Bundles, DSTV, GOTV, PHCN and payment for other services in Nigeria">
-    <meta name="keywords" content="AlphaBills - Buy airtime online, buy MTN airtime, buy internet data subscription, Etisalat Glo Airtel Airtime, DSTV payment,GOTV payment,PHCN payment">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/tailstyle.css">
     <link rel="stylesheet" href="css/newtail.css">
     <link rel="stylesheet" href="css/custom.css">
-    <title>AlphaBills | Buy Reputable Data bundle, Electricity bills and Airtime at affordable prices in Nigeria</title>
+    <title>Home | Pay To Naira</title>
 </head>
 <body>
-    <div class="hero bg-sky-500 bg-[url('/image/herorec.png')] bg-no-repeat bg-cover  p-6 w-[100%]  ">
-        <div class="bar w-[70%] flex rounded-3xl p-4 bg-white items-center justify-evenly ml-40 static">
-            <img src="image/ALPHABILLS STRAIGHT 1.png" alt="">
-            <div class="menu lg:block md:hidden">
-                    <li class="list-none">
-                        <a class="mr-6" href="">About Us</a>
-                        <a class="mr-6" href="">Bills</a>
-                        <a class="mr-6" href="https://chat.whatsapp.com/GktoSxKHEShJS8j2kuUnZb">Support</a>
-                    </li>
-            </div>
-            <% if(name) {%>
-                <div class="buttons lg:block md:hidden">
-                    <button class=" px-4 p-1 bg-black text-white rounded-md"><a href="/dashboard">Dashboard</a></button>
+    <div class="heropage bg-navy-blue">
+        <header>
+            <nav id="nav">
+                <a href="/"><img src="./imgs/Frame 4.png" alt=""></a>
+                <ul class="nav__link">
+                    <li class="Active"><a href="/about-us">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/support">Support & FAQ</a></li>
+                    <% if (user) { %>
+                        <button  onclick="location.href = '/dashboard';" class="btn1">Dashboard</button>
+                        <button onclick="location.href = '/trades/paypal';" class="btn2">Start trading</button>
+                   <% } else{%>
+                    <button  onclick="location.href = '/login';" class="btn1">Sign In</button>
+                    <button onclick="location.href = '/sign-up';" class="btn2">Start trading</button>
+                    <%}%>
+                </ul>
+                <div class="toggle-btn cursor-pointer" onclick="myfunction();">
+                    <i class="fa fa-bars"></i>
                 </div>
-                <% } else {%>
-            <div class="buttons lg:block md:hidden">
-                <button class=" px-4 p-1 border border-black rounded-md"><a href="/login">Sign in</a></button>
-                <button class=" px-4 p-1 bg-black text-white rounded-md"><a href="/sign-up">Register</a></button>
-            </div>
+            </nav>
+            <ul class="mobilenav__link">
+                <li><a href="/about-us">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/support">Support & FAQ</a></li>
+                <% if (user) { %>
+                    <button  onclick="location.href = '/dashboard';" class="btn1">Dashboard</button>
+                    <button onclick="location.href = '/trades/paypal';" class="btn2">Start trading</button>
+               <% } else{%>
+                <button  onclick="location.href = '/login';" class="btn1">Sign In</button>
+                <button onclick="location.href = '/sign-up';" class="btn2">Start trading</button>
+                <%}%>
+            </ul>
+        </header>
 
-            <% } %>
-           <div class="lg:hidden md:block">
-            <button onclick="myfunction()">
-              <img class="toggle-btn" src="image/Group 44 (1).png" alt="">
-            </button>
-           </div>
+        <div class="hero flex lg:flex-row items-center text-white">
+            <div class="bouy lg:p-10">
+                <h1 class=" bounce lg:w-2/3 mb-2 text-4xl">Your Gateway to Financial Flexibility</h1>
+                <p class="w-3/4"> PaytoNaira is the most secure way to buy and sell paypal 
+                    funds, payoneer and gift cards in Nigeria at better exchange 
+                    rates.
+                </p>
+                <button onclick="location.href = '/sign-up';"  class="bg-black text-white p-1.5 px-5 mt-5">Get Started</button>
+            </div>
+            <img class="mt-4" src="./imgs/image 2.png" alt="">
         </div>
-        <div class="mobile-menu">
-            <li class="mobilenav-link ">
-                <a class="mr-6" href="">About Us</a>
-                <a class="mr-6" href="">Bills</a>
-                <a class="mr-6" href="">Support</a>
-                <% if(name){ -%>
-                    <div class="button-mobile">
-                    <button class=" w-full px-4 p-1 border border-black rounded-md"><a href="/dashboard">Dashboard</a></button>
+    </div>
+   <!-- Header and HeroPage -->
+
+    <section class="new flex justify-center content-center  lg:ml-40 lg:p-20">
+        <div class="sect">
+            <h1 class="font-black text-2xl">86.3%</h1>
+            <p class="lg:w-1/2">Based on reviews and analysis, 
+                we got over 86% satisfactory 
+                from our existing users and trade 
+                partners
+            </p>
+        </div>
+        <div class="sect  lg:border-s-4">
+            <h1 class="font-black text-2xl lg:ml-5">2905</h1>
+            <p class="lg:w-1/2 lg:ml-5">Based on reviews and analysis, 
+                we got over 86% satisfactory 
+                from our existing users and trade 
+                partners
+            </p>
+        </div>
+        <div class="sect lg:border-s-4">
+            <h1 class="font-black text-2xl lg:ml-5">$314k</h1>
+            <p class="lg:w-1/2 lg:ml-5">Based on reviews and analysis, 
+                we got over 86% satisfactory 
+                from our existing users and trade 
+                partners
+            </p>
+        </div>
+    </section>
+<!--  -->
+    <section class="dist p-10 lg:flex bg-Ash ">
+            <div class="alltxt">
+                <h2>Here's what makes us different</h2>
+                <p class="w-50">Why you should trade your paypal, payoneer and giftcards on PaytoNaira</p>
+                <button onclick="location.href = '/sign-up';" class= " why bg-navy-blue text-white p-1.5 px-5 mt-5">Get Started</button>
+            </div>
+            <div class="cards lg:flex gap-5">
+               <div class="flex flex-col items-center ">
+                    <div class=" child  mb-5 items-center flex flex-col bg-white p-5 rounded-lg ">
+                        <img class="flex mb-5 " src="./imgs/Group 44 (2).png">
+                        <h2 class="text-center font-black">Amazing Support</h2>
+                        <p class=" text-center">Our helpdesk is always available and open to solve your trade issues and complaints immediately after lodged.</p>
                     </div>
-                    <% }else{ %>
-                    <div class="button-mobile">
-                        <button class=" px-4 p-1 border border-black rounded-md"><a href="/login">Sign in</a></button>
-                        <button class=" px-4 p-1 bg-black text-white rounded-md"><a href="/sign-up">Register</a></button>
+                    <div class="child mb-5 items-center flex flex-col bg-white p-5 rounded-lg">
+                        <img class="flex  mb-5" src="./imgs/Group 46 (1).png">
+                        <h2 class="text-center font-black">Accountble</h2>
+                        <p class=" text-center w-1/2">We solemnly bear responsibilities on every trade carried out on our platform and we never leave a trade behind..</p>
                     </div>
-                <% } %>
-            </li>
-        </div>
-        <div class="hero-page flex md::flex-col lg:flex-row items-center justify-center text-white w-[100%] ml-5">
-            <div class="hero-page1">
-                <h1 class="text-3xl w-3/4 mb-5">The Ultimate Online Bill Payment Solution</h1>
-                <p class="w-[75%] mb-5">Say goodbye the stress of due dates, late fees and missed Payment.</p>
-                <button class="bg-black text-white rounded-md px-8 p-2 mb-5"><a href="/sign-up">Get Started</a></button>
-                <div class=" other flex items-center mb-5">
-                    <div class="bg-white p-0.5 w-1/4"></div>
-                    <P class="mx-2">Or</P> 
-                    <div class="bg-white w-1/4 p-0.5"></div>
-                </div>
-                <div class="download2 flex items-center gap-4 mt-5">
-                   <div class="down flex items-center bg-black text-white p-4 rounded-2xl gap-2">
-                        <img src="image/image 11.png" alt="">
-                        <a href="">Download On PlayStore</a>
-                   </div>
-                   <div class=" up flex items-center bg-black text-white p-4 rounded-2xl gap-2 ">
-                        <img src="image/image 12.png" alt="">
-                        <a href="">Download On AppStore</a>
-                   </div>
-                </div>
+               </div>
+               <div class="flex flex-col items-center">
+                    <div class="child mb-5 items-center flex flex-col bg-white p-5 rounded-lg ">
+                        <img class="flex mb-5 " src="./imgs/Group 45 (1).png">
+                        <h2 class="text-center font-black ">Better Rates</h2>
+                        <p class=" text-center w-1/2">Our exchange compared to other exchanges, offers better rates when compared to other funds exchangers..</p>
+                    </div>
+                    <div class="child mb-5 items-center flex flex-col bg-white p-5 rounded-lg ">
+                        <img class="flex mb-5 " src="./imgs/Group 47.png">
+                        <h2 class="text-center font-black">Secure</h2>
+                        <p class=" text-center">Our platform is safe and secure to use and scam-free. No more losing funds to rippers..</p>
+                    </div>
+               </div>
             </div>
-            <div class="hero-page2">
-            <img class="w-[90%] ml-5" src="image/Group 42.png" alt="">
-            </div>
-        </div>
-    </div>
+    </section>
+    <!--  -->
+    <section class=" lg:p-20 ">
+       <div class="one lg:flex justify-center items-center ">
+                <img class="lg:pl-20" src="./imgs/Group 23 (1).png">
+                <div class="lg:w-50% lg:pl-20">
+                    <h2 class="lg:w-2/3 mb-5 text-4xl font-semibold">Nigeria's premier PayPal exchange service</h2>
+                    <p class="w-">Discover the most reliable and secure PayPal exchange service in Nigeria. We are your trusted financial partner, committed to providing seamless transactions and top-notch customer service.</p>
+                    <div class="alone flex items-center mt-5">
+                        <a href="#">Get Started</a>
+                        <div class="bg-navy-blue p-1 w-5"></div>
+                    </div>
+                </div>
+       </div>
+    </section>
+    <section class="lg: p-20 sm:p-5 ">
+        <div class="three flex justify-center items-center ">
+                 <div class="lg:w-50% lg:pl-20 sm:w-100%">
+                     <h2 class="lg:w-2/3 mb-5 text-4xl font-semibold">Your top choice for card-to-cash trades</h2>
+                     <p class="w-">Unlock the power of your unused gift cards by trading them for instant cash. We're your go-to platform for secure and efficient gift card-to-cash transactions.</p>
+                     <div class="flex items-center mt-5">
+                         <a href="#">Get Started</a>
+                         <div class="bg-navy-blue p-1 w-5"></div>
+                     </div>
+                 </div>
+                 <img class="lg:pl-20" src="./imgs/Group 22 (1).png">
 
-    <section class="bayo flex flex-col justify-center items-center">
-        <div class="ade flex items-center justify-center flex-col">
-            <h1 class="w-[35%] text-3xl pt-10 pb-3">Streamline Bills Payments with 50+ Service Providers</h1>
-            <p class="w-[60%] pb-10">We've partnered with over 50+ renowned service providers and brands to offer you a comprehensive platform for managing and paying your bills effortlessly</p>
         </div>
-        <div class=" shy grid sm: grid-cols-2 md:grid-cols-3 lg:grid-cols-5 p-8 gap-4">
-            <img src="image/Group 22.png" alt="">
-            <img src="image/Group 21.png" alt="">
-            <img src="image/Group 20.png" alt="">
-            <img src="image/Group 19.png" alt="">
-            <img src="image/Group 18.png" alt="">
-            <img src="image/Group 27.png" alt="">
-            <img src="image/Group 23.png" alt="">
-            <img src="image/Group 24.png" alt="">
-            <img src="image/Group 26.png" alt="">
-            <img src="image/Group 25.png" alt="">
+     </section>
+     <section class="lg: p-20 ">
+        <div class="three flex justify-center items-center ">
+                 <img class="lg:pl-20" src="./imgs/Group 24 (1).png">
+                 <div class="lg:w-50% lg:pl-20">
+                     <h2 class="w-2/3 mb-5 text-4xl font-semibold">Cash out your cryptocurrency</h2>
+                     <p class="w-">Easily transform your cryptocurrency holdings into real cash with our streamlined crypto-to-cash conversion services.</p>
+                     <div class="flex items-center mt-5">
+                         <a href="#">Get Started</a>
+                         <div class="bg-navy-blue p-1 w-5"></div>
+                     </div>
+                 </div>
         </div>
-    </section>
-    <section class="shot flex section-two w-[100%]">
-        <div class="guy flex  justify-center items-center">
-            <div class="sector">
-                <div class="one text-white">
-                    <h1 class="w-[30%] text-2xl mb-5"> Get the Best Data Bundle and Airtime Rates!</h1>
-                    <P class="w-[50%] mb-10">Discover unbeatable deals on data bundles and airtime with us! Enjoy the best rates and never overpay for your mobile needs again. Start saving today</P>
-                    <a class=" bg-black text-white px-8 p-3 rounded-md gap-2" href="/sign-up">Get Started</a>
-                </div>
-            </div>
-            <img class="w-[30%]" src="image/image 15.png" alt="">
-        </div>
-    </section>
-    <section class="guy2 lg:flex justify-center items-center mt-10 ">
-        <div class="omo  text-white">
-            <h1 class="w-[30%] text-2xl mb-5">Enjoy Your Favorite Music and Movies Stress-Free!</h1>
-            <p class="w-[50%] mb-10">Experience uninterrupted entertainment! Stream your beloved music and movies without a hitch. Relax and enjoy endless entertainment with ease.</p>
-            <a class="bg-blue-800 text-white px-8 p-3 rounded-md gap-2 " href="/sign-up">Get Started</a>
-        </div>
-        <img class="w-[30%]" src="image/sectimg2 (2).png" alt="">
-    </section>
-    <section class=" ash flex items-center justify-center mt-10 p-10">
-        <div>
-            <h1 class="w-[30%] text-2xl mb-5">Internet Connectivity, Anytime, Every Day</h1>
-            <p class="w-[60%] mb-10">Experience the internet without boundaries! Stay connected effortlessly, 24/7, and enjoy a world of possibilities at your fingertips. Say goodbye to downtime and hello to uninterrupted online adventures</p>
-            <a class=" bg-black text-white px-8 p-3 rounded-md gap-2" href="/sign-up">Get Started</a>
-        </div>
-        <img src="image/Group 43.png" alt="">
-    </section>
-    <section class="bundle flex flex-col items-center justify-center mt-10">
-        <h2 class="text-4xl">It’s easy to get started</h1>
-        <p class="bund">Say goodbye to the stress of due dates, late fees, and missed payments</p>
-        <div class="cardes lg:flex gap-5 items-center justify-center mt-5">
-            <div class="card1 flex flex-col items-center text-center w-[30%] bg-[url('/dist/image/rectangle.png')] bg-no-repeat bg-cover">
-                <img class="mb-5 mt-10" src="image/Group 30.png" alt="">
-                <h1 class="text-2xl mb-5">Create your Account</h1>
-                <p class="w-[60%] mb-5">Get the ball rolling by signing up on our user friendly web app or by downloading our mobile app. Setting up your AlphaBills account is quick and 
-                hassle free.</p>
-            </div>
-            <div class="card2 flex flex-col items-center text-center w-[30%] bg-[url('/dist/image/rectangle1.png')] bg-no-repeat bg-cover">
-                <img class="mb-5 mt-10" src="image/Group 31.png" alt="">
-                <h1 class="text-2xl mb-5">Add funds to your wallets</h1>
-                <p class="w-[60%] mb-5"> To start enjoying the convenience of AlphaBills, simply load funds into your wallet securely. You'll have complete control over your finances at your fingertips</p>
-            </div>
-            <div class="card3 flex flex-col items-center text-center w-[30%] bg-[url('/dist/image/rectangle2.png')] bg-no-repeat bg-cover">
-                <img class="mb-5 mt-10" src="image/Group 32.png" alt="">
-                <h1 class="text-2xl mb-5">Begin your Bills</h1>
-                <p class="w-[60%] mb-5"> Now that your wallet is topped up,  dive into the world of effortless bill payments. From utilities to subscriptions, AlphaBills has you covered</p>
-            </div>
-        </div>
-    </section>
-    <section class=" nw-foot flex items-center justify-center mt-10" >
-        <div>
-            <h1 class="text-3xl w-[50%] text">Download Our App for a Personalized Experience</h1>
-            <p>Enhance your AlphaBills journey by downloading our app today!!</p>
-            <div class="download flex items-center gap-4 mt-5">
-                <div class="shop flex items-center bg-black text-white p-4 rounded-2xl gap-2">
-                     <img src="image/image 11.png" alt="">
-                     <a href="">Download On PlayStore</a>
-                </div>
-                <div class=" shop flex items-center bg-black text-white p-4 rounded-2xl gap-2 ">
-                     <img src="image/image 12.png" alt="">
-                     <a href="">Download On AppStore</a>
-                </div>
-             </div>
-        </div>
-        <img class="two" src="image/Group 46.png" alt="">
-    </section>
-    <section class="kult flex justify-center items-center p-10">
-        <div class="foot">
-            <div><img src="image/ALPHABILLS STRAIGHT 1.png" alt=""></div>
-            <p class="w-[40%]">AlphaBills is your trusted partner for simplified bill management. We offer a seamless platform to pay bills, manage finances, and stay in control. Join us on the path to financial convenience today!</p>
-            <p>( +234 ) 701 342 8868</p>
-            <p>alphabills4u@gmail.com</p>
-        </div>
-        <div class="club flex gap-10">
-            <div>
-                <h1 class="text-blue-700 text-2xl">Services</h1>
-                <p>Data Bundle</p>
-                <p>Airtime</p>
-                <p>Cable TV</p>
-                <p>Electricity</p>
-            </div>
-            <div>
-                <h1 class="text-blue-700 text-2xl">Company</h1>
-                <p>About Us</p>
-                <p>Contact</p>
-                <p>Terms of services</p>
-                <p>Privacy & Policy</p>
-            </div>
-        </div>
-    </section>
-    <div class="ars flex items-center justify-center pb-3">
-        <h1>&copy; <span id="year"></span> Alphabills Technologies | All Rights Reserved</h1>
-    </div>
+     </section>
+  <!--  -->
+     <section class="news flex flex-col justify-center items-center ">
+         <div class="txt flex flex-col justify-center items-center">
+            <h3 class="text-center font-black mb-3">Real-life use cases that matters</h3>
+            <p class="lg:w-1/2 text-center justify-center items-center mb-3 ">These use cases showcase how we facilitate seamless transactions, whether you're a student, freelancer, traveler, or investor.</p>
+         </div>
+         <img class="txt2" src="./imgs/Frame 172.png">
+     </section>
+     <!--  -->
 
-    <div class="ars flex items-center justify-center pb-3">
-        <h1>Powered by <a href="https://toshconsultinc.com">Toshconsult Technologies Inc.</a></h1>
-    </div>
+     <section class="moh flex flex-col justify-center items-center bg-navy-blue lg:p-20 text-white mt-20">
+        <h3 class="sct text-3xl font-black mb-3">Ready to Experience Financial Freedom?</h3>
+        <p>Join Paytonaira Today and Start Simplifying Your Transactions!</p>
+        <button class="bg-black text-white p-1.5 px-5 mt-5">Get Started</button>
+     </section>
+     <!--  -->
 
+     <div class="footer p-20 bg-blaq text-white">
+        <div class="lg:flex ">
+            <div class="foot1">
+                <img src="./imgs/Frame 4.png">
+                <p class="lg:w-[80%]">PaytoNaira is the easiest and most secure 
+                    exchange that allow users to buy and sell 
+                    their paypal funds, payoneer and gift cards 
+                    in Nigeria.
+                </p>
+            </div>
+            <div class="foot2 flex flex-col gap-5  w-full ">
+                <h3>Quick link</h3>
+                <a href="/about-us">About us</a>
+                <a href="/contact">Contact</a>
+                <a href="/support">Support & FAQ</a>
+                <a href="/blog">Blog</a>
+            </div>
+            <div class="foot3 flex flex-col w-full gap-5">
+                <h3>Contact</h3>
+                <a href="">info@paytonaira.com</a>
+                <a href="">(+234) 91 0000 0000</a>
+                <a href="">5B Taiwo road, ilorin</a>
+            </div>
+            <div class="foot4 flex flex-col w-full">
+                <h3 class="mb-10">Subscribe to our newsletter</h3>
+                <input class="p-4 px-10 rounded-lg" type="email" placeholder="Email address">
+                <button class="p-1.5 px-5 bg-navy-blue rounded-lg mt-5 text-white">Subscribe now</button>
+            </div>
+         </div>
+         <div class="lg:flex items-center justify-center gap-10 mt-10 text-white">
+            <p>2023 copyright by PayToNaira. All right reserved</p>
+            <a class="underline" href="/terms-condition">Terms of services</a>
+            <a class="underline" href="/privacy">Privacy & Policy</a>
+            <div class="social flex gap-3">
+                <img src="./imgs/Group 36.png">
+                <img src="./imgs/Group 37.png">
+                <img src="./imgs/Group 38.png">
+                <img src="./imgs/Group 39.png">
+            </div>
+         </div>
+        </div>
+     
 
     <script>
         function myfunction() {
-            var mobileMenu = document.querySelector('.mobile-menu');
-            var rounded = document.querySelector(".rounded-3xl")
-            mobileMenu.classList.toggle('show-menu');
-            rounded.classList.toggle("clear-radius")
+        var toggle = document.querySelector('.mobilenav__link')
+        toggle.classList.toggle('display')
         }
-
-        document.querySelector("#year").innerHTML = new Date().getFullYear()
     </script>
-    
 </body>
 </html>

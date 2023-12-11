@@ -7,12 +7,15 @@
 .tab {
     /* overflow: hidden; */
     border: 1px solid #ccc;
-    background-color: blue;
+    background-color: #045089;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
   }
   
+  .bill-payer{
+    width: 100%;
+  }
   /* Style the buttons inside the tab */
   .tab button {
     background-color: inherit;
@@ -27,11 +30,17 @@
   /* Change background color of buttons on hover */
   .tab button:hover {
     background-color: white;
+    color: #000;
+  }
+
+  .tablinks{
+    color: white;
   }
   
   /* Create an active/current tablink class */
   .tab button.active {
     background-color: #fafafa;
+    color: #000;
   }
   
   /* Style the tab content */
@@ -58,4 +67,13 @@
   .buying, .not-available{
     color: red;
     font-size: 22px;
+  }
+
+  main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    padding-top: 50px;
   }

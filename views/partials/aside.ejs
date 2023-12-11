@@ -1,90 +1,71 @@
-<aside>
-    <div class="top-side">
-        <a class="item" href="/dashboard"><img src="/images/ALPHABILLS STRAIGHT 1.png" alt=""></a>
-        <div class="toggle">
-            <div class="first-line menu-bar"></div>
-            <div class="second-line menu-bar"></div>
-            <div class="third-line menu-bar"></div> 
-        </div>
-    </div>
-    <div class="middle-side">
-        <ul>
-            <li class="tags">
-                <a class="side-link" href="/dashboard">
-                    <span>
-                        <img src="/images/tabler-icon-layout-dashboard.png" alt="">
-                        <span>Dashboard</span>
-                    </span>
-                </a>
-            </li>
-            <li class="tags">
-                <a class="side-link" href="/airtime">
-                    <span>
-                        <img src="/images/tabler-icon-access-point.png" alt="">
-                        <span>Buy Airtime</span>
-                    </span>
-                </a>
-            </li>
-            <li class="tags">
-                <a class="side-link" href="/data">
-                    <span>
-                        <img src="/images/tabler-icon-id.png" alt="">
-                        <span>buy data</span>
-                    </span>
-                </a>
-            </li>
-            <li class="tags">
-                <a class="side-link" href="/billpayment">
-                    <span>
-                        <img src="/images/tabler-icon-battery-automotive.png" alt="">
-                        <span>pay bills</span>
-                    </span>
-                </a>
-            </li>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/aside.css">
 
-            <li class="tags">
-                <a class="side-link" href="/trades">
-                    <span>
-                        <img src="/images/tabler-icon-battery-automotive.png" alt="">
-                        <span>Trade Assets</span>
-                    </span>
-                </a>
-            </li>
-
-            <li class="tags">
-                <a class="side-link" href="/wallet">
-                    <span>
-                        <img src="/images/tabler-icon-wallet.png" alt="">
-                        <span>wallet</span>
-                    </span>
-                </a>
-            </li>
-            <li class="tags">
-                <a class="side-link" href="/profile">
-                    <span>
-                        <img src="/images/tabler-icon-address-book.png" alt="">
-                        <span>profile</span>
-                    </span>
-                </a>
-            </li>
-            <li class="tags">
-                <a class="side-link" href="/setting">
-                    <span>
-                        <img src="/images/tabler-icon-settings.png" alt="">
-                        <span>Settings</span>
-                    </span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="bottom-side">
-        <div class="tags log-out">
-            <a class="side-link" href="/logout">
-                <span>
-                    <img src="/images/tabler-icon-logout.png" alt="">
-                    <span>logot out</span>
-                </span>
-            </a>
+</head>
+<body>
+    <nav class="dashboard-nav">
+        <div class="nav-logo">
+            <div class="logo-img">
+                <img src="/img/logo-img.png" alt="">
+            </div>
+            <h3>PAYTONAIRA</h3>
         </div>
+        <div class="nav-pages">
+            <a href="/dashboard"><p>Dashboard</p></a>
+            <a href="/wallet"><p>Wallet</p></a>
+            <a href="/trades/paypal"><p>PayPal</p></a>
+            <a href="/trades/payoneer"><p>Payoneer</p></a>
+            <a href="/trades/crypto"><p>Crypto</p></a>
+            <a href="/trades/giftcard"><p>Giftcard</p></a>
+            <a href="/setting"><p>Settings</p></a>
+        </div>
+        <div class="nav-other-sect">
+            <div class="nav-not-img">
+                <img onclick="window.location.href='/logout'" style="cursor: pointer;" src="image/logout3.svg" alt="">
+            </div>
+            <button onclick="window.location.href='/profile'" class="nav-btn">
+                <img src="img/user.png" alt="">
+                <p><%= user.name %></p>
+            </button>
+        </div>
+    </nav>
+    <div class="main-nav">
+        <nav class="mobile-nav">
+            <div class="mobile-page">
+                <div class="mobile-logo">
+                    <img src="img/logo-img.png" alt="">
+                    <p>PAYTONAIRA</p>
+                </div>
+                <div class="mobile-menu">
+                    <a href="/dashboard"><p>Dashboard</p></a>
+                    <a href="/wallet"><p>Wallet</p></a>
+                    <a href="/trades/paypal"><p>PayPal</p></a>
+                    <a href="/trades/payoneer"><p>Payoneer</p></a>
+                    <a href="/trades/crypto"><p>Crypto</p></a>
+                    <a href="/trades/giftcard"><p>Giftcard</p></a>
+                    <a href="/setting"><p>Settings</p></a>
+                </div>
+                <div class="mobile-bottom-container">
+                    <div onclick="window.location.href='/logout'" class="mobile-buttom mobile-logo">
+                        <img class="logout-logo" src="image/logout3.svg" alt="">
+                        <p>LOGOUT</p>
+                    </div>
+                        <button onclick="window.location.href='/profile'" class="nav-btn">
+                            <img src="img/user.png" alt="">
+                            <p><%= user.name %></p>
+                        </button>
+                </div>
+            </div>
+            <button class="menu" onclick="aside()">☰</button>
+           
+        </nav>
     </div>
-</aside>
+
+    <script src="/js/navbar.js"></script>
+</body>
+</html>

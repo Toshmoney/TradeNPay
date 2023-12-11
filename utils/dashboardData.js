@@ -1,5 +1,7 @@
+require("dotenv")
 const Wallet = require("../model/Wallet");
 const Transaction = require("../model/Transaction");
+const baseurl = process.env.BASE_URL;
 
 const formatTransactionDate = (date_string) => {
   const trans_date = new Date(date_string);
@@ -46,9 +48,8 @@ const fetchUserTransactions = async (userId, limit = 20) => {
 };
 
 const dashboardData = async (user, is_admin = false, limit = 20) => {
-  let userid = user?._id
   const userWallet = await Wallet.findOne({
-    user: userid,
+    user: user._id,
   });
   let trxns = [];
   if (is_admin) {
@@ -72,9 +73,12 @@ const dashboardData = async (user, is_admin = false, limit = 20) => {
     email: user.email,
     phoneNumber: user.phoneNumber
   };
+
+  const tradePrice = await fetch(`${baseurl}/api/v1/trade_plan`).then(res => res.json())
   const data = {
     user: user_data,
     transactions: trxns,
+    tradePrice: tradePrice?.data
   };
   if (userWallet) {
     user_data.balance = userWallet.current_balance;

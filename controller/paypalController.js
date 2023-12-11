@@ -5,11 +5,12 @@ const { default: axios } = require("axios");
 const Trades = require("../model/Trades");
 const nodemailer = require("nodemailer");
 
+const baseurl = process.env.BASE_URL
 
 const buyPaypal = async (req, res) => {
   const {email, full_name, currency, service_id} = req.body;
   let amount = req.body.amount;
-  const trade = await fetch(`http://localhost:4000/api/v1/trade_plan/${service_id}`).then(res => res.json())
+  const trade = await fetch(`${baseurl}/api/v1/trade_plan/${service_id}`).then(res => res.json())
   let details = await trade.data
   const trade_type = details.trade_type
   const buyPrice = details.dollar_buy_price;
@@ -110,7 +111,7 @@ const sellPaypal = async (req, res) => {
 
   const {trans_id, currency, service_id} = req.body
   let amount = req.body.amount
-  const trade = await fetch(`http://localhost:4000/api/v1/trade_plan/${service_id}`).then(res => res.json())
+  const trade = await fetch(`${baseurl}/api/v1/trade_plan/${service_id}`).then(res => res.json())
   let details = await trade.data
   const trade_type = details.trade_type
   const sellPrice = details.dollar_sell_price;

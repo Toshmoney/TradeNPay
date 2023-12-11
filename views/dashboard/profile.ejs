@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlphaBills | User Profile</title>
+    <title>Pay To Naira | Profile</title>
     <link rel="stylesheet" href="css/profile.css">
     <link rel="stylesheet" href="css/aside.css">
 </head>
@@ -13,59 +13,13 @@
         <%- include('../partials/aside') %>
        <!-- mobile end -->
         <main>
-            <%- include('../partials/mobileHeader') %>
            <div class="dashboard-main-top">
                 <h1>Profile</h1>
            </div>
            <div class="container">
-                <div class="firste">
-                    <div class="one">
-                        <% if (messages.error) { %>
-                            <div class="alert alert-danger" role="alert">
-                              <%= messages.error %>
-                            </div>
-                        <% } %>
-                        <% if (messages.info) { %>
-                            <div class="alert alert-info" role="alert">
-                              <%= messages.info %>
-                            </div>
-                        <% } %>
-                        <div class="one-div">
-                            <div>
-                                <img src="images/Group 68.png" alt="">
-                            </div>
-                            <div class="content">
-                                <h3>Become a Reseller</h3>
-                                <p>We have special packages for our resellers, right from building a reseller website for them to the marketing strategies. <br>What are you still waiting for? Get start now!</p>
-                            </div>
-                        </div>
-                        <a class="btn" href="https://wa.me/2348103856846"><button>Get Started</button></a>
-                    </div>
-                    <div class="one">
-                        <div class="one-div">
-                            <div>
-                                <img src="images/Group 67.png" alt="">
-                            </div>
-                            <div class="content">
-                                <h3>Build a Website for your next Project</h3>
-                                <p>Do you have a project you are planning to launch? We've got amazing offer for you! <br>Our Developers are ready to make your dreams come through using the power of technologies.</p>
-                            </div>
-                        </div>
-                        <a class="btn" href="https://toshconsultinc.com"><button>Get Started</button></a>
-                    </div>
-                    <div class="three">
-                        <div>
-                            <img src="images/Group 66.png" alt="">
-                        </div>
-                        <h3>SHOW AVAILABLE BALANCE</h3>
-                        <div>
-                            <input type="checkbox">
-                        </div>
-                    </div>
-                </div>
                 <div class="seconde">
                     <div class="profile">
-                        <img src="images/small-logo.png" alt="profile">
+                        <div><img style="height: 50px;" src="/img/Frame 4@2x.png" alt="Profile"></div>
                         <div class="name">
                             <input class="username" type="text" value="<%= name %>">
                             <img src="images/tabler-icon-edit.png" alt="">
@@ -80,9 +34,9 @@
                 </div>
             </div>
         </main>
-    </section>
-    
+    <%- include('../partials/footer') %>
 
+    </section>
     <script src="js/profile.js"></script>
     <script src="js/dashboard.js"></script>
 
