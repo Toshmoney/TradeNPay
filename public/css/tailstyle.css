@@ -16,6 +16,7 @@ li,a,button{
   right: 80px;
   display: none;
   margin-top: 10px;
+  color: aliceblue;
 }
 header{
   display: flex;
@@ -85,9 +86,6 @@ header{
 .cards{
     width: 50%;
 }
-.txt2{
-    height: 100vh;
-}
 .form2{
     display: flex;
     padding: 80px;
@@ -97,6 +95,10 @@ header{
 }
 
 @media (max-width:970px) {
+
+.cards {
+        width: 100%;
+    }
   header{
       padding: 20px 20px;
       display: flex;
@@ -136,7 +138,7 @@ header{
       overflow: hidden;
   }
   .bouy {
-      padding: 10px;
+      padding: 25px;
   }
   .why{
       margin-bottom: 10px;
@@ -155,13 +157,11 @@ header{
       padding: 10px;
       align-items: center;
   }
-  .one h2{
-      margin-left: 40px;
+  .one h2, .one p, .three p, .three h2, .adj-p{
+      padding: 2px 10px;
+
   }
-  .one p{
-      width: 90%;
-      margin-left: 30px;
-  }
+  
   .alone{
       margin-left: 30px;
   }
@@ -254,4 +254,16 @@ header{
       width: 100%;
   }
 
+  .alltxt{
+    width: 100%;
+    padding: 20px;
+  }
+
+  .alltxt p, .alltxt h2{
+    width: 100%;
+  }
+
+  .sect{
+    padding: 20px 0;
+  }
 }
