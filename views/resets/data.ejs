@@ -5,11 +5,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AlphaBills | Reset Data Prices</title>
+  <title>PayToNaira | Reset Data Prices</title>
   <link rel="stylesheet" href="/css/toastr.css">
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/general.css">
-  <link rel="stylesheet" href="/css/aside.css">
+  <link rel="stylesheet" href="/css/adminstyle.css">
+  <link rel="stylesheet" href="/css/adminGeneral.css">
+  <link rel="stylesheet" href="/css/adminaside.css">
   <link rel="stylesheet" href="/css/DataPlans.css">
 </head>
 
@@ -18,9 +18,9 @@
     <%- include('../partials/adminAside') %>
 
       <main>
-        <%- include('../partials/mobileHeader') %>
+        <%- include('../partials/adminmobileHeader') %>
           <div class="dashboard-main-top">
-            <h1>UPDATE Data Price</h1>
+            <h1>UPDATE Trade Price</h1>
             <div class="input-bar">
               <div>
                 <img src="/images/tabler-icon-bell.png" alt="">
@@ -32,27 +32,14 @@
           </div>
           <div class="bill-payer">
             <form action="">
-              <div class="form-group">
-                <div class="choose form-field">
-                  <label class="bold" for="network">SELECT NETWORK PROVIDER</label>
-                  <select class="network" name="network" id="network">
-                    <% for ( let i=0; i < networks.length; i++ ) { let selected=( networks[i].id==data_plan.plan_id )
-                      ? "selected" : "" ; %>
-                      <option value="<%=networks[i].id %>" <%=selected %>><%=networks[i].name %>
-                      </option>
-                      <% } %>
-
-                  </select>
-                </div>
-              </div>
               <div class="form-field">
                 <label class="bold" for="data-size">SIZE</label>
-                <input value="<%= data_plan.size %>" type="text" name="data-size" id="data-size"
+                <input value="<%= trade_type %>" type="text" name="data-size" id="data-size"
                   placeholder="Set data price">
               </div>
               <div class="form-field">
                 <label class="bold" for="phoneNumber">PRICE</label>
-                <input value="<%= data_plan.sale_price %>" type="number" name="price" id="price"
+                <input value="<%= trade_type %>" type="number" name="price" id="price"
                   placeholder="Set data price">
               </div>
               <div class="page-end">

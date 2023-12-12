@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AlphaBills | Business Balance</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/general.css">
-    <link rel="stylesheet" href="css/aside.css">
-    <link rel="stylesheet" href="css/wallet.css">
+    <link rel="stylesheet" href="/css/adminstyle.css">
+    <link rel="stylesheet" href="/css/adminGeneral.css">
+    <link rel="stylesheet" href="/css/adminaside.css">
+    <link rel="stylesheet" href="/css/adminwallet.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
@@ -16,7 +16,7 @@
         <%- include('../partials/adminAside') %>
        <!-- mobile dashboard end -->
         <main>
-            <%- include('../partials/mobileHeader') %>
+            <%- include('../partials/adminmobileHeader') %>
             <div class="dashboard-main-top">
                     <h1>ALL Transactions</h1>
                     <div class="input-bar">
@@ -28,7 +28,7 @@
                         </div>
                     </div>
             </div>
-            <%- include('../partials/alltransactions', {transactions: transactions}) %>
+            <%- include('../partials/admintrans', {transactions: transactions}) %>
         </main>
     </section>
     <script src="js/dashboard.js"></script>

@@ -121,6 +121,7 @@ body{
 }
 .crypto-header td{
     color: #00000080;
+    padding: 2px 10px;
     font-size: 13px;
     font-weight: bold;
 }
