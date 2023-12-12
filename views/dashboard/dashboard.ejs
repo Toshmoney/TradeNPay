@@ -78,7 +78,7 @@
             <section class="crypto-table">
                 <h1>Trading rates for today</h1>
                 <% if (tradePrice.length > 0){ %>
-                    <table>
+                    <table class="table">
                         <tr class="crypto-header">
                             <td>Service</td>
                             <td>Buy Rate</td>
@@ -86,24 +86,15 @@
                             <td>Currency</td>
                             <td>Trade type</td>
                             <td>Availability</td>
-                            <td>Action</td>
                         </tr>
                         <% tradePrice.forEach(function(data){ %>
                             <tr class="crypto-line1">
-                                <td>
-                                    <p><%= data.trade_type %> </p>
-                                </td>
+                                <td><%= data.trade_type %></td>
                                 <td><%= data.dollar_sell_price? "₦" + data.dollar_sell_price : " Nill" %></td>
                                 <td><%= data.dollar_buy_price? "₦" + data.dollar_buy_price : "Nill" %></td>
                                 <td ><%= data.currency %></td>
                                 <td ><%= data.service_id %></td>
                                 <td><%= data.is_available? "Yes": "No" %></td>
-                                <td>
-                                    <div style="display: flex; gap: 30px;">
-                                        <button onclick="window.location.href='/trades/crypto'">Buy</button>
-                                        <button onclick="window.location.href='/trades/paypal'">Sell</button>
-                                    </div>
-                                </td>
                             </tr>
                        <% }) %>
                     </table>

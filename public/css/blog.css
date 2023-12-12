@@ -1,3 +1,8 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 .blog-head {
     display: flex;
     flex-direction: column;
@@ -28,60 +33,30 @@
 }
 
 .blog-content {
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-    margin-left: 100px;
-    padding-bottom: 30px;
-}
-.blog-content-two{
     width: 100%;
-    display: flex;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 12px;
+    align-items: center;
+    gap: 50px;
+    padding: 20px;
 }
 
-.first-blog-post{
-         width: 350px;
-        margin-right: 10px;
+
+.inner-blog-post{
+         width: 100%;
         border: 0.5px solid #ccc; 
         padding: 10px; 
         border-radius: 10px;
         border-color: #ccc;
         box-shadow: 20px;
 }
-.first-blog-post:hover{
+.inner-blog-post:hover{
     background-color: darkblue;
     cursor: pointer;
     color: white;
 }
-.second-blog-post{
-        width: 350px;
-        margin-right: 10px;
-        border: 0.5px solid #ccc; 
-        padding: 10px; 
-        border-radius: 10px;
-        border-color: #ccc;
-        box-shadow: 20px;
-}
-.second-blog-post:hover{
-    background-color: darkblue;
-    cursor: pointer;
-    color: white;
-}
-.third-blog-post {
-    width: 350px;
-    margin-right: 10px;
-    border: 0.5px solid #ccc; 
-    padding: 10px; 
-    border-radius: 10px;
-    border-color: #ccc;
-    box-shadow: 120px;
-}
-.third-blog-post:hover{
-    background-color: darkblue;
-    cursor: pointer;
-    color: white;
-}
+
 .date{
     display: flex;
     justify-content: space-between;
@@ -128,52 +103,16 @@ h3{
             .blog-head-p {
                 font-size: 16px;
             }
-        
-            .blog-content, .blog-content-two {
-                width: 100%;
-                flex-direction: column;
+
+            .blog-content{
+                grid-template-columns: 1fr;
                 align-items: center;
+                padding: 20px;
             }
-        
-            .first-blog-post, .second-blog-post, .third-blog-post {
+            .inner-blog-post{
                 width: 100%;
-                margin: 10px 0;
-            }
-        
-            .blog-content-img img {
-                max-width: 100%;
-                height: auto;
             }
         }
         
-       
-            .blog-content, .blog-content-two {
-             width: 100%;
-            display: flex;
-            flex-wrap: wrap; 
-            justify-content: space-around;
-            align-items: center;
-            padding-bottom: 30px;
-        }
-        
-        .first-blog-post, .second-blog-post, .third-blog-post {
-            width: 350px;
-            margin-right: 10px;
-            border: 0.5px solid #ccc;
-            padding: 10px;
-            border-radius: 10px;
-            border-color: #ccc;
-            box-shadow: 20px;
-        }
-        
-        .first-blog-post:hover, .second-blog-post:hover, .third-blog-post:hover {
-            background-color: darkblue;
-            cursor: pointer;
-        }
-        
-        
-        .blog-content-img {
-            display: flex;
-            width: 100%;
-        }
+
     
