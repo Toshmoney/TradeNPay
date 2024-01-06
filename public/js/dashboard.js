@@ -23,4 +23,5 @@ sideLinks.forEach(sideLink => {
     if (currentPage.includes(sideLinkHref)) {
         sideLink.classList.add('active')
     }
-})
+});
+

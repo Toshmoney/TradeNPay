@@ -53,6 +53,9 @@ const TransactionSchema = new Schema(
       type: String,
       trim: true,
     },
+    proof:{
+      type:String
+    }
   },
   { timestamps: true }
 );

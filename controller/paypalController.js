@@ -103,13 +103,14 @@ const sellPaypal = async (req, res) => {
       imageUploadFile.mv(uploadPath, function(err){
         if(err){
           req.flash("error", err);
+          console.log(err);
         }
       })
 
     }
 
 
-  const {trans_id, currency, service_id} = req.body
+  const {trans_id, currency, service_id, email} = req.body
   let amount = req.body.amount
   const trade = await fetch(`${baseurl}/api/v1/trade_plan/${service_id}`).then(res => res.json())
   let details = await trade.data
@@ -140,7 +141,9 @@ const sellPaypal = async (req, res) => {
     service: "paypal",
     type: "credit",
     description: `NGN${amount} worth of paypal ${service_id} funds sold!`,
-    reference_number: transaction_id,
+    reference_number: trans_id,
+    external_id:email,
+    proof:newImageName
   });
  
   // send request to server

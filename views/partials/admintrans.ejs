@@ -9,10 +9,11 @@
                             <thead class="font-medium dark:border-neutral-500 dark:bg-neutral-600">
                                 <tr>
                                     <th scope="col" class="px-6 py-4">User</th>
-                                    <th scope="col" class="px-6 py-4">Transaction</th>
+                                    <th scope="col" class="px-6 py-4">Transaction & Ref</th>
                                     <th scope="col" class="px-6 py-4">Amount (NGN)</th>
                                     <th scope="col" class="px-6 py-4">Status</th>
                                     <th scope="col" class="px-6 py-4">Date</th>
+                                    <th scope="col" class="px-6 py-4">Mail</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -21,8 +22,19 @@
                                         <td class="whitespace-nowrap px-6 py-4">
                                             <%= transaction.user.name %>
                                         </td>
-                                        <td class="whitespace-nowrap px-6 py-4">
-                                            <%= transaction.description %>
+                                        <td class="whitespace-nowrap px-6 py-4" id="displayText">
+                                            <div class="flex flex-col">
+                                                <%= transaction.description %>
+                                                <% if (transaction.status === 'review'){ %>
+                                                    <span style="background-color: grey; color: white; padding: 2px;">Ref: <%= transaction.reference_number %></span>
+                                                <% } %>
+                                            </div>
+
+                                            <div class="imagePopup">
+                                                <!-- <span class="closeBtn" onclick="displayPopup()">X</span> -->
+                                                <img src="https://via.placeholder.com/300" alt="Popup Image">
+                                              </div>
+
                                         </td>
                                         <td class="whitespace-nowrap px-6 py-4">
                                             <%= transaction.amount %>
@@ -36,8 +48,23 @@
                                                 <% } %>
                                         </td>
                                         <td class="whitespace-nowrap px-6 py-4">
-                                            <%= transaction.updatedAt %>
+                                            <div class="flex flex-col">
+                                                <%= transaction.updatedAt %>
+                                                <% if (transaction.status === 'review'){ %>
+                                                        <button onclick="displayPopup()" style="background-color: goldenrod; padding: 5px; color: white; border-radius: 5px; z-index: 1000;" >View</button>
+                                                    <% } %>
+                                            </div>
                                         </td>
+                                        <td class="whitespace-nowrap px-6 py-4 flex flex-col">
+                                            <% if (transaction.status === 'review'){ %>
+
+                                            <%= transaction.external_id %>
+
+                                            <% } %>
+
+
+                                        </td>
+
                                     </tr>
                                     <% }); %>
                             </tbody>

@@ -5,6 +5,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AlphaBills | Business Balance</title>
+
+    <style>
+        /* Styles for the popup */
+        .imagePopup {
+          display: none;
+          position: fixed;
+          z-index: 999;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          background-color: rgba(0, 0, 0, 0.8);
+          padding: 20px;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+    
+        #imagePopup img {
+          max-width: 100%;
+          max-height: 80vh;
+        }
+    
+        .closeBtn {
+          position: absolute;
+          top: 10px;
+          right: 15px;
+          font-size: 20px;
+          color: #fff;
+          cursor: pointer;
+        }
+
+        .active{
+            display: block;
+        }
+
+        .no-active{
+            display: none;
+        }
+      </style>
+
     <link rel="stylesheet" href="/css/adminstyle.css">
     <link rel="stylesheet" href="/css/adminGeneral.css">
     <link rel="stylesheet" href="/css/adminaside.css">
@@ -31,7 +70,19 @@
             <%- include('../partials/admintrans', {transactions: transactions}) %>
         </main>
     </section>
-    <script src="js/dashboard.js"></script>
+    <script>
+        // Function to display the image popup
+        function displayPopup() {
+          document.querySelector('.imagePopup').classList.toggle('active')
+        }
+      
+        // Function to close the image popup
+        function closePopup() {
+            document.querySelector('.active').classList.toggle('no-active')
+        }
+      </script>
+
+      <script src="js/dashboard.js"></script>
     <script src="js/wallet.js"></script>
 </body>
 </html>
