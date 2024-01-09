@@ -31,7 +31,7 @@ input, select {
 }
 
 .submit-btn {
-    background-color: #0235EA;
+    background-color: #045089;
     color: #FFFFFF;
     border: none;
 }
@@ -48,7 +48,7 @@ input, select {
     border-width: 5px;
     opacity: 0;
     max-width: 320px;
-    background-color: rgb(228, 57, 57);
+    background-color: #045089;
     color: aliceblue;
     padding: 1rem;
     -webkit-animation: fadeIn 10s;

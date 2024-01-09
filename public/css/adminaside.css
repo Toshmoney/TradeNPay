@@ -69,8 +69,8 @@ a:active {
 
 .side-link:hover,
 .side-link.active{
-    border-left: 2px solid #0235EA;
-    color: #0235EA;
+    border-left: 2px solid #045089;
+    color: #045089;
     padding-left: 1rem;
 }
 .side-link:hover > span,

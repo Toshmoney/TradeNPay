@@ -1,6 +1,7 @@
 .blue-background {
-    background: radial-gradient(24.1% 77.04% at 53.05% 34.1%, #0235EA 0%, rgba(33, 73, 217, 0.714882) 50.26%, rgba(29, 72, 226, 0.6) 100%);
+    /* background: radial-gradient(24.1% 77.04% at 53.05% 34.1%, #045089 0%, rgba(33, 73, 217, 0.714882) 50.26%, rgba(29, 72, 226, 0.6) 100%); */
     border-radius: 14px;
+    background-color: #045089;
     width: 100%;
     /* height: 20vh; */
     display: flex;

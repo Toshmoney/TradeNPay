@@ -60,6 +60,19 @@
             <div class="dashboard-main-top">
                     <h1>ALL Transactions</h1>
             </div>
+
+            <div>
+              <% if (messages.error) { %>
+                <div class="alert alert-danger" role="alert">
+                  <%= messages.error %>
+                </div>
+              <% } %>
+              <% if (messages.info) { %>
+                  <div class="alert alert-info" role="alert">
+                    <%= messages.info %>
+                  </div>
+              <% } %>
+            </div>
             <%- include('../partials/admintrans', {transactions: transactions}) %>
         </main>
     </section>

@@ -214,7 +214,7 @@ const approveTrades = async(req, res)=>{
     await userTrade.save();
 
   req.flash("info", "Successfully Approved trade, user will now get credited!")
-  return res.redirect("/admin")
+  return res.redirect("/transactions/all")
 }
 
 // Create new blog post
