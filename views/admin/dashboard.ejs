@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlphaBills Admin Dashboard</title>
+    <title>Admin Dashboard - Pay To Naira</title>
     <link rel="stylesheet" href="/css/adminstyle.css">
     <link rel="stylesheet" href="/css/adminGeneral.css">
     <link rel="stylesheet" href="/css/adminaside.css">
@@ -19,14 +19,6 @@
                 <%- include('../partials/adminmobileHeader') %>
                     <div class="dashboard-main-top">
                         <h1>Dashboard</h1>
-                        <div class="input-bar">
-                            <div>
-                                <img src="images/tabler-icon-bell.png" alt="">
-                            </div>
-                            <div class="profile-picture">
-                                <img src="images/Frame 12.png" alt="profile-picture">
-                            </div>
-                        </div>
                     </div>
 
                     <div class="dash-items">
@@ -39,7 +31,7 @@
                         </div>
                     </div>
 
-                    <div class="airtime-area">
+                    <div class="airtime-area-adjusted">
                         <div class="main-airtime">
                             <a href="/transactions">
                                 <div class="icon-box">
@@ -75,18 +67,6 @@
                                     <p>
                                         <%= total_user %> Users
                                     </p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="main-airtime">
-                            <a href="/business-balance">
-                                <div class="icon-box">
-                                    <img src="images/tabler-icon-wallet.png" alt="">
-                                </div>
-                                <div>
-                                    <h3>Business Balance</h3>
-                                    <h3>₦<%= business_balance %>
-                                    </h3>
                                 </div>
                             </a>
                         </div>
