@@ -3,6 +3,7 @@ require("express-async-errors");
 const express = require("express");
 const fileupload = require("express-fileupload");
 const session = require("express-session");
+const multer = require("multer");
 // const bodyParser = require("body-parser")
 const passport = require("passport");
 const flash = require("connect-flash");
@@ -25,6 +26,15 @@ const dataPlanRoutes = require("./routes/dataPlanRoute");
 const tradeRoutes = require("./routes/tradeRoute");
 const tvRoutes = require("./routes/tvRouter");
 const transactionRoutes = require("./routes/transaction");
+
+const storage = multer.diskStorage({
+  destination: './public/images',
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 const port = 4001;
 const app = express();
