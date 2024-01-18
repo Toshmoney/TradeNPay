@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paytonaira | All Trade Plans</title>
+  <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/adminGeneral.css">
+    <link rel="stylesheet" href="/css/adminaside.css">
+    <link rel="stylesheet" href="/css/adminwallet.css">
+    <link rel="icon" type="image/x-icon" href="/img/logo-img.png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/img/logo-img.png">
+
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body>
+  <section class="dashboard-container">
+    <%- include('../partials/adminAside') %>
+      <!-- mobile dashboard end -->
+      <main>
+        <%- include('../partials/adminmobileHeader') %>
+
+          <div class="dashboard-main-top">
+            <div>
+                <h1>ALL Trade Plans</h1>
+                <p>Edit the input you want to make changes to and don't forget to click on the update button</p>
+            </div>
+          </div>
+
+          <% if (msg.error) { %>
+            <div class="alert alert-danger" role="alert">
+              <%= msg.error %>
+            </div>
+          <% } %>
+          <% if (msg.info) { %>
+              <div class="alert alert-info" role="alert">
+                <%= msg.info %>
+              </div>
+          <% } %>
+
+          <!-- Trade plans table -->
+
+          <div class="history-table">
+            <% if (tradePrice.length> 0) { %>
+              <div class="flex flex-col">
+                <div class="overflow-x-auto">
+                  <div class="inline-block min-w-full">
+                    <div class="overflow-hidden">
+                      <table class="min-w-full text-left text-sm font-light">
+                        <thead class="font-medium dark:border-neutral-500 dark:bg-neutral-600">
+                          <tr>
+                            <th scope="col" class="whitespace-nowrap px-6 py-4">Service ID</th>
+                            <th scope="col" class="px-6 py-4">Buy Rate(₦)</th>
+                            <th scope="col" class="px-6 py-4">Sell Rate(₦)</th>
+                            <th scope="col" class="px-6 py-4">Currency</th>
+                            <th scope="col" class="px-6 py-4">Trade type</th>
+                            <th scope="col" class="px-6 py-4">Availability</th>
+                            <th scope="col" class="px-6 py-4">Buy Email</th>
+                            <th scope="col" class="px-6 py-4">Sell Email</th>
+                            <th scope="col" class="px-6 py-4">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% tradePrice.forEach(function(data) { %>
+                            <tr data-id="<%= data._id %>" data-plan_id="<%= data.service_id %>"
+                              class="data-plan bg-white dark:border-neutral-500 dark:bg-neutral-600 dark:text-white">
+                              <form action="/api/v1/trade_plan/<%= data.service_id %>" method="post">
+                                <td class="whitespace-nowrap px-6 py-4">
+                                    <%= data.trade_type %>
+                                  </td>
+                                  <td class="whitespace-nowrap px-6 py-4">
+                                    <input type="text" class="price-field bg-white dark:border-neutral-500 dark:bg-neutral-600 dark:text-white" name="dollar_sell_price" value='<%= data.dollar_sell_price? data.dollar_sell_price : " Nill" %>'>
+                                  </td>
+                                  <td class="whitespace-nowrap px-6 py-4">
+                                    <input type="text" class="price-field bg-white dark:border-neutral-500 dark:bg-neutral-600 dark:text-white" name="dollar_buy_price" value='<%= data.dollar_buy_price? data.dollar_buy_price : "Nill" %>'>
+                                  </td>
+                                  <td class="whitespace-nowrap px-6 py-4">
+                                      <%= data.currency %>
+                                  </td>
+                                  <td class="whitespace-nowrap px-6 py-4">
+                                    <%= data.service_id %> %>
+                                  </td>
+                                  <td class="px-6 py-4">
+                                    <input class="price-field bg-white dark:border-neutral-500 dark:bg-neutral-600 dark:text-white" type="text" name="is_available" value='<%= data.is_available%>'>
+                                  </td>
+                                  <td class="px-6 py-4">
+                                    <input class="price-field bg-white dark:border-neutral-500 dark:bg-neutral-600 dark:text-white" type="text" name="buing_mail" value='<%= data.buing_mail? data.buing_mail : "NA" %>'>
+                                  </td>
+                                  <td class="px-6 py-4">
+                                    <input class="price-field bg-white dark:border-neutral-500 dark:bg-neutral-600 dark:text-white" type="text" name="selling_mail" value='<%= data.selling_mail ? data.selling_mail : "NA" %>'>
+                                  </td>
+                                  <td class="whitespace-nowrap px-6 py-4">
+                                      <button type="submit" class="price-button bg-blue-500 text-white px-4 py-2">Update</button>
+                                  </td>
+                              </form>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% } else { %>
+                <p>No Data Plans</p>
+                <% } %>
+          </div>
+      </main>
+  </section>
+  <script src="/js/dashboard.js"></script>
+</body>
+
+</html>

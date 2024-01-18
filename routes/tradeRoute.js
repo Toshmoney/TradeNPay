@@ -17,7 +17,7 @@ router
 router
   .route("/:service_id")
   .get(getSingleTradePlan)
-  .patch([isAuthenticated, isAdmin], updateTradePlan)
+  .post([isAuthenticated, isAdmin], updateTradePlan)
   .delete([isAuthenticated, isAdmin], deleteTradePlan);
 router.route("/upload").post([isAuthenticated, isAdmin], batchUpload);
 router.route("/create-trade").post([isAuthenticated, isAdmin], createTradePlan);

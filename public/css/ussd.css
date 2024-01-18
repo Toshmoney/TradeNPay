@@ -1,0 +1,161 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+section{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 50px;
+    gap: 30px;
+}
+.content-img{
+    width: 100%;
+}
+.blog-text{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    /* text-align: center; */
+    gap: 30px;
+    /* align-items: center; */
+}
+.blog-text h1{
+    font-size: 60px;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+textarea, input{
+    outline: none;
+}
+.blog-text p{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: larger;
+    font-weight: lighter;
+}
+.area{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+form button{
+    width: 30%;
+    padding: 15px;
+    border-radius: 20px;
+    border: none;
+    background-color: #045089;
+    color: white;
+    font-size: larger;
+}
+.input{
+    flex-direction: column;
+    display: flex;
+    gap: 10px;
+}
+.blog-text b{
+    font-size: 25px;
+}
+.content-img{
+    width: 100%;
+    height: 50vh;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.tent{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+ul{
+    font-size: larger;
+    padding-left: 30px;
+}
+ol{
+    font-size: larger;
+    padding-left: 30px;
+}
+
+form{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+input{
+    width: 100%;
+    padding: 5px;
+}
+label{
+    font-size: larger;
+    font-weight: 600;
+}
+.blog-text h4{
+    font-size: 20px;
+}
+table{
+    border-collapse: collapse;
+}
+
+.blog-text h2{
+    font-size: 40px;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    font-size: larger;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  @media (max-width: 600px) {
+    th, td {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+
+@media screen and (max-width:900px) {
+    .blog-text{
+        width: 100%;
+        padding: 10px;
+    }
+    section{
+        padding: 50px 10px;
+    }
+    form{
+        width: 100%;
+    }
+    form button{
+        width: 100%;
+    }
+    h1{
+        font-size: 30px;
+        width: 100%;
+    }
+    h2{
+        font-size: 25px;
+    }
+    .blog-text h1{
+        width: 100%;
+    }
+}

@@ -1,0 +1,118 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    gap: 30px;
+}
+.blog-text p{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: larger;
+    font-weight: lighter;
+}
+.blog-text{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    /* align-items: center; */
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.text{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+form{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+input{
+    width: 100%;
+    padding: 5px;
+    border-top: 10px;
+}
+.blog-text img{
+    height: 50vh;
+    width: 100%;
+}
+.area{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+label{
+    font-size: larger;
+    font-weight: 600;
+}
+.input{
+    flex-direction: column;
+    display: flex;
+    gap: 10px;
+}
+form button{
+    width: 30%;
+    padding: 15px;
+    border-radius: 20px;
+    border: none;
+    background-color: #045089;
+}
+.mtn, .glo, .airtel, .mobile{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+span{
+    font-size: larger;
+    font-weight: 700;
+}
+.blog-text h1{
+    font-size: 60px;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+textarea, input{
+    outline: none;
+}
+
+@media screen and (max-width: 900px){
+    .blog-text{
+        width: 100%;
+    }
+    section{
+        padding: 40px 20px;
+    }
+    form{
+        width: 100%;
+    }
+    .blog-text h1{
+        width: 100%;
+    }
+    form button{
+        width: 100%;
+    }
+    .mobile-img{
+        width: 80%;
+    }
+    .blog-text h1{
+        font-size: 30px;
+    }
+    
+}

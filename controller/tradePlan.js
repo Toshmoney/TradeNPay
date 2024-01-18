@@ -60,11 +60,14 @@ const updateTradePlan = async (req, res) => {
       404
     );
   }
-  res.status(StatusCodes.OK).json({
-    message: "trade plan updated successfully",
-    success: true,
-    data: upadated_trade_plan,
-  });
+  // res.status(StatusCodes.OK).json({
+  //   message: "trade plan updated successfully",
+  //   success: true,
+  //   data: upadated_trade_plan,
+  // });
+
+  req.flash("info", "Successfully updated trade!")
+  return res.redirect("/admin/trade-plans")
 };
 
 const deleteTradePlan = async (req, res) => {

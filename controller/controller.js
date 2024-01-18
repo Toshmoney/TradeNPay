@@ -8,6 +8,7 @@ const User = require('../model/User.db');
 const { CustomAPIError } = require("../handleError");
 const { StatusCodes } = require("http-status-codes");
 const { default: axios } = require("axios");
+const Question = require("../model/Quiz");
 
 
 const homePage = async (req, res) => {
@@ -181,6 +182,126 @@ const termsCondition = async (req, res) => {
   const user = req?.user
   res.status(200).render("pages/terms-condition", {user});
 };
+
+const getQuiz = async(req, res)=>{
+  try {
+    // Fetch a random question from the database
+    const randomQuestion = await Question.findOne().skip(Math.floor(Math.random() * await Question.countDocuments()));
+
+    res.render('dashboard/quiz', { question: randomQuestion });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+}
+
+const createQuiz = async(req, res)=>{
+  try {
+    const { question, options, correctOption } = req.body;
+
+    // Convert options to an array
+    const optionsArray = options.split(',');
+
+    const newQuestion = new Question({
+      question,
+      options: optionsArray,
+      correctOption: parseInt(correctOption, 10),
+    });
+
+    await newQuestion.save();
+
+    res.redirect('/quiz/admin-post');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+const adminPostQuiz = async(req, res)=>{
+  res.render("admin/create-quiz")
+};
+
+
+
+const paypal = async(req, res)=>{
+  const user = req.user;
+  res.render("blog/paypal", {user})
+}
+const mtnBlog = async(req, res)=>{
+  const user = req.user;
+  res.render("blog/mtn", {user})
+}
+const mtnUssd = async(req, res)=>{
+  const user = req.user;
+  res.render("blog/mtn-ussd", {user})
+}
+const method = async(req, res)=>{
+  const user = req.user;
+  res.render("blog/method", {user})
+}
+const mobile = async(req, res)=>{
+  const user = req.user;
+  res.render("blog/mobile", {user})
+}
+const glo = async(req, res)=>{
+  const user = req.user;
+  res.render("blog/glo", {user})
+}
+const sellPaypal = async(req, res)=>{
+  const user = req.user;
+  res.render("blog/sellPaypal", {user})
+}
+const payPalFunds = async(req, res)=>{
+  const user = req.user;
+  res.render("blog/payPalFunds", {user})
+}
+const sellFunds = async(req, res)=>{
+  const user = req.user;
+  res.render("blog/sellFunds", {user})
+}
+const sellPayoneer = async(req, res)=>{
+  const user = req.user;
+  res.render("blog/sellPayoneer", {user})
+}
+
+const submitQuiz = async(req, res)=>{
+  try {
+    const selectedOption = parseInt(req.body.answer, 10);
+
+    // Retrieve the correct answer from the database based on the submitted question
+    const randomQuestion = await Question.findOne().skip(Math.floor(Math.random() * await Question.countDocuments()));
+    const correctOption = randomQuestion.correctOption;
+
+    const isCorrect = selectedOption == correctOption;
+
+    console.log("selected option: ", selectedOption);
+    console.log("correct option: ", correctOption);
+
+    if (isCorrect) {
+      res.send('Correct!');
+    } else {
+      res.send('Incorrect. Try again!');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+const getNewQuiz = async(req, res)=>{
+  let currentQuestionId; 
+  let previousQuestionId;
+try {
+  const randomQuestion = await Question.findOne({ _id: { $nin: [currentQuestionId, previousQuestionId] } }).skip(Math.floor(Math.random() * await Question.countDocuments()));
+  
+  previousQuestionId = currentQuestionId;
+  currentQuestionId = randomQuestion._id;
+
+  res.json({ question: randomQuestion.question, options: randomQuestion.options });
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ error: 'Internal Server Error' });
+}
+}
 module.exports = {
   homePage,
   dashboard,
@@ -199,9 +320,25 @@ module.exports = {
   trades,
   walletWithdraw,
 
+  getQuiz,
+  createQuiz,
+  submitQuiz,
+  adminPostQuiz,
+  getNewQuiz,
+
   aboutPage,
   blog,
   contact,
   support,
-  termsCondition
+  termsCondition,
+  paypal,
+  sellPayoneer,
+  sellFunds,
+  sellPaypal,
+  glo,
+  mtnUssd,
+  mtnBlog,
+  method,
+  mobile,
+  payPalFunds
 };

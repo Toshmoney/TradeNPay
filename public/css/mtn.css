@@ -1,0 +1,106 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+section{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 50px 20px;
+    gap: 30px;
+}
+.content-img{
+    width: 100%;
+}
+.blog-text{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    /* text-align: center; */
+    gap: 30px;
+    /* align-items: center; */
+}
+.blog-text h1{
+    font-size: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.blog-text h2{
+    font-size: 40px;
+}
+.blog-text h3{
+    font-size: 30px;
+}
+.blog-text h4{
+    font-size: 20px;
+}
+textarea, input{
+    outline: none;
+}
+.blog-text p{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: larger;
+    font-weight: lighter;
+}
+.area{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+form button{
+    width: 30%;
+    padding: 15px;
+    border-radius: 20px;
+    border: none;
+    background-color: #045089;
+    color: white;
+    font-size: larger;
+}
+.input{
+    flex-direction: column;
+    display: flex;
+    gap: 10px;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.tent{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+ul{
+    font-size: larger;
+    padding-left: 30px;
+}
+ol{
+    font-size: larger;
+    padding-left: 30px;
+}
+
+li{
+    color: grey !important;
+}
+
+form{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+input{
+    width: 100%;
+    padding: 5px;
+}
+label{
+    font-size: larger;
+    font-weight: 600;
+}

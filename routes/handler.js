@@ -22,7 +22,22 @@ const {
   contact,
   support,
   termsCondition,
-  walletWithdraw
+  walletWithdraw,
+  getQuiz,
+  submitQuiz,
+  createQuiz,
+  adminPostQuiz,
+  getNewQuiz,
+  paypal,
+  mobile,
+  glo,
+  method,
+  mtnUssd,
+  mtnBlog,
+  sellPayoneer,
+  sellPaypal,
+  payPalFunds,
+  sellFunds,
 } = require("../controller/controller");
 
 const {
@@ -70,6 +85,7 @@ const { newPin, updatePin } = require("../controller/transactionPin");
 const { checkUserPin, verifyUserPin } = require("../middleware/checkUserPin");
 const { withdrawalRequest, fetchsupportbanks } = require("../controller/withdrawFunds");
 const addFundsManually = require("../controller/addFundManually");
+
 // const { buyPaypal } = require("../controller/paypalController");
 
 router.route("/api/v1/packages").post(fetchPackages);
@@ -81,6 +97,17 @@ router.route("/support").get(support)
 router.route("/contact").get(contact)
 router.route("/privacy").get(privacyPolicy)
 router.route("/terms-condition").get(termsCondition)
+router.route("/how-to-create-a-paypal-account-in-nigeria-2023/").get(paypal)
+router.route("/best-mobile-networks-in-nigeria/").get(mobile)
+router.route("/easy-ways-to-get-free-data-on-glo-in-2024/").get(glo)
+router.route("/best-methods-for-receiving-payment-in-nigeria/").get(method)
+router.route("/mtn-ussd-code-for-apple-music-not-working-fixed/").get(mtnUssd)
+router.route("/best-mtn-tariff-and-cheapest-data-plans-in-nigeria/").get(mtnBlog)
+router.route("/buy-and-sell-payoneer-funds-in-nigeria/").get(sellPayoneer)
+router.route("/buy-and-sell-paypal-funds-in-nigeria/").get(sellPaypal)
+router.route("/sell-paypal-funds-in-nigeria-html/").get(payPalFunds)
+router.route("/best-way-to-sell-paypal-funds-in-nigeria/").get(sellFunds)
+
 
 
 router.route("/banks/get-bank-details").get(fetchsupportbanks)
@@ -109,6 +136,11 @@ router.route("/airtime").get([isLoggedIn, checkUserPin], airtime);
 router.route("/data").get([isLoggedIn, checkUserPin], dataplan);
 router.route("/billpayment").get([isLoggedIn, checkUserPin], billpayment);
 router.route("/trades").get([isLoggedIn, checkUserPin], trades);
+
+// Quiz
+router.route("/quiz/take-quiz").get([isLoggedIn], getQuiz);
+router.route("/quiz/submit-quiz").post([isLoggedIn], submitQuiz);
+router.route("/quiz/next-question").get([isLoggedIn], getNewQuiz);
 router
   .route("/billpayment/:service")
   .get([isLoggedIn, checkUserPin], billPayer);
@@ -134,6 +166,8 @@ router.route("/wallet/fund-manual").post([isLoggedIn, isAdmin], addFundsManually
 
 // Admin only
 router.route("/admin").get([isLoggedIn, isAdmin], adminDashboard);
+router.route("/quiz/admin-post").get([isLoggedIn, isAdmin], adminPostQuiz);
+router.route("/quiz/post-question").post([isLoggedIn, isAdmin], createQuiz);
 router.route("/blogs/all-posts").get([isLoggedIn, isAdmin], businessBal);
 router.route("/create-post").post([isLoggedIn, isAdmin], createPost);
 router.route("/edit-post/:slug").patch([isLoggedIn, isAdmin], editSinglePost);

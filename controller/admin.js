@@ -103,9 +103,20 @@ const adminDataReset = async (req, res) => {
   });
 };
 
+const baseurl = process.env.BASE_URL;
 const adminTradePlans = async (req, res) => {
-  const tradeplans = await DataPlan.find().sort("-trade_type");
-  res.status(200).render("admin/tradeplans", { tradeplans });
+  const trade = await fetch(`${baseurl}/api/v1/trade_plan`).then(res => res.json())
+  const tradePrice = trade?.data;
+  const user = req.user;
+
+  const errorMg = req.flash("error").join(" ");
+  const infoMg = req.flash("info").join(" ");
+  const messages = {
+    error: errorMg,
+    info: infoMg,
+  };
+
+  res.status(200).render("admin/tradeplans", {msg : messages, user, tradePrice});
 };
 
 const adminTradeReset = async (req, res) => {
