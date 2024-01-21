@@ -89,6 +89,20 @@ const adminSettings = async (req, res) => {
   res.status(200).render("admin/adminsettings", data);
 };
 
+const adminManualFunding = async (req, res) => {
+  const data = await dashboardData(req.user);
+  const errorMg = req.flash("error").join(" ");
+  const infoMg = req.flash("info").join(" ");
+  const messages = {
+    error: errorMg,
+    info: infoMg,
+  };
+
+  const {user} = data
+
+  res.status(200).render("admin/manualfunding", {user, msg : messages});
+};
+
 const adminDataPlans = async (req, res) => {
   const data_plans = await DataPlan.find().sort("-network_name");
   res.status(200).render("admin/dataplans", { data_plans });
@@ -168,6 +182,7 @@ const allTrades = async(req, res)=>{
   res.json(trades)
 }
 
+// Accept user trades
 const approveTrades = async(req, res)=>{
   const _id = req.params['id']
   const userTrade = await Transaction.findOne({_id});
@@ -227,6 +242,76 @@ const approveTrades = async(req, res)=>{
   req.flash("info", "Successfully Approved trade, user will now get credited!")
   return res.redirect("/transactions/all")
 }
+
+
+// Reject User Trades
+
+const rejectTrades = async(req, res)=>{
+  const _id = req.params['id']
+  const userTrade = await Transaction.findOne({_id});
+  let user = userTrade.user;
+  let balance_before = userTrade.balance_before;
+  let balance_after = userTrade.balance_after;
+  let amount = userTrade.amount;
+  let id = userTrade._id
+  let userWallet = await Wallet.findOne({user});
+
+  const userBalance = userWallet.current_balance;
+
+  if(!userTrade) throw new Error('No trade with that id')
+
+  if(userTrade.status === 'completed'){
+    req.flash("error", "Trade already approved!")
+    return;
+  }
+
+  if(userTrade.status === 'rejected'){
+    req.flash("error", "Trade already rejected by admin!")
+    return;
+  }
+
+  userTrade.status = "rejected"
+  userTrade.description = `NGN ${amount} worth of trade funds rejected!`
+
+  const person = await User.findById({_id:user});
+  const email = person.email;
+  const name = person.name;
+
+  // Use Nodemailer to send notification email to the user
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL_USERNAME,
+    to: email,
+    subject: "Trade Notification from paytoNaira!",
+    text: `Dear ${name}, sorry your new trade of N${amount} was rejected due to invalid documents submitted, kindly contact admin to learn more!`,
+  };
+
+  transporter.sendMail(mailOptions, (err) => {
+      if (err) {
+        console.log(err);
+        req.flash("error", "Error while sending Notification to user");
+        return res.redirect("/admin");
+      }
+    });
+  
+  
+    // add transaction amount to user wallet
+    userWallet.previous_balance = userBalance;
+    userWallet.current_balance = userBalance;
+    await userWallet.save();
+    await userTrade.save();
+
+  req.flash("info", "Successfully rejected trade, user will be notified shortly!")
+  return res.redirect("/transactions/all")
+}
+
 
 // Create new blog post
 const createPost = async(req, res)=>{
@@ -387,4 +472,6 @@ module.exports = {
   deleteAllPost,
   adminTradeReset,
   adminTradePlans,
+  adminManualFunding,
+  rejectTrades,
 };

@@ -42,8 +42,15 @@
                                         <td class="whitespace-nowrap px-6 py-4">
                                             <%= transaction.status %>
                                             <% if (transaction.status === 'review'){ %>
+
+                                                <!-- Approve Trades -->
                                                 <form action="/trades/approve/<%= transaction._id %>" method="post">
                                                     <button style="background-color: #045089; padding: 5px; color: white; border-radius: 5px;" type="submit">Approve Trade</button>
+                                                </form>
+
+                                                <!-- Reject Trades -->
+                                                <form action="/trades/reject/<%= transaction._id %>" method="post">
+                                                    <button style="background-color: red; padding: 5px; color: white; border-radius: 5px;" type="submit">Reject Trade</button>
                                                 </form>
                                                 <% } %>
                                         </td>

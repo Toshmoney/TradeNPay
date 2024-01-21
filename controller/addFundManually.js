@@ -9,12 +9,10 @@ const Wallet = require("../model/Wallet");
 const User = require("../model/User.db")
 
 const addFundsManually = async (req, res) => {
-  const { amount, email, reference } = req.body;
+  const { amount, email } = req.body;
   if (!amount || !email) {
-    return res.status(400).json({
-      message: "user email or amount is missing",
-      success: false,
-    });
+    req.flash("error", "User email or amount is missing!")
+    return;
   }
   let useracc = await User.findOne({email})
   const user = useracc._id;
@@ -29,7 +27,7 @@ const addFundsManually = async (req, res) => {
   }
   const userBalance = wallet.current_balance;
   const transaction = new Transaction({
-    user: req.user,
+    user: user,
     balance_before: userBalance,
     balance_after: userBalance,
     amount: amount,
@@ -37,7 +35,7 @@ const addFundsManually = async (req, res) => {
     type: "credit",
     status: "pending",
     description: `Manual wallet funding with N${amount}`,
-    reference_number: reference,
+    reference_number: "manual-funding",
   });
 
      // Create a Nodemailer transporter
@@ -49,25 +47,12 @@ const addFundsManually = async (req, res) => {
         },
       });
   
-      // Load the EJS template and CSS file
-      const emailTemplate = ejs.compile(fs.readFileSync('views/pages/fundnotify.ejs', 'utf8'));
-      // const cssStyles = fs.readFileSync('public/css/email.css', 'utf8');
-  
-      // Define the email content
-      const emailContent = emailTemplate({ amount, name});
-  
       // Create the email data
       const mailOptions = {
         from: 'paytonaira@gmail.com',
         to: email,
         subject: 'Manual Funding',
-        html: emailContent
-        // attachments: [
-        //   {
-        //     filename: 'email.css',
-        //     content: cssStyles,
-        //   },
-        // ],
+        text: `Dear ${name}, your account has been credited NGN${amount} through admin manual funding!`,
       };
   
       // Send the email
@@ -86,14 +71,17 @@ const addFundsManually = async (req, res) => {
   transaction.balance_after = userBalance + amount_paid;
   await wallet.save();
   await transaction.save();
-  res.status(200).json({
-    message: "Verification successful",
-    status: true,
-    data: {
-      balance: wallet.current_balance,
-      transaction: formatTransaction(transaction),
-    },
-  });
+
+  req.flash("info", "manual funding is successful, User will now get credited!")
+  return res.redirect("/manual/funding")
+  // res.status(200).json({
+  //   message: "Verification successful",
+  //   status: true,
+  //   data: {
+  //     balance: wallet.current_balance,
+  //     transaction: formatTransaction(transaction),
+  //   },
+  // });
 };
 
 module.exports = addFundsManually;

@@ -60,6 +60,8 @@ const {
   deleteAllPost,
   adminTradeReset,
   adminTradePlans,
+  rejectTrades,
+  adminManualFunding,
 
 } = require("../controller/admin");
 
@@ -177,6 +179,9 @@ router.route("/post/:slug").get(getSinglePost);
 router.route("/post/:slug").delete([isLoggedIn, isAdmin], deletePost);
 router.route("/trade/all").get([isLoggedIn, isAdmin],allTrades);
 router.route("/trades/approve/:id").post([isLoggedIn, isAdmin], approveTrades);
+router.route("/manual/funding").get([isLoggedIn, isAdmin], adminManualFunding);
+router.route("/manual/funding").post([isLoggedIn, isAdmin], addFundsManually);
+router.route("/trades/reject/:id").post([isLoggedIn, isAdmin], rejectTrades);
 router.route("/users/all-users").get([isLoggedIn, isAdmin], allUsers);
 router.route("/admin/setting").get([isLoggedIn, isAdmin], adminSettings);
 router.route("/transactions/all").get([isLoggedIn, isAdmin], adminTrans);

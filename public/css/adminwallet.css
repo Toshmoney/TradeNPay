@@ -32,6 +32,46 @@
     gap: 3rem;
     padding: 2rem;
 }
+
+.funding-container{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    width: 80%;
+    height: 80vh;
+    gap: 30px;
+}
+
+.group-form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#fund-email, #fund-amount{
+    padding: 10px;
+    width: 50%;
+    border-radius: 10px;
+    border-color: #0235EA;
+}
+
+#fund-amount:focus, #fund-email:focus{
+    border-color: #0235EA;
+}
+
+#fund-amount::placeholder, #fund-email::placeholder{
+    color: rgba(29, 72, 226, 0.6);
+}
+
+.fund-btn{
+    background-color: #0235EA;
+    padding: 10px 35px;
+    border-color: transparent;
+    color: white;
+    margin-top: 15px;
+    border-radius: 20px;
+}
 .btn-group {
     gap: 1rem;
     display: flex;
