@@ -16,18 +16,19 @@
   
   <script>
     function toggleButton() {
-      var button = document.getElementById('submitButton');
+      var button = document.querySelector('.submit-btn');
       button.innerHTML = "Please wait...";
       button.disabled = true;
     }
+    const sub = "<%= submissionSuccessful %>"
 
-    <% if (submissionSuccessful) { %>
+    if (sub) {
       window.onload = function() {
         var button = document.querySelector('.submit-btn');
         button.innerHTML = "Sell";
         button.disabled = false;
       };
-    <% } %>
+    }
   </script>
 
 </head>

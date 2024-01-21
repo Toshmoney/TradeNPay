@@ -14,6 +14,22 @@
   <link rel="stylesheet" href="/css/paypal.css">
   <link rel="icon" type="image/x-icon" href="/img/logo-img.png">
 
+  <script>
+    function toggleButton() {
+      var button = document.querySelector('.submit-btn');
+      button.innerHTML = "Please wait...";
+      button.disabled = true;
+    }
+    const sub = "<%= submissionSuccessful %>"
+
+    if (sub) {
+      window.onload = function() {
+        var button = document.querySelector('.submit-btn');
+        button.innerHTML = "Sell";
+        button.disabled = false;
+      };
+    }
+  </script>
 
 </head>
 
@@ -80,7 +96,7 @@
 
                   <div class="form-field">
                     <label for="file" class="bole file-upload-label">UPLOAD PROOF OF PAYMENT</label>
-                    <input type="file" class="file-upload" name="image" id="file" accept="image/*" required>
+                    <input type="file" class="file-upload" name="proof" id="file" accept="image/*" required>
                   </div>
 
                   <div class="form-field">

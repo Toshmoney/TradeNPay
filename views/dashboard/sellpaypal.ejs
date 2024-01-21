@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PaytoNaira | Trade Paypal</title>
+  <link rel="stylesheet" href="/css/toastr.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/general.css">
+  <link rel="stylesheet" href="/css/aside.css">
+  <link rel="stylesheet" href="/css/DataPlans.css">
+  <link rel="stylesheet" href="/css/paypal.css">
+  <link rel="icon" type="image/x-icon" href="/img/logo-img.png">
+
+  <script>
+    function toggleButton() {
+      var button = document.querySelector('.submit-btn');
+      button.innerHTML = "Please wait...";
+      button.disabled = true;
+    }
+    const sub = "<%= submissionSuccessful %>"
+
+    if (sub) {
+      window.onload = function() {
+        var button = document.querySelector('.submit-btn');
+        button.innerHTML = "Sell";
+        button.disabled = false;
+      };
+    }
+  </script>
+</head>
+
+<body>
+  <section class="dashboard-container">
+    <%- include('../partials/tradeasides') %>
+
+      <main>
+        <% if (messages.error) { %>
+          <div class="alert alert-danger" role="alert">
+            <%= messages.error %>
+          </div>
+      <% } %>
+      <% if (messages.info) { %>
+          <div class="alert alert-info" role="alert">
+            <%= messages.info %>
+          </div>
+      <% } %>
+          <div class="dashboard-main-top">
+            <h1>TRADE PAYPAL</h1>
+            <p>Select Buy or Sell</p>
+          </div>
+          <div class="bill-payer">
+            <div class="tab">
+                <button class="tablinks" onclick="window.location.href='/trades/buy-paypal'">Buy</button>
+                <button class="tablinks" onclick="openTrade(event, 'Sell')">Sell</button>
+            </div>
+        <div>
+          <h2 class="sell-available"></h2>
+          <h2>Selling Price: NGN <span class="selling"></span> per $</h2> <br>
+            <form action="/trades/sell-paypal" class="sell-form" method="post">
+                <div class="form-group">
+                    <div class="choose form-field">
+                        <label class="bold" for="service_id">SELECT TRADE TYPE</label>
+                        <select class="service_id" name="service_id" id="sell-service" value="Select Option" onchange="fetch_selling_price()">
+                            <!-- <option value="">Select Option</option> -->
+                            <option value="GNS">GOODS AND SERVICES</option>
+                            <option value="FNF">FRIEND AND FAMILY</option>
+                        </select>
+                    </div>
+
+                    <div class="choose form-field">
+                        <label class="bold" for="network">SELECT CURRENCY</label>
+                        <select class="service_id" name="currency" id="sell-currency" value="Select Option">
+                            <option value="USD">USD</option>
+                        </select>
+                    </div>
+                </div>
+
+                        <br>
+                        <h2>Kindly send your funds to: <span class="selling-mail"></span></h2>
+                        <br>
+                <div class="form-group">
+                    <div class="form-field">
+                        <label class="bold" for="full_name">TNX ID</label>
+                        <input type="text" name="trans_id" id="trans_id" placeholder="Paypal TNX ID">
+                    </div>
+
+                    <div class="form-field">
+                        <label class="bold" for="email">PAYPAL EMAIL</label>
+                        <input type="email" name="email" id="sell-email" placeholder="Paypal email">
+                    </div>
+                </div>
+
+                <div class="form-field">
+                  <label for="file" class="bole file-upload-label">UPLOAD PROOF OF PAYMENT</label>
+                  <input type="file" class="file-upload" name="proof" id="file" accept="image/*" required>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="form-field">
+                        <label class="bold" for="amount">AMOUNT</label>
+                        <input type="number" name="amount" id="sell-amount" placeholder="Amount here">
+                        <p class="font-bold text-xs">You are getting: <span id="total-amount-selling"></span> </p>
+                    </div>
+                    <div class="form-field">
+                        <label class="bold" for="pin">PIN</label>
+                        <input type="password" name="pin" id="sell-pin" placeholder="****" />
+                    </div>
+                </div>
+              <div class="page-end">
+                <p class="flex gap-6 bold wallet-balance">
+                  Total Bal.<span>
+                    <%= data.balance %>
+                  </span>
+                </p>
+                <div class="ctas">
+                  <button type="submit" class="cta submit sell-submit-btn">Sell</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </main>
+  </section>
+
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/paypal.js"></script>
+  <script src="/js/jquery.js"></script>
+  <script src="/js/toastr.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+
+    const toastOptions = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": true,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "4000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+    toastr.options = { ...toastOptions }
+    let walletBalance = 0;
+    const balanceElement = document.querySelector('.wallet-balance > span')
+    walletBalance = Number(balanceElement.textContent)
+    balanceElement.textContent = `N${walletBalance}`
+
+    // const form = document.querySelector('form')
+    // const sellform = document.querySelector('.sell-form')
+
+    async function fetch_selling_price(){
+      const sellservice_id = document.querySelector("#sell-service").value;
+      // console.log(sellservice_id);
+
+      const sellingMail = document.querySelector(".selling-mail")
+      const tradeprice = await fetch(`/api/v1/trade_plan/${sellservice_id}`)
+      .then(res => res.json())
+      console.log(tradeprice.data);
+      let amt = tradeprice.data.dollar_sell_price;
+      let isAvail = tradeprice.data.is_available;
+      const avail = document.querySelector(".sell-available")
+      if(isAvail){
+        avail.textContent='Paypal service is available';
+        sellingMail.textContent = tradeprice.data.selling_mail;
+      }else{
+        avail.textContent='Paypal services not available';
+        avail.classList.toggle("not-available")
+      }
+      const buying = document.querySelector(".selling");
+      buying.textContent = amt;
+      const totalField = document.querySelector("#total-amount-selling")
+      const amountField = document.querySelector("#sell-amount")
+      amountField.addEventListener("input", () => {
+        const amount = amountField.value
+      totalField.textContent = Math.round(amt * Number(amount))
+    })
+    }
+
+    fetch_selling_price()
+
+  </script>
+</body>
+
+</html>

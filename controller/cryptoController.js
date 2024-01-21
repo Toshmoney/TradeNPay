@@ -20,10 +20,11 @@ const sellCrypto = async(req, res)=>{
       req.flash("error", "Payment screenshot is missing!");
     } else {
 
-      imageUploadFile = req.files.image;
+      imageUploadFile = req.files.proof;
       newImageName = Date.now() + imageUploadFile.name;
 
-      uploadPath = require('path').resolve('./') + '/uploads/' + newImageName;
+      uploadPath = require('path').resolve('./') + '/public/uploads/' + newImageName;
+
 
       imageUploadFile.mv(uploadPath, function(err){
         if(err){
@@ -31,6 +32,7 @@ const sellCrypto = async(req, res)=>{
         }
       })
     }
+
     const {pin, currency, service_id} = req.body;
     let amount = req.body.amount
     const trade = await fetch(`${baseurl}/api/v1/trade_plan/${service_id}`).then(res => res.json())
@@ -80,6 +82,7 @@ const sellCrypto = async(req, res)=>{
     type: "credit",
     description: `NGN${amount} worth of ${service_id} coin sold!`,
     reference_number: transaction_id,
+    proof:newImageName
   });
  
   // send request to server

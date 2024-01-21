@@ -77,10 +77,10 @@ const tradeService = async (req, res) => {
   const urlParams = req.params;
   const service = urlParams.service;
   if (service === "paypal") {
-    return res.status(200).render("dashboard/paypal", {data, messages});
+    return res.status(200).render("dashboard/paypal", {data, messages, submissionSuccessful: res.locals.submissionSuccessful});
   }
   if (service === "payoneer") {
-    return res.status(200).render("dashboard/payoneer", {data, messages});
+    return res.status(200).render("dashboard/payoneer", {data, messages, submissionSuccessful: res.locals.submissionSuccessful});
   }
   if (service === "giftcard") {
     return res.status(200).render("dashboard/giftcard", {data, messages, submissionSuccessful: res.locals.submissionSuccessful});

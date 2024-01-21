@@ -288,7 +288,10 @@ const rejectTrades = async(req, res)=>{
 
   const userBalance = userWallet.current_balance;
 
-  if(!userTrade) throw new Error('No trade with that id')
+  if(!userTrade){
+    req.flash("error",'No trade with that id')
+    return;
+  }
 
   if(userTrade.status === 'completed'){
     req.flash("error", "Trade already approved!")

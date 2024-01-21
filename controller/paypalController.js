@@ -10,7 +10,7 @@ const baseurl = process.env.BASE_URL
 const buyPaypal = async (req, res) => {
   const {email, full_name, currency, service_id} = req.body;
   let amount = req.body.amount;
-  const trade = await fetch(`${baseurl}/api/v1/trade_plan/${service_id}`).then(res => res.json())
+  const trade = await fetch(`/api/v1/trade_plan/${service_id}`).then(res => res.json())
   let details = await trade.data
   const trade_type = details.trade_type
   const buyPrice = details.dollar_buy_price;
@@ -60,7 +60,7 @@ const buyPaypal = async (req, res) => {
     trans_id: transaction_id,
    });
    if(!purchasedtrade){
-    res.json({message: "Error while purchasing paypal funds"})
+    re.flash({message: "Error while purchasing paypal funds"})
    }
     // update transaction to be concluded
     transaction.status = "completed";
@@ -86,35 +86,35 @@ const buyPaypal = async (req, res) => {
 };
 
 const sellPaypal = async (req, res) => {
-
   let imageUploadFile;
     let uploadPath;
     let newImageName;
 
     if(!req.files || Object.keys(req.files).length === 0){
-      req.flash("error", "Screenshot image is missing!");
+      req.flash("error", "Payment screenshot is missing!");
     } else {
 
-      imageUploadFile = req.files.image;
+      imageUploadFile = req.files.proof;
       newImageName = Date.now() + imageUploadFile.name;
 
-      uploadPath = require('path').resolve('./') + '/uploads/' + newImageName;
+      uploadPath = require('path').resolve('./') + '/public/uploads/' + newImageName;
+
 
       imageUploadFile.mv(uploadPath, function(err){
         if(err){
           req.flash("error", err);
-          console.log(err);
         }
       })
-
     }
 
-
   const {trans_id, currency, service_id, email} = req.body
+
+  console.log(newImageName);
+
   let amount = req.body.amount
   const trade = await fetch(`${baseurl}/api/v1/trade_plan/${service_id}`).then(res => res.json())
   let details = await trade.data
-  const trade_type = details.trade_type
+  const trade_type = details?.trade_type || "paypal"
   const sellPrice = details.dollar_sell_price;
   const user = req.user;
   const userWallet = req.user.wallet;
@@ -158,7 +158,9 @@ const sellPaypal = async (req, res) => {
     proof: newImageName,
    });
    if(!soldTrade){
-    res.json({message: "Error while purchasing paypal funds"})
+    // res.json({message: "Error while purchasing paypal funds"})
+    req.flash("error", "Error while purchasing paypal funds")
+    return res.redirect("/trades/paypal")
    }
 
    // Use Nodemailer to notify admin via email
@@ -193,17 +195,12 @@ const sellPaypal = async (req, res) => {
     userWallet.current_balance = userBalance;
     await userWallet.save();
     await transaction.save();
-    res.status(202).json({
-      message: "transaction is being processed",
-      balance: userWallet.current_balance,
-      success: true,
-    });
+    req.flash("info", "Transaction is being processed")
+    return res.redirect("/trades/paypal")
   } catch (error) {
     transaction.status = "failed"
-    return res.status(422).json({
-      message: "failed transaction",
-      success: false,
-    });
+    req.flash("error", error)
+    return res.redirect("/trades/paypal")
   }
 };
 

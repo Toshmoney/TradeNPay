@@ -22,6 +22,16 @@
     <%- include('../partials/tradeasides') %>
 
       <main>
+        <% if (messages.error) { %>
+          <div class="alert alert-danger" role="alert">
+            <%= messages.error %>
+          </div>
+      <% } %>
+      <% if (messages.info) { %>
+          <div class="alert alert-info" role="alert">
+            <%= messages.info %>
+          </div>
+      <% } %>
           <div class="dashboard-main-top">
             <div>
               <h1>TRADE PAYONEER</h1>
@@ -36,7 +46,7 @@
         <div id="Buy" class="tabcontent">
           <h2 class="buy-available"></h2>
           <h2>Buying Price: NGN <span class="buying"></span> per $</h2> <br>
-            <form class="buy-now" action="">
+            <form class="buy-now">
                 <div class="form-group">
                     <div class="choose form-field">
                         <label class="bold" for="service_id">SELECT TRADE TYPE</label>
@@ -97,7 +107,7 @@
         <div id="Sell" class="tabcontent">
             <h2 class="sell-available"></h2>
           <h2>Selling Price: NGN <span class="selling"></span> per $</h2> <br>
-            <form action="" class="sell-form">
+            <form action="/trade/sell-payoneer" class="sell-form" method="post">
                 <div class="form-group">
                     <div class="choose form-field">
                         <label class="bold" for="service_id">SELECT TRADE TYPE</label>
@@ -113,7 +123,7 @@
 
                     <div class="choose form-field">
                         <label class="bold" for="network">SELECT CURRENCY</label>
-                        <select class="service_id" name="service_id" id="sell-currency" value="Select Option">
+                        <select class="service_id" name="currency" id="sell-currency" value="Select Option">
                             <!-- <option value="">Select Option</option> -->
                             <option value="USD">USD</option>
                             <!-- <option value="EUR">EUR</option>
@@ -137,7 +147,7 @@
 
                 <div class="form-field">
                   <label for="file" class="bole file-upload-label">UPLOAD PROOF OF PAYMENT</label>
-                  <input type="file" class="file-upload" name="image" id="file" accept="image/*" required>
+                  <input type="file" class="file-upload" name="proof" id="file" accept="image/*" required>
                 </div>
 
                 <div class="form-group">

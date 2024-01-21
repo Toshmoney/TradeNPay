@@ -1,15 +1,16 @@
+require("dotenv").config()
 const { generateTransId } = require("../utils");
 const Transaction = require("../model/Transaction");
 const { default: axios } = require("axios");
 const Trades = require("../model/Trades");
 const nodemailer = require("nodemailer");
 
-
+const baseurl = process.env.BASE_URL; 
 const buyPayoneer = async (req, res) => {
   // const { amount, beneficiary, email, code, service_id, service_type } = req.body;
   const {email, full_name, currency, service_id} = req.body;
   let amount = req.body.amount
-  const trade = await fetch(`http://localhost:4000/api/v1/trade_plan/${service_id}`).then(res => res.json())
+  const trade = await fetch(`${baseurl}/api/v1/trade_plan/${service_id}`).then(res => res.json())
   let details = await trade.data
   const trade_type = details.trade_type
   const buyPrice = details.dollar_buy_price;
@@ -88,8 +89,31 @@ const buyPayoneer = async (req, res) => {
 
 const sellPayoneer = async (req, res) => {
   const {full_name, currency, service_id} = req.body;
+
+  let imageUploadFile;
+    let uploadPath;
+    let newImageName;
+
+    if(!req.files || Object.keys(req.files).length === 0){
+      req.flash("error", "Screenshot image is missing!");
+    } else {
+
+      imageUploadFile = req.files.proof;
+      newImageName = Date.now() + imageUploadFile.name;
+
+      uploadPath = require('path').resolve('./') + '/public/uploads/' + newImageName;
+
+      imageUploadFile.mv(uploadPath, function(err){
+        if(err){
+          req.flash("error", err);
+          console.log(err);
+        }
+      })
+
+    }
+    
   let amount = req.body.amount;
-  const trade = await fetch(`http://localhost:4000/api/v1/trade_plan/${service_id}`).then(res => res.json())
+  const trade = await fetch(`${baseurl}/api/v1/trade_plan/${service_id}`).then(res => res.json())
   let details = await trade.data
   const trade_type = details.trade_type
   const sellPrice = details.dollar_sell_price;
