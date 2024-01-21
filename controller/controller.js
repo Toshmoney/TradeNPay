@@ -83,10 +83,10 @@ const tradeService = async (req, res) => {
     return res.status(200).render("dashboard/payoneer", {data, messages});
   }
   if (service === "giftcard") {
-    return res.status(200).render("dashboard/giftcard", {data, messages});
+    return res.status(200).render("dashboard/giftcard", {data, messages, submissionSuccessful: res.locals.submissionSuccessful});
   }
   if (service === "crypto") {
-    return res.status(200).render("dashboard/crypto", {data, messages});
+    return res.status(200).render("dashboard/crypto", {data, messages, submissionSuccessful: res.locals.submissionSuccessful});
   }
   return res.status(404).json({
     message: "page you are looking for does not exist",

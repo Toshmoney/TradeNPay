@@ -17,12 +17,18 @@ const sellGiftcard = async(req, res)=>{
 
     if(!req.files || Object.keys(req.files).length === 0){
       req.flash("error", "Giftcard image is missing!");
-    } else {
+    }
 
-      imageUploadFile = req.files.image;
+    const proof = req.files?.proof;
+    if (!proof) {
+      throw new CustomAPIError("file is missing", StatusCodes.BAD_REQUEST);
+    }
+    else {
+
+      imageUploadFile = req.files.proof;
       newImageName = Date.now() + imageUploadFile.name;
 
-      uploadPath = require('path').resolve('./') + '/uploads/' + newImageName;
+      uploadPath = require('path').resolve('./') + '/public/uploads/' + newImageName;
 
       imageUploadFile.mv(uploadPath, function(err){
         if(err){
@@ -68,6 +74,7 @@ const sellGiftcard = async(req, res)=>{
     type: "credit",
     description: `$${amount} giftcard ${service_id} funds sold!`,
     reference_number: transaction_id,
+    proof:newImageName
   });
  
   // send request to server

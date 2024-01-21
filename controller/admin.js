@@ -61,6 +61,7 @@ const adminTrans = async (req, res) => {
     const transaction = item.toObject();
     return {
       ...transaction,
+      proof: transaction.proof,
       createdAt: formatDate(transaction.createdAt),
       updatedAt: formatDate(transaction.updatedAt),
     };

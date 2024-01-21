@@ -13,7 +13,7 @@
                                     <th scope="col" class="px-6 py-4">Amount (NGN)</th>
                                     <th scope="col" class="px-6 py-4">Status</th>
                                     <th scope="col" class="px-6 py-4">Date</th>
-                                    <th scope="col" class="px-6 py-4">Mail</th>
+                                    <th scope="col" class="px-6 py-4">Proof</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,7 +32,7 @@
 
                                             <div class="imagePopup">
                                                 <!-- <span class="closeBtn" onclick="displayPopup()">X</span> -->
-                                                <img src="https://via.placeholder.com/300" alt="Popup Image">
+                                                <img src="/uploads/<%= transaction.proof %>" alt="Popup Image">
                                               </div>
 
                                         </td>
@@ -70,6 +70,12 @@
                                             <% } %>
 
 
+                                        </td>
+
+                                        <td class="whitespace-nowrap px-6 py-4">
+                                            <% if (transaction.status === 'review'){ %>
+                                                <img style="width: 200px; height: 150px;" src="/uploads/<%= transaction.proof %>" alt="Proof">
+                                            <% } %>
                                         </td>
 
                                     </tr>

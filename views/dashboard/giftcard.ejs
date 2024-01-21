@@ -13,7 +13,22 @@
   <link rel="stylesheet" href="/css/DataPlans.css">
   <link rel="stylesheet" href="/css/paypal.css">
   <link rel="icon" type="image/x-icon" href="/img/logo-img.png">
+  
+  <script>
+    function toggleButton() {
+      var button = document.getElementById('submitButton');
+      button.innerHTML = "Please wait...";
+      button.disabled = true;
+    }
 
+    <% if (submissionSuccessful) { %>
+      window.onload = function() {
+        var button = document.querySelector('.submit-btn');
+        button.innerHTML = "Sell";
+        button.disabled = false;
+      };
+    <% } %>
+  </script>
 
 </head>
 
@@ -27,15 +42,7 @@
               <h1>TRADE GIFTCARD</h1>
               <p>Select Buy or Sell</p>
             </div>
-          </div>
-          <div class="bill-payer">
-            <div class="tab">
-                <button class="tablinks" onclick="openTrade(event, 'Buy')">Sell</button>
-                <button class="tablinks" onclick="openTrade(event, 'Sell')">Buy</button>
-            </div>
-        <div id="Buy" class="tabcontent">
-          <h2 class="available"></h2>
-            <h2>Selling Price: NGN <span class="selling"></span> per $</h2> <br>
+
             <% if (messages.error) { %>
               <div class="alert alert-danger" role="alert">
                 <%= messages.error %>
@@ -46,7 +53,16 @@
                 <%= messages.info %>
               </div>
           <% } %>
-            <form class="buy-now" action="/trades/sell-giftcard" method="post" enctype="multipart/form-data">
+          </div>
+          <div class="bill-payer">
+            <div class="tab">
+                <button class="tablinks" onclick="openTrade(event, 'Buy')">Sell</button>
+                <button class="tablinks" onclick="openTrade(event, 'Sell')">Buy</button>
+            </div>
+        <div id="Buy" class="tabcontent">
+          <h2 class="available"></h2>
+            <h2>Selling Price: NGN <span class="selling"></span> per $</h2> <br>
+            <form class="buy-now" action="/trades/sell-giftcard" method="post" enctype="multipart/form-data" onsubmit="toggleButton()">
                 <div class="form-group">
                     <div class="choose form-field">
                         <label class="bold" for="service_id">SELECT GIFT CARDS TYPE</label>
@@ -73,7 +89,7 @@
                 <div class="form-field">
                   <br>
                   <label for="file" class="bole file-upload-label">UPLOAD GIFT CARD</label>
-                  <input type="file" class="file-upload" name="image" id="file" accept="image/*" required>
+                  <input type="file" class="file-upload" name="proof" id="file" accept="image/*" required>
                   <br>
                 </div>
 
@@ -123,8 +139,9 @@
   <script src="/js/jquery.js"></script>
   <script src="/js/toastr.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script>
 
+  <script>
+      
     async function fetchapi(){
       const service_id = document.querySelector("#service_id").value
 
