@@ -81,6 +81,7 @@ const allUsers = async (req, res) => {
       current_balance: wallet?.current_balance,
     };
   });
+  
   res.status(200).render("admin/allusers", { users: wallets });
 };
 
@@ -101,6 +102,20 @@ const adminManualFunding = async (req, res) => {
   const {user} = data
 
   res.status(200).render("admin/manualfunding", {user, msg : messages});
+};
+
+const makeUserAdmin = async (req, res) => {
+  const data = await dashboardData(req.user);
+  const errorMg = req.flash("error").join(" ");
+  const infoMg = req.flash("info").join(" ");
+  const messages = {
+    error: errorMg,
+    info: infoMg,
+  };
+
+  const {user} = data
+
+  res.status(200).render("admin/makeadmin", {user, msg : messages});
 };
 
 const adminDataPlans = async (req, res) => {
@@ -312,6 +327,57 @@ const rejectTrades = async(req, res)=>{
   return res.redirect("/transactions/all")
 }
 
+// Make User an Admin
+
+const assignAdminRole = async(req, res)=>{
+  const {email} = req.body
+  const user = await User.findOne({email: email.toLowerCase()});
+  if(!user){
+    req.flash("error", "No user found!")
+    return res.redirect("/role/make-admin");
+  }
+
+  if(user.is_admin === true){
+    req.flash("error", "User is already an admin!")
+    return res.redirect("/role/make-admin");
+  }
+
+  user.is_admin = true;
+
+  const name = user.name;
+
+  // Use Nodemailer to send notification email to the user
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL_USERNAME,
+    to: email,
+    subject: "User Role Updated!",
+    text: `Dear ${name}, you have been given admin role, login to admin dashboard to continue!`,
+  };
+
+  transporter.sendMail(mailOptions, (err) => {
+      if (err) {
+        console.log(err);
+        req.flash("error", "Error while sending Notification to user");
+        return res.redirect("/admin");
+      }
+    });
+  
+  
+    // add transaction amount to user wallet
+    await user.save();
+
+  req.flash("info", "Successfully assigned new role to user!")
+  return res.redirect("/role/make-admin")
+}
+
 
 // Create new blog post
 const createPost = async(req, res)=>{
@@ -474,4 +540,6 @@ module.exports = {
   adminTradePlans,
   adminManualFunding,
   rejectTrades,
+  makeUserAdmin,
+  assignAdminRole,
 };

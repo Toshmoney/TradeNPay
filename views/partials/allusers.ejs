@@ -25,6 +25,11 @@
                                         </td>
                                         <td class="whitespace-nowrap px-6 py-4">
                                             <%= user.email %>
+                                            <span>
+                                                <% if(user.userRole === true){ %>
+                                                     <span>Admin</span>
+                                                <%}%>
+                                            </span>
                                         </td>
                                         <td class="whitespace-nowrap px-6 py-4">
                                             <%= user.createdAt %>

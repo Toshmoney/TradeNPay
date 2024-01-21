@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PaytoNaira | Assign role to user</title>
+  <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/adminGeneral.css">
+    <link rel="stylesheet" href="/css/adminaside.css">
+    <link rel="stylesheet" href="/css/adminwallet.css">
+    <link rel="icon" type="image/x-icon" href="/img/logo-img.png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/img/logo-img.png">
+
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body>
+  <section class="dashboard-container">
+    <%- include('../partials/adminAside') %>
+      <!-- mobile dashboard end -->
+      <main>
+        <%- include('../partials/adminmobileHeader') %>
+
+          <div class="dashboard-main-top">
+            <div>
+                <h1>ADMIN Assign New Role</h1>
+            </div>
+          </div>
+
+          <% if (msg.error) { %>
+            <div class="alert alert-danger" role="alert">
+              <%= msg.error %>
+            </div>
+          <% } %>
+          <% if (msg.info) { %>
+              <div class="alert alert-info" role="alert">
+                <%= msg.info %>
+              </div>
+          <% } %>
+
+          <!-- Manual Funding Form -->
+
+          <div >
+            <form class="funding-container" action="/role/make-admin" method="post">
+            <h2>Enter Input Correctly</h2>
+
+                <div class="group-form">
+                    <label for="fund-email">User Email: </label>
+                    <input required type="email" name="email" id="fund-email" placeholder="Enter user email address">
+                </div>
+
+                <div>
+                    <button type="submit" class="fund-btn">Make Admin</button>
+                </div>
+            </form>
+          </div>
+      </main>
+  </section>
+  <script src="/js/dashboard.js"></script>
+</body>
+
+</html>
