@@ -64,6 +64,12 @@
     color: rgba(29, 72, 226, 0.6);
 }
 
+@media screen and (max-width:900px) {
+    #fund-amount, #fund-email{
+        width: 90%;
+    }
+}
+
 .fund-btn{
     background-color: #0235EA;
     padding: 10px 35px;
