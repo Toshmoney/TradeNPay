@@ -64,6 +64,8 @@ const {
   adminManualFunding,
   makeUserAdmin,
   assignAdminRole,
+  turnAdminToUser,
+  revertAdminRole,
 
 } = require("../controller/admin");
 
@@ -184,6 +186,8 @@ router.route("/trades/approve/:id").post([isLoggedIn, isAdmin], approveTrades);
 router.route("/manual/funding").get([isLoggedIn, isAdmin], adminManualFunding);
 router.route("/role/make-admin").get([isLoggedIn, isAdmin], makeUserAdmin);
 router.route("/role/make-admin").post([isLoggedIn, isAdmin], assignAdminRole);
+router.route("/role/turn-to-user").get([isLoggedIn, isAdmin], revertAdminRole);
+router.route("/role/turn-to-user").post([isLoggedIn, isAdmin], turnAdminToUser);
 router.route("/manual/funding").post([isLoggedIn, isAdmin], addFundsManually);
 router.route("/trades/reject/:id").post([isLoggedIn, isAdmin], rejectTrades);
 router.route("/users/all-users").get([isLoggedIn, isAdmin], allUsers);

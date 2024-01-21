@@ -118,6 +118,20 @@ const makeUserAdmin = async (req, res) => {
   res.status(200).render("admin/makeadmin", {user, msg : messages});
 };
 
+const revertAdminRole = async (req, res) => {
+  const data = await dashboardData(req.user);
+  const errorMg = req.flash("error").join(" ");
+  const infoMg = req.flash("info").join(" ");
+  const messages = {
+    error: errorMg,
+    info: infoMg,
+  };
+
+  const {user} = data
+
+  res.status(200).render("admin/revertuser", {user, msg : messages});
+};
+
 const adminDataPlans = async (req, res) => {
   const data_plans = await DataPlan.find().sort("-network_name");
   res.status(200).render("admin/dataplans", { data_plans });
@@ -328,7 +342,6 @@ const rejectTrades = async(req, res)=>{
 }
 
 // Make User an Admin
-
 const assignAdminRole = async(req, res)=>{
   const {email} = req.body
   const user = await User.findOne({email: email.toLowerCase()});
@@ -378,6 +391,55 @@ const assignAdminRole = async(req, res)=>{
   return res.redirect("/role/make-admin")
 }
 
+// Revert Admin to normal user
+const turnAdminToUser = async(req, res)=>{
+  const {email} = req.body
+  const user = await User.findOne({email: email.toLowerCase()});
+  if(!user){
+    req.flash("error", "No user found!")
+    return res.redirect("/role/make-admin");
+  }
+
+  if(user.is_admin === false){
+    req.flash("error", "User is not admin before!")
+    return res.redirect("/role/turn-to-user");
+  }
+
+  user.is_admin = false;
+
+  const name = user.name;
+
+  // Use Nodemailer to send notification email to the user
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL_USERNAME,
+    to: email,
+    subject: "User Role Updated!",
+    text: `Dear ${name}, your role has been reverted to normal user!`,
+  };
+
+  transporter.sendMail(mailOptions, (err) => {
+      if (err) {
+        console.log(err);
+        req.flash("error", "Error while sending Notification to user");
+        return res.redirect("/admin");
+      }
+    });
+  
+  
+    // add transaction amount to user wallet
+    await user.save();
+
+  req.flash("info", "Successfully reverted the admin to normal user!")
+  return res.redirect("/role/make-admin")
+}
 
 // Create new blog post
 const createPost = async(req, res)=>{
@@ -542,4 +604,6 @@ module.exports = {
   rejectTrades,
   makeUserAdmin,
   assignAdminRole,
+  turnAdminToUser,
+  revertAdminRole
 };
