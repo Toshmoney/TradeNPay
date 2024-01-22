@@ -141,6 +141,16 @@
   <script src="/js/toastr.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8G1QZD83G2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8G1QZD83G2');
+</script>
+
   <script>
       
     async function fetchapi(){
@@ -149,7 +159,7 @@
         const currencySelect = document.getElementById("currency");
 
         // If Amazon is selected, limit currency to CAD and USD
-        if (serviceId === "AMAZON") {
+        if (serviceId === "AMAZON" || serviceId === "EBAY") {
             currencySelect.innerHTML = '<option value="CAD">CAD</option>';
         } else {
             // Reset to default currencies for other services

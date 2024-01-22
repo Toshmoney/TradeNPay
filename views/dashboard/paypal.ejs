@@ -183,12 +183,25 @@
 
       </main>
   </section>
+  <%- include('../partials/footer') %>
+
 
   <script src="/js/dashboard.js"></script>
   <script src="/js/paypal.js"></script>
   <script src="/js/jquery.js"></script>
   <script src="/js/toastr.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8G1QZD83G2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8G1QZD83G2');
+</script>
+
   <script>
 
     const toastOptions = {
