@@ -70,7 +70,7 @@
                         <select class="service_id" name="service_id" id="service_id" value="Select Option" onchange="fetchapi()" required>
                             <!-- <option value="">Select Option</option> -->
                             <option value="EBAY">EBAY</option>
-                            <option value="ONEVANILLA">ONE VANILLA</option>
+                            <option value="AMAZON">AMAZON</option>
                             <option value="STEAMUSD">STEAM WALLET</option>
                         </select>
                     </div>
@@ -144,6 +144,19 @@
   <script>
       
     async function fetchapi(){
+
+      const serviceId = document.getElementById("service_id").value;
+        const currencySelect = document.getElementById("currency");
+
+        // If Amazon is selected, limit currency to CAD and USD
+        if (serviceId === "AMAZON") {
+            currencySelect.innerHTML = '<option value="CAD">CAD</option>';
+        } else {
+            // Reset to default currencies for other services
+            currencySelect.innerHTML = '<option value="USD">USD</option><option value="EUR">EUR</option><option value="GBP">GBP</option><option value="CAD">CAD</option><option value="AUD">AUD</option>';
+        }
+
+
       const service_id = document.querySelector("#service_id").value
 
       const tradeprice = await fetch(`/api/v1/trade_plan/${service_id}`)

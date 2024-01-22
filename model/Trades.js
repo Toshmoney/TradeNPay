@@ -20,7 +20,7 @@ const TradeSchema = new Schema(
     },
     service_id: {
       type: String,
-      enum: ["GNS", "FNF", "BCH", "USDT", "LTC", "ETH", "BTC", "ONEVANILLA","EBAY", "STEAMAUD", "STEAMUSD", "STEAMGBP", "STEAMCAD", "STEAMEUR", "PAYONEER"],
+      enum: ["GNS", "FNF", "BCH", "USDT", "LTC", "ETH", "BTC", "AMAZON","EBAY", "STEAMAUD", "STEAMUSD", "STEAMGBP", "STEAMCAD", "STEAMEUR", "PAYONEER"],
       required: [true, "service type not indicated"],
     },
     trade_type:{
