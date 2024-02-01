@@ -9,7 +9,8 @@ const baseurl = process.env.BASE_URL;
 const buyPayoneer = async (req, res) => {
   // const { amount, beneficiary, email, code, service_id, service_type } = req.body;
   const {email, full_name, currency, service_id} = req.body;
-  let amount = req.body.amount
+  let amount = req.body.amount;
+
   const trade = await fetch(`${baseurl}/api/v1/trade_plan/${service_id}`).then(res => res.json())
   let details = await trade.data
   const trade_type = details.trade_type
@@ -113,6 +114,10 @@ const sellPayoneer = async (req, res) => {
     }
     
   let amount = req.body.amount;
+
+  if(Number(amount) < 50){
+    return res.json({error: "Minimum trade for payoneer is $50"})
+  }
   const trade = await fetch(`${baseurl}/api/v1/trade_plan/${service_id}`).then(res => res.json())
   let details = await trade.data
   const trade_type = details.trade_type

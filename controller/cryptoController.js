@@ -35,6 +35,13 @@ const sellCrypto = async(req, res)=>{
 
     const {pin, currency, service_id} = req.body;
     let amount = req.body.amount
+
+    
+    if(Number(amount) < 30){
+      req.flash("error", "Minimum trade for crypto is $30")
+      return res.redirect("/trades/crypto")
+    }
+    
     const trade = await fetch(`${baseurl}/api/v1/trade_plan/${service_id}`).then(res => res.json())
     let details = await trade.data
     const trade_type = details.trade_type
@@ -43,9 +50,6 @@ const sellCrypto = async(req, res)=>{
     const userBalance = userWallet.current_balance;
     amount = Number(amount * sellPrice);
 
-    if(amount < 50){
-      req.flash("error", "Minimum trade for crypto is $50")
-    }
 
     if (!pin) {
       req.flash("error", "please provide transaction pin")
@@ -135,7 +139,7 @@ const sellCrypto = async(req, res)=>{
     await userWallet.save();
     await transaction.save();
     req.flash("info", "transaction is being processed")
-    res.redirect("/trades/crypto")
+    // res.redirect("/trades/crypto")
     // res.status(202).json({
     //   message: "transaction is being processed",
     //   balance: userWallet.current_balance,

@@ -145,8 +145,8 @@ router.route("/trades").get([isLoggedIn, checkUserPin], trades);
 
 // Quiz
 router.route("/quiz/take-quiz").get([isLoggedIn], getQuiz);
-router.route("/quiz/submit-quiz").post([isLoggedIn], submitQuiz);
-router.route("/quiz/next-question").get([isLoggedIn], getNewQuiz);
+// router.route("/quiz/submit-quiz").post([isLoggedIn], submitQuiz);
+// router.route("/quiz/next-question").get([isLoggedIn], getNewQuiz);
 router
   .route("/billpayment/:service")
   .get([isLoggedIn, checkUserPin], billPayer);

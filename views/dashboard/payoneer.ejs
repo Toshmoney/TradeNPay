@@ -429,8 +429,12 @@
           sellsubmitButton.disabled = false
           sellsubmitButton.textContent = 'Sell';
           sellsubmitButton.classList.remove('disabled')
-          toastr.success('Your transaction is being processed');
-          location.href='/dashboard'
+          if(data.error){
+            toastr.error(data.error)
+          }else{
+          toastr.success(data.message);
+          }
+          // location.href='/dashboard'
         })
         .catch(error => {
           let message = "Try again letter"
@@ -443,6 +447,7 @@
           sellsubmitButton.textContent = 'Sell';
           sellsubmitButton.classList.remove('disabled')
           toastr.info(message, 'Purchase failed')
+          console.log(error);
         })
     }
 

@@ -112,6 +112,12 @@ const sellPaypal = async (req, res) => {
   console.log(newImageName);
 
   let amount = req.body.amount
+
+  if(Number(amount) < 50){
+    req.flash("error", "Minimum trade for paypal is $50")
+    return res.redirect("/trades/paypal");
+  }
+
   const trade = await fetch(`${baseurl}/api/v1/trade_plan/${service_id}`).then(res => res.json())
   let details = await trade.data
   const trade_type = details?.trade_type || "paypal"
