@@ -68,8 +68,8 @@ header{
 .child p{
     width: 60%;
 }
-nav img{
-    height: 40px;
+#nav img{
+    height: 30px;
 }
 .dist{
     width: 100%;
