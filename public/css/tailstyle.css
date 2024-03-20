@@ -23,6 +23,7 @@ header{
   justify-content: flex-end;
   align-items: center;
   padding: 10px 10%;
+  background-color: #708BEB;
 }
 .nav__link li{
   list-style: none;
@@ -67,6 +68,9 @@ header{
 .child p{
     width: 60%;
 }
+nav img{
+    height: 40px;
+}
 .dist{
     width: 100%;
     justify-content: space-around;
@@ -92,6 +96,16 @@ header{
     align-items: center;
     justify-content: space-evenly;
 
+}
+.foot1 img{
+    height: 40px;
+}
+
+.foot1{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
 }
 
 @media (max-width:970px) {
